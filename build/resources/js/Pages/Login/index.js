@@ -46,7 +46,7 @@ const Login = (props) => {
                 react_1.default.createElement(core_1.Image, { src: "/img/full_logo.png", width: 150 })),
             react_1.default.createElement(core_1.Paper, { withBorder: true, shadow: "md", p: 30, mt: 30, radius: "md" },
                 react_1.default.createElement("form", { onSubmit: form.onSubmit((values) => attemptLogin(values)) },
-                    react_1.default.createElement(core_1.Select, { label: "Bartolo", placeholder: "Escoge tu nombre", itemComponent: SelectItem, data: data, maxDropdownHeight: 400, nothingFound: "No hay nadie", filter: (value, item) => item.label?.toLowerCase().includes(value.toLowerCase().trim()) || false, required: true, ...form.getInputProps('email'), disabled: isLoading }),
+                    react_1.default.createElement(core_1.Select, { label: "Bartolo", placeholder: "Escoge tu nombre", itemComponent: SelectItem, data: data, maxDropdownHeight: 200, nothingFound: "No hay nadie", filter: (value, item) => item.label?.toLowerCase().includes(value.toLowerCase().trim()) || false, required: true, ...form.getInputProps('email'), disabled: isLoading, dropdownPosition: "bottom" }),
                     react_1.default.createElement(core_1.PasswordInput, { label: "Password", placeholder: "Your password", required: true, mt: "md", ...form.getInputProps('password'), disabled: isLoading }),
                     react_1.default.createElement(core_1.Button, { fullWidth: true, mt: "xl", type: "submit", loading: isLoading }, "Entrar"))))));
 };

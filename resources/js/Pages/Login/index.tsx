@@ -87,7 +87,7 @@ const Login = (props: Props): React.ReactElement => {
               itemComponent={SelectItem}
               data={data}
               // searchable
-              maxDropdownHeight={400}
+              maxDropdownHeight={200}
               nothingFound="No hay nadie"
               filter={(value, item) =>
                 item.label?.toLowerCase().includes(value.toLowerCase().trim()) || false
@@ -95,6 +95,7 @@ const Login = (props: Props): React.ReactElement => {
               required={true}
               {...form.getInputProps('email')}
               disabled={isLoading}
+              dropdownPosition="bottom"
             />
 
             <PasswordInput
