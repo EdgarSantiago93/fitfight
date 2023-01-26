@@ -43,7 +43,7 @@ const Login = (props) => {
     return (react_1.default.createElement(react_1.default.Fragment, null,
         react_1.default.createElement(core_1.Container, { size: 420, my: 40 },
             react_1.default.createElement(core_1.Center, null,
-                react_1.default.createElement(core_1.Image, { src: "/img/full_logo.png", width: 200 })),
+                react_1.default.createElement(core_1.Image, { src: "/img/full_logo.png", width: 150 })),
             react_1.default.createElement(core_1.Paper, { withBorder: true, shadow: "md", p: 30, mt: 30, radius: "md" },
                 react_1.default.createElement("form", { onSubmit: form.onSubmit((values) => attemptLogin(values)) },
                     react_1.default.createElement(core_1.Select, { label: "Bartolo", placeholder: "Escoge tu nombre", itemComponent: SelectItem, data: data, maxDropdownHeight: 400, nothingFound: "No hay nadie", filter: (value, item) => item.label?.toLowerCase().includes(value.toLowerCase().trim()) || false, required: true, ...form.getInputProps('email'), disabled: isLoading }),

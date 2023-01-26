@@ -76,7 +76,7 @@ const Login = (props: Props): React.ReactElement => {
     <>
       <Container size={420} my={40}>
         <Center>
-          <Image src="/img/full_logo.png" width={200} />
+          <Image src="/img/full_logo.png" width={150} />
         </Center>
 
         <Paper withBorder shadow="md" p={30} mt={30} radius="md">
