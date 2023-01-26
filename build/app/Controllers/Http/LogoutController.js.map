@@ -1,0 +1,1 @@
+{"version":3,"file":"LogoutController.js","sourceRoot":"","sources":["../../../../app/Controllers/Http/LogoutController.ts"],"names":[],"mappings":";;AAEA,MAAqB,gBAAgB;IAC5B,KAAK,CAAC,MAAM,CAAC,EAAE,IAAI,EACxB,QAAQ,EACa;QACrB,MAAM,IAAI,CAAC,GAAG,CAAC,KAAK,CAAC,CAAC,MAAM,EAAE,CAAA;QAC9B,QAAQ,CAAC,QAAQ,CAAC,QAAQ,CAAC,CAAA;IAC7B,CAAC;CACF;AAPD,mCAOC"}
