@@ -1,0 +1,96 @@
+{
+  "name": "fitfight",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "node ace serve --watch",
+    "build": "node ace build --production",
+    "start": "node server.js",
+    "lint": "eslint . --ext=.ts",
+    "format": "prettier --write ."
+  },
+  "eslintConfig": {
+    "extends": [
+      "plugin:adonis/typescriptApp",
+      "prettier"
+    ],
+    "plugins": [
+      "prettier"
+    ],
+    "rules": {
+      "prettier/prettier": [
+        "error"
+      ]
+    }
+  },
+  "eslintIgnore": [
+    "build"
+  ],
+  "prettier": {
+    "trailingComma": "es5",
+    "semi": false,
+    "singleQuote": true,
+    "useTabs": false,
+    "quoteProps": "consistent",
+    "bracketSpacing": true,
+    "arrowParens": "always",
+    "printWidth": 100
+  },
+  "devDependencies": {
+    "@adonisjs/assembler": "^5.9.5",
+    "@babel/core": "^7.20.12",
+    "@babel/preset-env": "^7.20.2",
+    "@babel/preset-react": "^7.18.6",
+    "@japa/preset-adonis": "^1.2.0",
+    "@japa/runner": "^2.2.2",
+    "@symfony/webpack-encore": "^4.1.1",
+    "@types/proxy-addr": "^2.0.0",
+    "@types/react": "^18.0.27",
+    "@types/source-map-support": "^0.5.6",
+    "adonis-preset-ts": "^2.1.0",
+    "eslint": "^8.32.0",
+    "eslint-config-prettier": "^8.6.0",
+    "eslint-plugin-adonis": "^2.1.1",
+    "eslint-plugin-prettier": "^4.2.1",
+    "pino-pretty": "^9.1.1",
+    "prettier": "^2.8.3",
+    "ts-loader": "^9.0.0",
+    "typescript": "^4.6.4",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^4.10.0",
+    "youch": "^3.2.2",
+    "youch-terminal": "^2.1.5"
+  },
+  "dependencies": {
+    "@adonisjs/auth": "^8.2.3",
+    "@adonisjs/core": "^5.9.0",
+    "@adonisjs/lucid": "^18.3.0",
+    "@adonisjs/repl": "^3.1.11",
+    "@adonisjs/session": "^6.4.0",
+    "@adonisjs/shield": "^7.1.0",
+    "@adonisjs/view": "^6.2.0",
+    "@eidellev/inertia-adonisjs": "^7.4.0",
+    "@emotion/react": "^11.10.5",
+    "@inertiajs/inertia": "^0.11.1",
+    "@inertiajs/inertia-react": "^0.8.1",
+    "@inertiajs/react": "^1.0.0",
+    "@mantine/core": "^5.10.2",
+    "@mantine/dropzone": "^5.10.2",
+    "@mantine/form": "^5.10.2",
+    "@mantine/hooks": "^5.10.2",
+    "@mantine/notifications": "^5.10.2",
+    "@tabler/icons": "^2.1.1",
+    "@types/react-dom": "^18.0.10",
+    "axios": "^1.2.5",
+    "luxon": "^3.2.1",
+    "mysql2": "^3.0.1",
+    "phc-argon2": "^1.1.4",
+    "proxy-addr": "^2.0.7",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "reflect-metadata": "^0.1.13",
+    "source-map-support": "^0.5.21",
+    "tabler-icons-react": "^1.56.0",
+    "uuid": "^9.0.0"
+  }
+}
