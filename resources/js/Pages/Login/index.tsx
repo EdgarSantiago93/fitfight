@@ -21,7 +21,6 @@ const Login = (props: Props): React.ReactElement => {
     initialValues: {
       email: '',
       password: '',
-      // remember_me: true,
     },
   })
 
@@ -87,7 +86,7 @@ const Login = (props: Props): React.ReactElement => {
               placeholder="Escoge tu nombre"
               itemComponent={SelectItem}
               data={data}
-              searchable
+              // searchable
               maxDropdownHeight={400}
               nothingFound="No hay nadie"
               filter={(value, item) =>

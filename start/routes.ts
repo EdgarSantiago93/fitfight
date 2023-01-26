@@ -20,16 +20,10 @@
 
 import Route from '@ioc:Adonis/Core/Route'
 
-
 Route.get('/login', 'RoutesController.getLoginView')
 
 Route.get('/logout', 'LogoutController')
 
 Route.post('/login', 'AttemptLoginController')
 
-
-Route.get('/', 'RoutesController.getDashboardView')
-
-
-
-
+Route.get('/', 'RoutesController.getDashboardView').middleware('auth')

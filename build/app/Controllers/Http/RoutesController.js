@@ -12,7 +12,7 @@ class RoutesController {
         }
         const users = await User_1.default.all();
         return inertia.render('Login', {
-            users: users
+            users: users,
         });
     }
     async getDashboardView({ auth, inertia }) {

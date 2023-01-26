@@ -7,6 +7,7 @@ import '../css/app.css';
 import { MantineProvider } from '@mantine/core';
 import { NotificationsProvider } from '@mantine/notifications';
 import { createRoot } from 'react-dom/client';
+
 const container = document.getElementById('app');
 const root = createRoot(container);
 root.render(
