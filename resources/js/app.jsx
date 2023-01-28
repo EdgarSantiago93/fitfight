@@ -7,12 +7,15 @@ import '../css/app.css';
 import { MantineProvider } from '@mantine/core';
 import { NotificationsProvider } from '@mantine/notifications';
 import { createRoot } from 'react-dom/client';
+import { ModalsProvider } from '@mantine/modals';
 
 const container = document.getElementById('app');
 const root = createRoot(container);
 root.render(
     <MantineProvider withGlobalStyles withNormalizeCSS
+
         theme={{
+            loader: 'bars',
             colors: {
                 // 'fit-red': ['#F04336', '#E63A2E', '#D93227', '#C92A20', '#B92119', '#A81912', '#9A110C', '#8C0905', '#7E0100', '#6F0000'],
                 'fit-red': [
@@ -48,12 +51,14 @@ root.render(
         }}>
 
         <NotificationsProvider>
-            <InertiaApp
-                // Pass props from the server down to the client app
-                initialPage={JSON.parse(container.dataset.page)}
-                // Dynamically load the required page component
-                resolveComponent={(name) => import(`./Pages/${name}`).then((module) => module.default)}
-            />      </NotificationsProvider>
+            <ModalsProvider>
+
+                <InertiaApp
+                    initialPage={JSON.parse(container.dataset.page)}
+                    resolveComponent={(name) => import(`./Pages/${name}`).then((module) => module.default)}
+                />
+            </ModalsProvider>
+        </NotificationsProvider>
 
 
     </MantineProvider>

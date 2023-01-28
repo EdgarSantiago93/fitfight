@@ -11,19 +11,66 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const luxon_1 = require("luxon");
 const Orm_1 = global[Symbol.for('ioc.use')]("Adonis/Lucid/Orm");
+const uuid_1 = require("uuid");
 class Entry extends Orm_1.BaseModel {
+    static assignUuid(entry) {
+        entry.id = (0, uuid_1.v4)();
+    }
 }
 __decorate([
     (0, Orm_1.column)({ isPrimary: true }),
     __metadata("design:type", Number)
 ], Entry.prototype, "id", void 0);
 __decorate([
-    Orm_1.column.dateTime({ autoCreate: true }),
+    Orm_1.column.dateTime({
+        autoCreate: true,
+        serialize: (value) => {
+            return { day: value?.day, month: value?.month, year: value?.year };
+        },
+    }),
     __metadata("design:type", luxon_1.DateTime)
 ], Entry.prototype, "createdAt", void 0);
 __decorate([
     Orm_1.column.dateTime({ autoCreate: true, autoUpdate: true }),
     __metadata("design:type", luxon_1.DateTime)
 ], Entry.prototype, "updatedAt", void 0);
+__decorate([
+    (0, Orm_1.column)({ serializeAs: null }),
+    __metadata("design:type", String)
+], Entry.prototype, "user_id", void 0);
+__decorate([
+    (0, Orm_1.column)(),
+    __metadata("design:type", String)
+], Entry.prototype, "pose_file", void 0);
+__decorate([
+    (0, Orm_1.column)(),
+    __metadata("design:type", String)
+], Entry.prototype, "tracker_file", void 0);
+__decorate([
+    (0, Orm_1.column)(),
+    __metadata("design:type", String)
+], Entry.prototype, "calories", void 0);
+__decorate([
+    (0, Orm_1.column)(),
+    __metadata("design:type", String)
+], Entry.prototype, "minutes", void 0);
+__decorate([
+    (0, Orm_1.column)(),
+    __metadata("design:type", Boolean)
+], Entry.prototype, "is_validated", void 0);
+__decorate([
+    (0, Orm_1.column)(),
+    __metadata("design:type", Boolean)
+], Entry.prototype, "is_rest_day", void 0);
+__decorate([
+    (0, Orm_1.column)(),
+    __metadata("design:type", String)
+], Entry.prototype, "status", void 0);
+__decorate([
+    (0, Orm_1.beforeCreate)(),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Entry]),
+    __metadata("design:returntype", void 0)
+], Entry, "assignUuid", null);
 exports.default = Entry;
 //# sourceMappingURL=Entry.js.map

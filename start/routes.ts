@@ -27,3 +27,9 @@ Route.get('/logout', 'LogoutController')
 Route.post('/login', 'AttemptLoginController')
 
 Route.get('/', 'RoutesController.getDashboardView').middleware('auth')
+
+Route.post('/get_media_token', 'GetUploadToken').middleware('auth')
+
+Route.post('/get_signed_url', 'GetPresignedURL.apiHandle').middleware('auth')
+
+Route.post('/create_entry', 'SaveEntry').middleware('auth')

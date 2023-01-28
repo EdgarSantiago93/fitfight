@@ -18,12 +18,13 @@ class default_1 extends Schema_1.default {
             table.string('calories', 255).nullable();
             table.string('minutes', 255).nullable();
             table.boolean('is_validated').defaultTo(false);
-            table.dateTime('uploaded_at', { useTz: true }).defaultTo(this.now());
+            table.string('status', 255).defaultTo('pending');
+            table.boolean('is_rest_day').defaultTo(false);
             table.timestamp('created_at', { useTz: true });
             table.timestamp('updated_at', { useTz: true });
         });
         this.schema.alterTable('entries', (table) => {
-            table.foreign('user_id').references('users.id');
+            table.foreign('user_id', 'id').references('users.id');
             table.foreign('pose_file').references('media.id');
             table.foreign('tracker_file').references('media.id');
         });

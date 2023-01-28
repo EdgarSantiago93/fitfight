@@ -11,7 +11,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const luxon_1 = require("luxon");
 const Orm_1 = global[Symbol.for('ioc.use')]("Adonis/Lucid/Orm");
+const uuid_1 = require("uuid");
 class Vote extends Orm_1.BaseModel {
+    static assignUuid(vote) {
+        vote.id = (0, uuid_1.v4)();
+    }
 }
 __decorate([
     (0, Orm_1.column)({ isPrimary: true }),
@@ -25,5 +29,11 @@ __decorate([
     Orm_1.column.dateTime({ autoCreate: true, autoUpdate: true }),
     __metadata("design:type", luxon_1.DateTime)
 ], Vote.prototype, "updatedAt", void 0);
+__decorate([
+    (0, Orm_1.beforeCreate)(),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Vote]),
+    __metadata("design:returntype", void 0)
+], Vote, "assignUuid", null);
 exports.default = Vote;
 //# sourceMappingURL=Vote.js.map

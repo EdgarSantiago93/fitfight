@@ -1,9 +1,7 @@
 import { createStyles } from '@mantine/core';
 
 export const useStyles = createStyles((theme, _params, getRef) => {
-    console.log(theme);
     const fitRed = theme.colors['fit-red'][4];
-    console.log(fitRed);
     return (
         {
             wrapper: {
@@ -11,20 +9,11 @@ export const useStyles = createStyles((theme, _params, getRef) => {
                 padding: '15px 10px',
                 width: '100%',
                 height: '100vh',
-                // display: 'flex',
                 alignItems: 'start',
                 justifyContent: 'start',
                 overflowY: 'scroll',
 
-                // borderRadius: theme.radius.sm,
 
-                // // Dynamic media queries, define breakpoints in theme, use anywhere
-                // [`@media (max-width: ${theme.breakpoints.sm}px)`]: {
-                //     // Type safe child reference in nested selectors via ref
-                //     [`& .${getRef('child')}`]: {
-                //         fontSize: theme.fontSizes.xs,
-                //     },
-                // },
             },
 
 
@@ -111,7 +100,11 @@ export const useStyles = createStyles((theme, _params, getRef) => {
                 textAlign: 'center',
                 justifyContent: 'center',
                 alignItems: 'center',
-                padding: "9px 10px",
+                padding: "0px 10px",
+                paddingTop: '5px',
+                boxSizing: "border-box",
+                MozBoxSizing: "border-box",
+                WebkitBoxSizing: "border-box"
             },
             day: {
                 fontSize: '15px',
@@ -146,17 +139,59 @@ export const useStyles = createStyles((theme, _params, getRef) => {
             },
 
             today: {
+                boxSizing: "border-box",
+                MozBoxSizing: "border-box",
+                WebkitBoxSizing: "border-box",
                 background: theme.colors.gray[1],
-                padding: "9px 10px",
+                padding: "0px 10px",
+                paddingTop: '5px',
                 borderRadius: "10px"
             },
             selectedDay: {
+                boxSizing: "border-box",
+                MozBoxSizing: "border-box",
+                WebkitBoxSizing: "border-box",
                 border: `2px solid ${theme.colors['fit-red'][4]}`,
-                padding: "9px 10px",
+                padding: "0px 10px",
+                paddingTop: '5px',
                 borderRadius: "10px"
+            },
+            validatedSelected: {
+                boxSizing: "border-box",
+                MozBoxSizing: "border-box",
+                WebkitBoxSizing: "border-box",
+                border: `2px solid ${theme.colors.lime[4]}!important`,
+                borderRadius: "10px",
+                padding: "0px 10px",
+                paddingTop: '5px',
+            },
+            validated: {
+                boxSizing: "border-box",
+                MozBoxSizing: "border-box",
+                WebkitBoxSizing: "border-box",
+                background: theme.colors.lime[1],
+                borderRadius: "10px",
+                padding: "0px 10px",
+                paddingTop: '5px',
+            },
+            forcedRest: {
+                boxSizing: "border-box",
+                MozBoxSizing: "border-box",
+                WebkitBoxSizing: "border-box",
+                background: theme.colors.gray[4],
+                borderRadius: "10px",
+                padding: "0px 10px",
+                paddingTop: '5px',
+            },
+            pending: {
+                boxSizing: "border-box",
+                MozBoxSizing: "border-box",
+                WebkitBoxSizing: "border-box",
+                // background: theme.colors.yellow[1],
+                borderRadius: "10px",
+                padding: "0px 10px",
+                paddingTop: '5px',
             }
-
-
 
 
 

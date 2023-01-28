@@ -16,6 +16,7 @@ const luxon_1 = require("luxon");
 const Orm_1 = global[Symbol.for('ioc.use')]("Adonis/Lucid/Orm");
 const Hash_1 = __importDefault(global[Symbol.for('ioc.use')]("Adonis/Core/Hash"));
 const uuid_1 = require("uuid");
+const Entry_1 = __importDefault(global[Symbol.for('ioc.use')]("App/Models/Entry"));
 class User extends Orm_1.BaseModel {
     static assignUuid(user) {
         user.id = (0, uuid_1.v4)();
@@ -55,6 +56,10 @@ __decorate([
     Orm_1.column.dateTime({ autoCreate: true, autoUpdate: true }),
     __metadata("design:type", luxon_1.DateTime)
 ], User.prototype, "updatedAt", void 0);
+__decorate([
+    (0, Orm_1.hasMany)(() => Entry_1.default, { foreignKey: 'user_id' }),
+    __metadata("design:type", Object)
+], User.prototype, "entries", void 0);
 __decorate([
     (0, Orm_1.beforeCreate)(),
     __metadata("design:type", Function),

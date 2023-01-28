@@ -1,7 +1,6 @@
 import { createStyles } from '@mantine/core';
 
 export const useStyles = createStyles((theme, _params, getRef) => {
-    console.log(theme);
     const fitRed = theme.colors['fit-red'][4];
     return (
         {
@@ -27,10 +26,10 @@ export const useStyles = createStyles((theme, _params, getRef) => {
                 backgroundRepeat: 'no-repeat',
                 backgroundSize: 'cover',
                 borderRadius: '10px',
+            },
+            photoView: {
+                width: "100%", maxWidth: "320px", borderRadius: "10px",
             }
-
-
-
         }
 
     );
