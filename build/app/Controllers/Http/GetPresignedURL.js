@@ -11,6 +11,7 @@ class GetPresignedURL {
         const fileKey = request.input('file_key');
         const live = request.input('is_live');
         const fileType = request.input('file_type');
+        console.log('API HANDLE');
         const res = await this.controllerAction({ fileKey: fileKey, live: live, fileType: fileType });
         if (res == 'error') {
             return response.badRequest('Error generando el URL');
@@ -21,10 +22,12 @@ class GetPresignedURL {
         });
     }
     async controllerAction({ fileKey, fileType, live = false }) {
+        console.log('first');
         aws_sdk_1.default.config.update({
             accessKeyId: Env_1.default.get('AWS_ACCESS_KEY_ID'),
             secretAccessKey: Env_1.default.get('AWS_SECRET_ACCESS_KEY'),
         });
+        console.log('second');
         const S3_BUCKET = live ? 'fitfight' : 'fitfight-temp';
         const REGION = 'us-west-1';
         const URL_EXPIRATION_TIME = 3600;
@@ -32,12 +35,17 @@ class GetPresignedURL {
             params: { Bucket: S3_BUCKET },
             region: REGION,
         });
+        console.log('third');
         const res = new Promise((resolve, _reject) => {
             myBucket.getSignedUrl('getObject', {
                 Key: fileKey,
                 Expires: URL_EXPIRATION_TIME,
             }, async (_err, url) => {
                 if (_err) {
+                    console.log('error');
+                    console.log('error');
+                    console.log('error');
+                    console.log('error');
                     console.log('error', _err);
                     resolve('error');
                 }
