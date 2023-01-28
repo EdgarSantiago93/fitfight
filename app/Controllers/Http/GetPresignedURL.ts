@@ -38,14 +38,6 @@ export default class GetPresignedURL {
       region: REGION,
     })
 
-    // myBucket.copyObject(
-    //   {
-    //     Bucket: "DESTINATION_BUCKET_NAME",
-    //     CopySource: "/SOURCE_BUCKET_NAME/OBJECT_NAME",
-    //     Key: "OBJECT_NAME"
-    // }
-    // )
-
     const res = new Promise((resolve, _reject) => {
       myBucket.getSignedUrl(
         'getObject',
@@ -56,6 +48,10 @@ export default class GetPresignedURL {
         },
         async (_err, url) => {
           if (_err) {
+            console.log('error')
+            console.log('error')
+            console.log('error')
+            console.log('error')
             console.log('error', _err)
             resolve('error')
           }
