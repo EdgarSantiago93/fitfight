@@ -11,7 +11,7 @@ exports.default = (0, config_1.sessionConfig)({
     driver: Env_1.default.get('SESSION_DRIVER'),
     cookieName: 'adonis-session',
     clearWithBrowser: false,
-    age: '2h',
+    age: '7d',
     cookie: {
         path: '/',
         httpOnly: true,

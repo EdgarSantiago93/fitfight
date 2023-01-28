@@ -35,8 +35,8 @@ export const useStyles = createStyles((theme, _params, getRef) => {
             },
             image: {
                 width: '100%',
-                maxHeight: '400px',
-                maxWidth: '400px',
+                maxHeight: '350px',
+                maxWidth: '350px',
                 height: 'calc(50vw - 30px)',
                 backgroundPosition: 'center',
                 backgroundRepeat: 'no-repeat',

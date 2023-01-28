@@ -8,10 +8,10 @@ export const useStyles = createStyles((theme, _params, getRef) => {
                 position: 'relative',
                 padding: '15px 10px',
                 width: '100%',
-                height: '100vh',
+                // height: '100vh',
                 alignItems: 'start',
                 justifyContent: 'start',
-                overflowY: 'scroll',
+                // overflowY: 'scroll',
 
 
             },
@@ -29,13 +29,13 @@ export const useStyles = createStyles((theme, _params, getRef) => {
             },
 
             greeting_text: {
-                fontSize: '23px',
+                fontSize: '21px',
                 fontWeight: '500',
                 letterSpacing: '-1px',
                 lineHeight: 1,
             },
             greeting_text_name: {
-                fontSize: '23px',
+                fontSize: '21px',
                 fontWeight: '700',
                 letterSpacing: '-1px',
                 lineHeight: 1,
@@ -45,7 +45,7 @@ export const useStyles = createStyles((theme, _params, getRef) => {
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
-                height: '55px',
+                height: '50px',
             },
 
             // 
@@ -61,7 +61,7 @@ export const useStyles = createStyles((theme, _params, getRef) => {
                 borderRadius: theme.radius.xl,
                 background: fitRed,
                 color: 'white',
-                marginTop: '20px',
+                marginTop: '10px',
             },
 
             // 
