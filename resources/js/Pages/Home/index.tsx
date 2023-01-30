@@ -31,6 +31,7 @@ const Home = (props: Props): React.ReactElement => {
         day: daysEs[c.format('d')],
         date: c.format('DD'),
         month: c.format('MMMM'),
+        monthNumber: c.format('MM'),
         entry: userEntry,
       }
       days.push(v)
@@ -89,6 +90,11 @@ const Home = (props: Props): React.ReactElement => {
     if (moment().format('DD') < selection.date) {
       return <DayToCome />
     }
+
+    if (moment().format('DD') > selection.date && moment().format('MM') <= selection.monthNumber) {
+      return <DayToCome />
+    }
+
     if (!selection.entry) {
       return <NoEntry />
     }
@@ -167,7 +173,11 @@ const Home = (props: Props): React.ReactElement => {
                   <div className={classes.date}>{day.date}</div>
                   <div>
                     {day.entry?.is_rest_day ? '😴' : null}
-                    {!day.entry && moment().format('DD') > day.date ? '❌' : null}
+                    {!day.entry &&
+                    moment().format('DD') > day.date &&
+                    moment().format('MM') >= day.monthNumber
+                      ? '❌'
+                      : null}
                     {day.entry?.is_validated &&
                     day.entry?.status == 'validated' &&
                     !day.entry?.is_rest_day

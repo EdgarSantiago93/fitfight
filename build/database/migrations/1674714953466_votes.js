@@ -19,7 +19,7 @@ class default_1 extends Schema_1.default {
             table.timestamp('updated_at', { useTz: true });
         });
         this.schema.alterTable('votes', (table) => {
-            table.foreign('user_id', 'id').references('users.id');
+            table.foreign('user_id').references('users.id');
             table.foreign('entry_id').references('entries.id');
         });
     }

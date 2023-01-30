@@ -10,6 +10,7 @@ const User_1 = __importDefault(global[Symbol.for('ioc.use')]("App/Models/User"))
 const moment_1 = __importDefault(require("moment"));
 const Media_1 = __importDefault(global[Symbol.for('ioc.use')]("App/Models/Media"));
 const luxon_1 = require("luxon");
+const axios_1 = __importDefault(require("axios"));
 class SaveEntry {
     async handle({ auth, request, response }) {
         await auth.use('web').authenticate();
@@ -98,6 +99,9 @@ class SaveEntry {
                 return await handleMovingMedia(media);
             });
             await Promise.all(mediaFiles);
+            let botId = '5839076306:AAEGD1UhBEtx8nNjLC1ACMgAMlEYbrhLgnU';
+            let groupId = '-895463386';
+            axios_1.default.get(`https://api.telegram.org/bot${botId}/sendMessage?chat_id=${groupId}&text=${user.name} ha subido una entrada`);
         }
         const thisWeekEntries = await dbUser
             ?.related('entries')

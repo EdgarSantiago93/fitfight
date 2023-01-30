@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Entry_1 = __importDefault(global[Symbol.for('ioc.use')]("App/Models/Entry"));
 const User_1 = __importDefault(global[Symbol.for('ioc.use')]("App/Models/User"));
 const moment_1 = __importDefault(require("moment"));
+const View_1 = __importDefault(global[Symbol.for('ioc.use')]("Adonis/Core/View"));
 class RoutesController {
     async getLoginView({ auth, inertia, response }) {
         await auth.use('web').authenticate();
@@ -122,6 +123,19 @@ class RoutesController {
                 return serialized;
             }));
         return inertia.render('Home', { user: user, entries: weeksEntriesJson });
+    }
+    async entryShareCard({ request, response }) {
+        if (!request.params().id) {
+            return response.redirect('/');
+        }
+        const entry = await Entry_1.default.find(request.params().id);
+        const user = await entry?.related('user').query().first();
+        moment_1.default.locale('es');
+        const html = await View_1.default.render('share', {
+            entryUser: user,
+            date: `FitFight | ${(0, moment_1.default)().format('MMMM').charAt(0).toUpperCase() + (0, moment_1.default)().format('MMMM').slice(1)} ${(0, moment_1.default)().format('DD')}`,
+        });
+        return html;
     }
 }
 exports.default = RoutesController;

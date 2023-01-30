@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React from 'react'
 import { Button, Grid, TextInput, Text } from '@mantine/core'
 
@@ -97,7 +96,9 @@ const EntryNotSubmitted = (props: Props) => {
       props.overlayLoad(false)
     }
   }
-  const [processLoading, setProcessLoading] = React.useState(false)
+
+  const [trackerLoading, setTrackerLoading] = React.useState(false)
+  const [poseLoading, setPoseLoading] = React.useState(false)
 
   React.useEffect(() => {}, [])
 
@@ -109,7 +110,7 @@ const EntryNotSubmitted = (props: Props) => {
           <ImageUploader
             formValue="tracker_img"
             form={form}
-            loading={setProcessLoading}
+            loading={setTrackerLoading}
             key="tracker_img_key"
           />
         </Grid.Col>
@@ -119,7 +120,7 @@ const EntryNotSubmitted = (props: Props) => {
           <ImageUploader
             formValue="pose_img"
             form={form}
-            loading={setProcessLoading}
+            loading={setPoseLoading}
             key="pose_img_key"
           />
         </Grid.Col>
@@ -150,7 +151,7 @@ const EntryNotSubmitted = (props: Props) => {
               variant="subtle"
               leftIcon={<>😴</>}
               onClick={() => openSubmitRestDayModal()}
-              disabled={processLoading}
+              disabled={poseLoading || trackerLoading}
             >
               Hoy es descanso
             </Button>
@@ -160,7 +161,7 @@ const EntryNotSubmitted = (props: Props) => {
               variant="outline"
               leftIcon={<>💪</>}
               onClick={() => openSubmitModal()}
-              disabled={processLoading}
+              disabled={poseLoading || trackerLoading}
             >
               Vamos
             </Button>

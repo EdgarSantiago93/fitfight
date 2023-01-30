@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>{{date}}</title>
+      <meta name="description" content="{{entryUser.name}} subió una entrada" />
+      <meta property="og:url" content="https://bartolos.site" />
+      <meta property="og:type" content="website" />
+      <meta property="og:title" content="{{date}}" />
+      <meta property="og:description" content="{{entryUser.name}} subió una entrada" />
+      <meta property="og:image" content="https://bartolos.site{{entryUser.avatar}}" />
+
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta property="twitter:domain" content="bartolos.site" />
+      <meta property="twitter:url" content="https://bartolos.site" />
+      <meta
+        name="twitter:title"
+     content="{{date}}" 
+      />
+      <meta name="twitter:description" content="{{entryUser.name}} subió una entrada" />
+      <meta name="twitter:image" content="https://bartolos.site{{entryUser.avatar}}" />
+
+  @entryPointStyles('app')
+  @entryPointScripts('app')
+</head>
+<body>
+
+  <main>
+
+  <div style="text-align:center; margin-top:20px">
+    <img src="/img/full_logo.png" style="width:100%;max-width:100px"/>
+      <h3 class="title"> Cargando.</h3>
+  </div>
+  </main>
+</body>
+<script>
+
+setTimeout(() => {
+  window.location.href='/'
+}, 2000);
+</script>
+</html>

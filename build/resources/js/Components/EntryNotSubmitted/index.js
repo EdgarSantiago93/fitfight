@@ -86,16 +86,17 @@ const EntryNotSubmitted = (props) => {
             props.overlayLoad(false);
         }
     };
-    const [processLoading, setProcessLoading] = react_1.default.useState(false);
+    const [trackerLoading, setTrackerLoading] = react_1.default.useState(false);
+    const [poseLoading, setPoseLoading] = react_1.default.useState(false);
     react_1.default.useEffect(() => { }, []);
     return (react_1.default.createElement("div", { className: classes.notSubmitted },
         react_1.default.createElement(core_1.Grid, null,
             react_1.default.createElement(core_1.Grid.Col, { span: 6 },
                 react_1.default.createElement("div", { className: classes.label }, "Tracker"),
-                react_1.default.createElement(ImageUploader_1.default, { formValue: "tracker_img", form: form, loading: setProcessLoading, key: "tracker_img_key" })),
+                react_1.default.createElement(ImageUploader_1.default, { formValue: "tracker_img", form: form, loading: setTrackerLoading, key: "tracker_img_key" })),
             react_1.default.createElement(core_1.Grid.Col, { span: 6 },
                 react_1.default.createElement("div", { className: classes.label }, "Pose"),
-                react_1.default.createElement(ImageUploader_1.default, { formValue: "pose_img", form: form, loading: setProcessLoading, key: "pose_img_key" })),
+                react_1.default.createElement(ImageUploader_1.default, { formValue: "pose_img", form: form, loading: setPoseLoading, key: "pose_img_key" })),
             react_1.default.createElement(core_1.Grid.Col, { span: 6 },
                 react_1.default.createElement(core_1.TextInput, { label: "Calorias", radius: "md", size: "md", ...form.getInputProps('calories') })),
             react_1.default.createElement(core_1.Grid.Col, { span: 6 },
@@ -107,8 +108,8 @@ const EntryNotSubmitted = (props) => {
                         width: '100%',
                         alignContent: 'center',
                     } },
-                    react_1.default.createElement(core_1.Button, { component: "a", href: "#", variant: "subtle", leftIcon: react_1.default.createElement(react_1.default.Fragment, null, "\uD83D\uDE34"), onClick: () => openSubmitRestDayModal(), disabled: processLoading }, "Hoy es descanso"),
-                    react_1.default.createElement(core_1.Button, { component: "a", href: "#", variant: "outline", leftIcon: react_1.default.createElement(react_1.default.Fragment, null, "\uD83D\uDCAA"), onClick: () => openSubmitModal(), disabled: processLoading }, "Vamos"))))));
+                    react_1.default.createElement(core_1.Button, { component: "a", href: "#", variant: "subtle", leftIcon: react_1.default.createElement(react_1.default.Fragment, null, "\uD83D\uDE34"), onClick: () => openSubmitRestDayModal(), disabled: poseLoading || trackerLoading }, "Hoy es descanso"),
+                    react_1.default.createElement(core_1.Button, { component: "a", href: "#", variant: "outline", leftIcon: react_1.default.createElement(react_1.default.Fragment, null, "\uD83D\uDCAA"), onClick: () => openSubmitModal(), disabled: poseLoading || trackerLoading }, "Vamos"))))));
 };
 exports.default = EntryNotSubmitted;
 //# sourceMappingURL=index.js.map

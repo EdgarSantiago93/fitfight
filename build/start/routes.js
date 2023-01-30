@@ -7,6 +7,7 @@ const Route_1 = __importDefault(global[Symbol.for('ioc.use')]("Adonis/Core/Route
 Route_1.default.get('/login', 'RoutesController.getLoginView');
 Route_1.default.get('/logout', 'LogoutController');
 Route_1.default.post('/login', 'AttemptLoginController');
+Route_1.default.get('/entry/:id', 'RoutesController.entryShareCard');
 Route_1.default.get('/', 'RoutesController.getDashboardView').middleware('auth');
 Route_1.default.get('/lb', 'RoutesController.getLeaderBoardView').middleware('auth');
 Route_1.default.get('/vote', 'RoutesController.getVotingView').middleware('auth');

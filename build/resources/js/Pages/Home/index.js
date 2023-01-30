@@ -31,6 +31,7 @@ const Home = (props) => {
                 day: daysEs[c.format('d')],
                 date: c.format('DD'),
                 month: c.format('MMMM'),
+                monthNumber: c.format('MM'),
                 entry: userEntry,
             };
             days.push(v);
@@ -71,6 +72,9 @@ const Home = (props) => {
         if ((0, moment_1.default)().format('DD') < selection.date) {
             return react_1.default.createElement(DayToCome_1.default, null);
         }
+        if ((0, moment_1.default)().format('DD') > selection.date && (0, moment_1.default)().format('MM') <= selection.monthNumber) {
+            return react_1.default.createElement(DayToCome_1.default, null);
+        }
         if (!selection.entry) {
             return react_1.default.createElement(NoEntry_1.default, null);
         }
@@ -109,7 +113,11 @@ const Home = (props) => {
                         react_1.default.createElement("div", { className: classes.date }, day.date),
                         react_1.default.createElement("div", null,
                             day.entry?.is_rest_day ? '😴' : null,
-                            !day.entry && (0, moment_1.default)().format('DD') > day.date ? '❌' : null,
+                            !day.entry &&
+                                (0, moment_1.default)().format('DD') > day.date &&
+                                (0, moment_1.default)().format('MM') >= day.monthNumber
+                                ? '❌'
+                                : null,
                             day.entry?.is_validated &&
                                 day.entry?.status == 'validated' &&
                                 !day.entry?.is_rest_day

@@ -7,6 +7,7 @@ import User from 'App/Models/User'
 import moment from 'moment'
 import Media from 'App/Models/Media'
 import { DateTime } from 'luxon'
+import axios from 'axios'
 
 export default class SaveEntry {
   public async handle({ auth, request, response }: HttpContextContract) {
@@ -115,6 +116,13 @@ export default class SaveEntry {
         return await handleMovingMedia(media)
       })
       await Promise.all(mediaFiles)
+
+      let botId = '5839076306:AAEGD1UhBEtx8nNjLC1ACMgAMlEYbrhLgnU'
+      let groupId = '-895463386'
+
+      axios.get(
+        `https://api.telegram.org/bot${botId}/sendMessage?chat_id=${groupId}&text=${user.name} ha subido una entrada`
+      )
     }
     // @ts-ignore
     const thisWeekEntries = await dbUser

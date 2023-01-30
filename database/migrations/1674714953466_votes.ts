@@ -18,7 +18,7 @@ export default class extends BaseSchema {
     })
 
     this.schema.alterTable('votes', (table) => {
-      table.foreign('user_id', 'id').references('users.id')
+      table.foreign('user_id').references('users.id')
       table.foreign('entry_id').references('entries.id')
     })
   }

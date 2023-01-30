@@ -2,6 +2,7 @@
 import Entry from 'App/Models/Entry'
 import User from 'App/Models/User'
 import moment from 'moment'
+import View from '@ioc:Adonis/Core/View'
 
 export default class RoutesController {
   //
@@ -171,5 +172,22 @@ export default class RoutesController {
     )
 
     return inertia.render('Home', { user: user, entries: weeksEntriesJson })
+  }
+
+  public async entryShareCard({ request, response }) {
+    if (!request.params().id) {
+      return response.redirect('/')
+    }
+    const entry = await Entry.find(request.params().id)
+    const user = await entry?.related('user').query().first()
+    moment.locale('es')
+    const html = await View.render('share', {
+      entryUser: user,
+      date: `FitFight | ${
+        moment().format('MMMM').charAt(0).toUpperCase() + moment().format('MMMM').slice(1)
+      } ${moment().format('DD')}`,
+    })
+
+    return html
   }
 }

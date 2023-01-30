@@ -26,6 +26,8 @@ Route.get('/logout', 'LogoutController')
 
 Route.post('/login', 'AttemptLoginController')
 
+Route.get('/entry/:id', 'RoutesController.entryShareCard')
+
 Route.get('/', 'RoutesController.getDashboardView').middleware('auth')
 Route.get('/lb', 'RoutesController.getLeaderBoardView').middleware('auth')
 Route.get('/vote', 'RoutesController.getVotingView').middleware('auth')
