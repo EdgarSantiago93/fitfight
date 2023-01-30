@@ -178,11 +178,10 @@ export default class RoutesController {
     if (!request.params().id) {
       return response.redirect('/')
     }
-    const entry = await Entry.find(request.params().id)
-    const user = await entry?.related('user').query().first()
+    const entry = await Entry.query().where('id', request.params().id).preload('user').first()
     moment.locale('es')
     const html = await View.render('share', {
-      entryUser: user,
+      entryUser: entry?.$preloaded.user,
       date: `FitFight | ${
         moment().format('MMMM').charAt(0).toUpperCase() + moment().format('MMMM').slice(1)
       } ${moment().format('DD')}`,
