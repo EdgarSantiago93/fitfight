@@ -128,11 +128,10 @@ class RoutesController {
         if (!request.params().id) {
             return response.redirect('/');
         }
-        const entry = await Entry_1.default.find(request.params().id);
-        const user = await entry?.related('user').query().first();
+        const entry = await Entry_1.default.query().where('id', request.params().id).preload('user').first();
         moment_1.default.locale('es');
         const html = await View_1.default.render('share', {
-            entryUser: user,
+            entryUser: entry?.$preloaded.user,
             date: `FitFight | ${(0, moment_1.default)().format('MMMM').charAt(0).toUpperCase() + (0, moment_1.default)().format('MMMM').slice(1)} ${(0, moment_1.default)().format('DD')}`,
         });
         return html;
