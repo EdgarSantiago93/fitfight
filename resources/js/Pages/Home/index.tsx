@@ -1,19 +1,14 @@
 import React from 'react'
-import {
-  Avatar,
-  Group,
-  Image,
-  ThemeIcon,
-  Loader,
-  Menu,
-  LoadingOverlay,
-  Container,
-} from '@mantine/core'
-import { ChevronRight, Logout } from 'tabler-icons-react'
+import { ThemeIcon, Loader, LoadingOverlay, Container } from '@mantine/core'
+import { ChevronRight } from 'tabler-icons-react'
 import { useStyles } from './styles'
 import moment from 'moment'
 
 import EntryNotSubmitted from '../../Components/EntryNotSubmitted'
+import NoEntry from '../../Components/NoEntry'
+import EntryRated from '../../Components/EntryRated'
+import DayToCome from '../../Components/DayToCome'
+import PageHeader from '../../Components/PageHeader'
 
 interface Props {}
 const Home = (props: Props): React.ReactElement => {
@@ -23,18 +18,6 @@ const Home = (props: Props): React.ReactElement => {
   const { classes, cx } = useStyles()
   moment.locale('es')
   const daysEs = ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab']
-
-  const getGreeting = (): string => {
-    const currentHour = moment().hour()
-    if (currentHour >= 6 && currentHour < 12) {
-      return 'Buenos días'
-    } else if (currentHour >= 12 && currentHour < 18) {
-      return 'Buenas tardes'
-    } else if (currentHour >= 18 || currentHour < 6) {
-      return 'Buenas noches'
-    }
-    return 'Hola'
-  }
 
   const getCurrentWeek: any = () => {
     var currentDate = moment()
@@ -86,23 +69,28 @@ const Home = (props: Props): React.ReactElement => {
   const generateComponent = () => {
     const selection = currentWeek[selectedDayIndex]
     console.log('selection', selection)
+
     if (!selection.entry && moment().format('DD') == selection.date) {
       return <EntryNotSubmitted overlayLoad={setIsLoadingOverlay} />
     }
+
     if (selection.entry?.is_rest_day) {
       return <div>Es un dia de descanso</div>
     }
     if (selection.entry?.is_validated && selection.entry?.status == 'validated') {
-      return <div>Ya fue validado</div>
+      return <EntryRated entry={selection.entry} />
     }
     if (!selection.entry?.is_validated && selection.entry?.status == 'pending') {
-      return <div>Esperando validacion</div>
+      return <EntryRated entry={selection.entry} />
     }
     if (selection.entry?.status == 'forced_rest') {
       return <div>Se acabo la semna</div>
     }
     if (moment().format('DD') < selection.date) {
-      return <div>El dia aun no llega</div>
+      return <DayToCome />
+    }
+    if (!selection.entry) {
+      return <NoEntry />
     }
   }
   const setDayAndIndex = (day: any, index: number) => {
@@ -110,55 +98,39 @@ const Home = (props: Props): React.ReactElement => {
     setSelectedDayIndex(index)
   }
 
+  //@ts-ignore
+  const [shouldVote, setShouldVote] = React.useState(false)
+
   return (
     <>
       <div className={classes.wrapper}>
         <LoadingOverlay visible={isLoadingOverlay} overlayBlur={2} />
-        <Group>
-          <Image src="/img/logo_h.png" width={95} />
-        </Group>
 
-        <div className={classes.greeting}>
-          <div>
-            <div className={classes.greeting_text}>{getGreeting()},</div>
-            <div className={classes.greeting_text_name}>{user.name}</div>
-          </div>
+        <PageHeader user={user} showCal={true} showLb={true} />
+        {/*  */}
 
-          <div className={classes.avatarContainer}>
-            <Menu shadow="md" width={200}>
-              <Menu.Target>
-                <Avatar src={user.avatar} size={40} radius={100} />
-              </Menu.Target>
+        {/*  */}
 
-              <Menu.Dropdown>
-                <Menu.Item
-                  icon={<Logout size={14} />}
-                  onClick={() => (window.location.href = 'logout')}
-                >
-                  Cerrar sesión
-                </Menu.Item>
-              </Menu.Dropdown>
-            </Menu>
-          </div>
-        </div>
+        {!shouldVote && (
+          <Container
+            className={classes.missingVotesContainer}
+            sx={(theme) => ({
+              backgroundImage: theme.fn.gradient({ from: '#F04336', to: '#FBAB3E', deg: 45 }),
+            })}
+            onClick={() => (window.location.href = '/vote')}
+          >
+            <div>
+              <div className={classes.missingVotesContainer_top}>12 entradas por votar</div>
+              <div className={classes.missingVotesContainer_bottom}>Mostrar detalles</div>
+            </div>
 
-        <Container
-          className={classes.missingVotesContainer}
-          sx={(theme) => ({
-            backgroundImage: theme.fn.gradient({ from: '#F04336', to: '#FBAB3E', deg: 45 }),
-          })}
-        >
-          <div>
-            <div className={classes.missingVotesContainer_top}>12 entradas por votar</div>
-            <div className={classes.missingVotesContainer_bottom}>Mostrar detalles</div>
-          </div>
-
-          <div className={classes.missingVotesContainer_icon}>
-            <ThemeIcon variant="light" radius="xl" size="xl">
-              <ChevronRight />
-            </ThemeIcon>
-          </div>
-        </Container>
+            <div className={classes.missingVotesContainer_icon}>
+              <ThemeIcon variant="light" radius="xl" size="lg">
+                <ChevronRight />
+              </ThemeIcon>
+            </div>
+          </Container>
+        )}
 
         <div>
           <div className={classes.todayDateContainer}>

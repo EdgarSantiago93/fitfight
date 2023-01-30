@@ -23,12 +23,11 @@ export default class GetPresignedURL {
   }
 
   public async controllerAction({ fileKey, fileType, live = false }) {
-    console.log('first')
     AWS.config.update({
       accessKeyId: Env.get('AWS_ACCESS_KEY_ID'),
       secretAccessKey: Env.get('AWS_SECRET_ACCESS_KEY'),
     })
-    console.log('second')
+
     const S3_BUCKET = live ? 'fitfight' : 'fitfight-temp'
     const REGION = 'us-west-1'
     const URL_EXPIRATION_TIME = 3600 // in seconds
@@ -37,7 +36,6 @@ export default class GetPresignedURL {
       params: { Bucket: S3_BUCKET },
       region: REGION,
     })
-    console.log('third')
     const res = new Promise((resolve, _reject) => {
       myBucket.getSignedUrl(
         'getObject',
@@ -48,14 +46,8 @@ export default class GetPresignedURL {
         },
         async (_err, url) => {
           if (_err) {
-            console.log('error')
-            console.log('error')
-            console.log('error')
-            console.log('error')
-            console.log('error', _err)
             resolve('error')
           }
-          console.log('SIGNED URL  ', url)
           resolve(url)
         }
       )

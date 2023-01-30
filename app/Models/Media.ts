@@ -1,6 +1,8 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column, beforeCreate } from '@ioc:Adonis/Lucid/Orm'
 import { v4 as uuidv4 } from 'uuid'
+import GetPresignedURL from 'App/Controllers/Http/GetPresignedURL'
+
 export default class Media extends BaseModel {
   @column({ isPrimary: true })
   public id: number
@@ -32,5 +34,16 @@ export default class Media extends BaseModel {
   @beforeCreate()
   public static assignUuid(media: Media) {
     media.id = uuidv4()
+  }
+
+  public async presignedUrl() {
+    // @ts-ignore
+    const getPresignedURLController = new GetPresignedURL()
+    const url = await getPresignedURLController.controllerAction({
+      fileKey: this.name,
+      live: true,
+      fileType: this.type,
+    })
+    return url
   }
 }

@@ -73,10 +73,6 @@ const ImageUploader = ({ form, formValue, loading }) => {
   }
 
   const deleteFile = () => {
-    console.log('delete')
-    console.log('delete')
-    console.log('delete')
-    console.log('delete')
     setPreviewUrl('')
     setFileReady(false)
     form.setFieldValue(formValue, '')

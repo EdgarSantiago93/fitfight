@@ -61,7 +61,6 @@ export default class SaveEntry {
     }
 
     if (request.input('is_rest_day') == true) {
-      console.log('REST DAAAY')
       const restDay = await dbUser
         ?.related('entries')
         .query()
@@ -93,9 +92,7 @@ export default class SaveEntry {
       if (request.input('tracker_img')) {
         mediaFiles.push(request.input('tracker_img'))
       }
-
-      for await (const media of mediaFiles) {
-        console.log(media)
+      const handleMovingMedia = async (media) => {
         const dbMedia = await Media.find(media)
         if (dbMedia) {
           dbMedia.status = 'live'
@@ -108,12 +105,16 @@ export default class SaveEntry {
             },
             (err, data) => {
               console.log('err', err)
-              console.log('data moving ', data)
+              console.log('⭐data  moving ', data)
             }
           )
         }
-        break
       }
+
+      mediaFiles.map(async (media) => {
+        return await handleMovingMedia(media)
+      })
+      await Promise.all(mediaFiles)
     }
     // @ts-ignore
     const thisWeekEntries = await dbUser

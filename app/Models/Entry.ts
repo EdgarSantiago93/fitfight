@@ -1,6 +1,19 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, beforeCreate } from '@ioc:Adonis/Lucid/Orm'
+import {
+  BaseModel,
+  column,
+  beforeCreate,
+  HasOne,
+  hasOne,
+  hasMany,
+  HasMany,
+  belongsTo,
+  BelongsTo,
+} from '@ioc:Adonis/Lucid/Orm'
 import { v4 as uuidv4 } from 'uuid'
+import Media from './Media'
+import Vote from './Vote'
+import User from './User'
 
 export default class Entry extends BaseModel {
   @column({ isPrimary: true })
@@ -17,17 +30,18 @@ export default class Entry extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
 
-  @column({ serializeAs: null })
-  public user_id: string
+  // @column({ serializeAs: null })
 
-  @column()
+  @column({
+    serializeAs: null,
+  })
   public pose_file: string
 
   @column()
-  public tracker_file: string
+  public calories: string
 
   @column()
-  public calories: string
+  public type: string
 
   @column()
   public minutes: string
@@ -45,4 +59,35 @@ export default class Entry extends BaseModel {
   public static assignUuid(entry: Entry) {
     entry.id = uuidv4()
   }
+
+  @column({
+    serializeAs: null,
+  })
+  public tracker_file: string
+
+  @hasOne(() => Media, {
+    foreignKey: 'id',
+    localKey: 'tracker_file',
+  })
+  public tracker_file_model: HasOne<typeof Media>
+
+  @hasOne(() => Media, {
+    foreignKey: 'id',
+    localKey: 'pose_file',
+  })
+  public pose_file_model: HasOne<typeof Media>
+
+  @hasMany(() => Vote, {
+    foreignKey: 'entry_id',
+  })
+  public votes: HasMany<typeof Vote>
+
+  @column({ serializeAs: null })
+  public user_id: string
+
+  @belongsTo(() => User, {
+    foreignKey: 'user_id',
+    localKey: 'id',
+  })
+  public user: BelongsTo<typeof User>
 }

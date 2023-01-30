@@ -46,7 +46,8 @@ export default class User extends BaseModel {
       user.password = await Hash.make(user.password)
     }
   }
-  @hasMany(() => Entry, { foreignKey: 'user_id' })
+
+  @hasMany(() => Entry, { foreignKey: 'user_id', localKey: 'id' })
   public entries: HasMany<typeof Entry>
 }
 

@@ -1,9 +1,18 @@
 {
-  "assets/app.css": "/assets/app.5c491193.css",
-  "assets/app.js": "/assets/app.3f62e603.js",
-  "assets/35.93593bb4.js": "/assets/35.93593bb4.js",
-  "assets/815.716cb20c.js": "/assets/815.716cb20c.js",
-  "assets/142.ba65ca23.js": "/assets/142.ba65ca23.js",
-  "assets/99.7fe8cbed.js": "/assets/99.7fe8cbed.js",
-  "assets/736.b6e59ce6.js": "/assets/736.b6e59ce6.js"
+  "assets/app.css": "http://localhost:8080/assets/app.css",
+  "assets/app.js": "http://localhost:8080/assets/app.js",
+  "assets/resources_js_Pages_Home_index_tsx.js": "http://localhost:8080/assets/resources_js_Pages_Home_index_tsx.js",
+  "assets/resources_js_Pages_Home_styles_js.js": "http://localhost:8080/assets/resources_js_Pages_Home_styles_js.js",
+  "assets/resources_js_Pages_Leaderboard_index_tsx.js": "http://localhost:8080/assets/resources_js_Pages_Leaderboard_index_tsx.js",
+  "assets/resources_js_Pages_Leaderboard_styles_js.js": "http://localhost:8080/assets/resources_js_Pages_Leaderboard_styles_js.js",
+  "assets/resources_js_Pages_Login_index_tsx.js": "http://localhost:8080/assets/resources_js_Pages_Login_index_tsx.js",
+  "assets/resources_js_Pages_NoParticipation_index_tsx.js": "http://localhost:8080/assets/resources_js_Pages_NoParticipation_index_tsx.js",
+  "assets/resources_js_Pages_NoParticipation_styles_js.js": "http://localhost:8080/assets/resources_js_Pages_NoParticipation_styles_js.js",
+  "assets/resources_js_Pages_Vote_index_tsx.js": "http://localhost:8080/assets/resources_js_Pages_Vote_index_tsx.js",
+  "assets/resources_js_Pages_Vote_styles_js.js": "http://localhost:8080/assets/resources_js_Pages_Vote_styles_js.js",
+  "assets/vendors-node_modules_mantine_core_esm_index_js-node_modules_tabler-icons-react_dist_index_js.js": "http://localhost:8080/assets/vendors-node_modules_mantine_core_esm_index_js-node_modules_tabler-icons-react_dist_index_js.js",
+  "assets/vendors-node_modules_moment_locale_af_js-node_modules_moment_locale_ar-dz_js-node_modules_mom-248d90.js": "http://localhost:8080/assets/vendors-node_modules_moment_locale_af_js-node_modules_moment_locale_ar-dz_js-node_modules_mom-248d90.js",
+  "assets/vendors-node_modules_mantine_form_esm_index_js-node_modules_mantine_notifications_esm_index_j-32735d.js": "http://localhost:8080/assets/vendors-node_modules_mantine_form_esm_index_js-node_modules_mantine_notifications_esm_index_j-32735d.js",
+  "assets/resources_js_Components_PageHeader_index_tsx-node_modules_moment_locale_sync_recursive_.js": "http://localhost:8080/assets/resources_js_Components_PageHeader_index_tsx-node_modules_moment_locale_sync_recursive_.js",
+  "assets/resources_js_api_index_tsx.js": "http://localhost:8080/assets/resources_js_api_index_tsx.js"
 }

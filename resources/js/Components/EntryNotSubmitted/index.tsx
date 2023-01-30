@@ -78,7 +78,6 @@ const EntryNotSubmitted = (props: Props) => {
   const processRestDay = () => {
     form.values.is_rest_day = true
     processEntry().then(() => {
-      console.log('done')
       form.values.is_rest_day = false
     })
   }
@@ -107,12 +106,22 @@ const EntryNotSubmitted = (props: Props) => {
       <Grid>
         <Grid.Col span={6}>
           <div className={classes.label}>Tracker</div>
-          <ImageUploader formValue="tracker_img" form={form} loading={setProcessLoading} />
+          <ImageUploader
+            formValue="tracker_img"
+            form={form}
+            loading={setProcessLoading}
+            key="tracker_img_key"
+          />
         </Grid.Col>
 
         <Grid.Col span={6}>
           <div className={classes.label}>Pose</div>
-          <ImageUploader formValue="pose_img" form={form} loading={setProcessLoading} />
+          <ImageUploader
+            formValue="pose_img"
+            form={form}
+            loading={setProcessLoading}
+            key="pose_img_key"
+          />
         </Grid.Col>
 
         <Grid.Col span={6}>
