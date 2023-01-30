@@ -66,7 +66,7 @@ class SaveEntry {
             });
         }
         else {
-            await Entry_1.default.create({
+            const entryInstance = await Entry_1.default.create({
                 pose_file: request.input('pose_img') ? request.input('pose_img') : null,
                 tracker_file: request.input('tracker_img') ? request.input('tracker_img') : null,
                 calories: request.input('calories'),
@@ -101,7 +101,7 @@ class SaveEntry {
             await Promise.all(mediaFiles);
             let botId = '5839076306:AAEGD1UhBEtx8nNjLC1ACMgAMlEYbrhLgnU';
             let groupId = '-895463386';
-            axios_1.default.get(`https://api.telegram.org/bot${botId}/sendMessage?chat_id=${groupId}&text=${user.name} ha subido una entrada`);
+            axios_1.default.get(`https://api.telegram.org/bot${botId}/sendMessage?chat_id=${groupId}&text=${user.name} ha subido una entrada https://bartolos.site/entry/${entryInstance.id}`);
         }
         const thisWeekEntries = await dbUser
             ?.related('entries')

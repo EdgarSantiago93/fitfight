@@ -78,7 +78,7 @@ export default class SaveEntry {
         user_id: user.id,
       })
     } else {
-      await Entry.create({
+      const entryInstance = await Entry.create({
         pose_file: request.input('pose_img') ? request.input('pose_img') : null,
         tracker_file: request.input('tracker_img') ? request.input('tracker_img') : null,
         calories: request.input('calories'),
@@ -121,7 +121,7 @@ export default class SaveEntry {
       let groupId = '-895463386'
 
       axios.get(
-        `https://api.telegram.org/bot${botId}/sendMessage?chat_id=${groupId}&text=${user.name} ha subido una entrada`
+        `https://api.telegram.org/bot${botId}/sendMessage?chat_id=${groupId}&text=${user.name} ha subido una entrada https://bartolos.site/entry/${entryInstance.id}`
       )
     }
     // @ts-ignore

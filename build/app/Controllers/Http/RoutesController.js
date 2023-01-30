@@ -129,6 +129,9 @@ class RoutesController {
             return response.redirect('/');
         }
         const entry = await Entry_1.default.query().where('id', request.params().id).preload('user').first();
+        if (!entry) {
+            return response.redirect('/');
+        }
         moment_1.default.locale('es');
         const html = await View_1.default.render('share', {
             entryUser: entry?.$preloaded.user,
