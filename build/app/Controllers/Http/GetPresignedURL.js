@@ -11,6 +11,7 @@ class GetPresignedURL {
         const fileKey = request.input('file_key');
         const live = request.input('is_live');
         const fileType = request.input('file_type');
+        console.log('API HANDLE');
         const res = await this.controllerAction({ fileKey: fileKey, live: live, fileType: fileType });
         if (res == 'error') {
             return response.badRequest('Error generando el URL');
@@ -38,11 +39,8 @@ class GetPresignedURL {
                 Expires: URL_EXPIRATION_TIME,
             }, async (_err, url) => {
                 if (_err) {
-
-                    console.log('error', _err);
                     resolve('error');
                 }
-                console.log('SIGNED URL  ', url);
                 resolve(url);
             });
         });

@@ -57,7 +57,7 @@ __decorate([
     __metadata("design:type", luxon_1.DateTime)
 ], User.prototype, "updatedAt", void 0);
 __decorate([
-    (0, Orm_1.hasMany)(() => Entry_1.default, { foreignKey: 'user_id' }),
+    (0, Orm_1.hasMany)(() => Entry_1.default, { foreignKey: 'user_id', localKey: 'id' }),
     __metadata("design:type", Object)
 ], User.prototype, "entries", void 0);
 __decorate([

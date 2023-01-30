@@ -49,7 +49,6 @@ class SaveEntry {
             return response.conflict('Ya tienes 5 días activos. Hoy puede ser tu día de descanso');
         }
         if (request.input('is_rest_day') == true) {
-            console.log('REST DAAAY');
             const restDay = await dbUser
                 ?.related('entries')
                 .query()
@@ -80,8 +79,7 @@ class SaveEntry {
             if (request.input('tracker_img')) {
                 mediaFiles.push(request.input('tracker_img'));
             }
-            for await (const media of mediaFiles) {
-                console.log(media);
+            const handleMovingMedia = async (media) => {
                 const dbMedia = await Media_1.default.find(media);
                 if (dbMedia) {
                     dbMedia.status = 'live';
@@ -92,11 +90,14 @@ class SaveEntry {
                         Key: dbMedia.name,
                     }, (err, data) => {
                         console.log('err', err);
-                        console.log('data moving ', data);
+                        console.log('⭐data  moving ', data);
                     });
                 }
-                break;
-            }
+            };
+            mediaFiles.map(async (media) => {
+                return await handleMovingMedia(media);
+            });
+            await Promise.all(mediaFiles);
         }
         const thisWeekEntries = await dbUser
             ?.related('entries')

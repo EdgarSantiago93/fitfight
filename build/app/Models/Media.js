@@ -8,13 +8,26 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const luxon_1 = require("luxon");
 const Orm_1 = global[Symbol.for('ioc.use')]("Adonis/Lucid/Orm");
 const uuid_1 = require("uuid");
+const GetPresignedURL_1 = __importDefault(global[Symbol.for('ioc.use')]("App/Controllers/Http/GetPresignedURL"));
 class Media extends Orm_1.BaseModel {
     static assignUuid(media) {
         media.id = (0, uuid_1.v4)();
+    }
+    async presignedUrl() {
+        const getPresignedURLController = new GetPresignedURL_1.default();
+        const url = await getPresignedURLController.controllerAction({
+            fileKey: this.name,
+            live: true,
+            fileType: this.type,
+        });
+        return url;
     }
 }
 __decorate([

@@ -9,6 +9,10 @@ const tabler_icons_react_1 = require("tabler-icons-react");
 const styles_1 = require("./styles");
 const moment_1 = __importDefault(require("moment"));
 const EntryNotSubmitted_1 = __importDefault(require("../../Components/EntryNotSubmitted"));
+const NoEntry_1 = __importDefault(require("../../Components/NoEntry"));
+const EntryRated_1 = __importDefault(require("../../Components/EntryRated"));
+const DayToCome_1 = __importDefault(require("../../Components/DayToCome"));
+const PageHeader_1 = __importDefault(require("../../Components/PageHeader"));
 const Home = (props) => {
     const {} = props;
     const user = props['user'];
@@ -16,19 +20,6 @@ const Home = (props) => {
     const { classes, cx } = (0, styles_1.useStyles)();
     moment_1.default.locale('es');
     const daysEs = ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'];
-    const getGreeting = () => {
-        const currentHour = (0, moment_1.default)().hour();
-        if (currentHour >= 6 && currentHour < 12) {
-            return 'Buenos días';
-        }
-        else if (currentHour >= 12 && currentHour < 18) {
-            return 'Buenas tardes';
-        }
-        else if (currentHour >= 18 || currentHour < 6) {
-            return 'Buenas noches';
-        }
-        return 'Hola';
-    };
     const getCurrentWeek = () => {
         var currentDate = (0, moment_1.default)();
         var weekStart = currentDate.clone().startOf('isoWeek');
@@ -69,48 +60,39 @@ const Home = (props) => {
             return react_1.default.createElement("div", null, "Es un dia de descanso");
         }
         if (selection.entry?.is_validated && selection.entry?.status == 'validated') {
-            return react_1.default.createElement("div", null, "Ya fue validado");
+            return react_1.default.createElement(EntryRated_1.default, { entry: selection.entry });
         }
         if (!selection.entry?.is_validated && selection.entry?.status == 'pending') {
-            return react_1.default.createElement("div", null, "Esperando validacion");
+            return react_1.default.createElement(EntryRated_1.default, { entry: selection.entry });
         }
         if (selection.entry?.status == 'forced_rest') {
             return react_1.default.createElement("div", null, "Se acabo la semna");
         }
         if ((0, moment_1.default)().format('DD') < selection.date) {
-            return react_1.default.createElement("div", null, "El dia aun no llega");
+            return react_1.default.createElement(DayToCome_1.default, null);
+        }
+        if (!selection.entry) {
+            return react_1.default.createElement(NoEntry_1.default, null);
         }
     };
     const setDayAndIndex = (day, index) => {
         setSelectedDay(day);
         setSelectedDayIndex(index);
     };
+    const [shouldVote, setShouldVote] = react_1.default.useState(false);
     return (react_1.default.createElement(react_1.default.Fragment, null,
         react_1.default.createElement("div", { className: classes.wrapper },
             react_1.default.createElement(core_1.LoadingOverlay, { visible: isLoadingOverlay, overlayBlur: 2 }),
-            react_1.default.createElement(core_1.Group, null,
-                react_1.default.createElement(core_1.Image, { src: "/img/logo_h.png", width: 95 })),
-            react_1.default.createElement("div", { className: classes.greeting },
-                react_1.default.createElement("div", null,
-                    react_1.default.createElement("div", { className: classes.greeting_text },
-                        getGreeting(),
-                        ","),
-                    react_1.default.createElement("div", { className: classes.greeting_text_name }, user.name)),
-                react_1.default.createElement("div", { className: classes.avatarContainer },
-                    react_1.default.createElement(core_1.Menu, { shadow: "md", width: 200 },
-                        react_1.default.createElement(core_1.Menu.Target, null,
-                            react_1.default.createElement(core_1.Avatar, { src: user.avatar, size: 40, radius: 100 })),
-                        react_1.default.createElement(core_1.Menu.Dropdown, null,
-                            react_1.default.createElement(core_1.Menu.Item, { icon: react_1.default.createElement(tabler_icons_react_1.Logout, { size: 14 }), onClick: () => (window.location.href = 'logout') }, "Cerrar sesi\u00F3n"))))),
-            react_1.default.createElement(core_1.Container, { className: classes.missingVotesContainer, sx: (theme) => ({
+            react_1.default.createElement(PageHeader_1.default, { user: user, showCal: true, showLb: true }),
+            !shouldVote && (react_1.default.createElement(core_1.Container, { className: classes.missingVotesContainer, sx: (theme) => ({
                     backgroundImage: theme.fn.gradient({ from: '#F04336', to: '#FBAB3E', deg: 45 }),
-                }) },
+                }), onClick: () => (window.location.href = '/vote') },
                 react_1.default.createElement("div", null,
                     react_1.default.createElement("div", { className: classes.missingVotesContainer_top }, "12 entradas por votar"),
                     react_1.default.createElement("div", { className: classes.missingVotesContainer_bottom }, "Mostrar detalles")),
                 react_1.default.createElement("div", { className: classes.missingVotesContainer_icon },
-                    react_1.default.createElement(core_1.ThemeIcon, { variant: "light", radius: "xl", size: "xl" },
-                        react_1.default.createElement(tabler_icons_react_1.ChevronRight, null)))),
+                    react_1.default.createElement(core_1.ThemeIcon, { variant: "light", radius: "xl", size: "lg" },
+                        react_1.default.createElement(tabler_icons_react_1.ChevronRight, null))))),
             react_1.default.createElement("div", null,
                 react_1.default.createElement("div", { className: classes.todayDateContainer },
                     react_1.default.createElement("div", null, (0, moment_1.default)().format('DD [de] ')),

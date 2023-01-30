@@ -67,7 +67,6 @@ const EntryNotSubmitted = (props) => {
     const processRestDay = () => {
         form.values.is_rest_day = true;
         processEntry().then(() => {
-            console.log('done');
             form.values.is_rest_day = false;
         });
     };
@@ -93,10 +92,10 @@ const EntryNotSubmitted = (props) => {
         react_1.default.createElement(core_1.Grid, null,
             react_1.default.createElement(core_1.Grid.Col, { span: 6 },
                 react_1.default.createElement("div", { className: classes.label }, "Tracker"),
-                react_1.default.createElement(ImageUploader_1.default, { formValue: "tracker_img", form: form, loading: setProcessLoading })),
+                react_1.default.createElement(ImageUploader_1.default, { formValue: "tracker_img", form: form, loading: setProcessLoading, key: "tracker_img_key" })),
             react_1.default.createElement(core_1.Grid.Col, { span: 6 },
                 react_1.default.createElement("div", { className: classes.label }, "Pose"),
-                react_1.default.createElement(ImageUploader_1.default, { formValue: "pose_img", form: form, loading: setProcessLoading })),
+                react_1.default.createElement(ImageUploader_1.default, { formValue: "pose_img", form: form, loading: setProcessLoading, key: "pose_img_key" })),
             react_1.default.createElement(core_1.Grid.Col, { span: 6 },
                 react_1.default.createElement(core_1.TextInput, { label: "Calorias", radius: "md", size: "md", ...form.getInputProps('calories') })),
             react_1.default.createElement(core_1.Grid.Col, { span: 6 },
