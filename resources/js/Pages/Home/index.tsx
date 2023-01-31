@@ -1,6 +1,6 @@
 import React from 'react'
-import { ThemeIcon, Loader, LoadingOverlay, Container } from '@mantine/core'
-import { ChevronRight } from 'tabler-icons-react'
+import { ThemeIcon, Loader, LoadingOverlay, Container, ActionIcon } from '@mantine/core'
+import { ChevronRight, Photo } from 'tabler-icons-react'
 import { useStyles } from './styles'
 import moment from 'moment'
 
@@ -9,12 +9,17 @@ import NoEntry from '../../Components/NoEntry'
 import EntryRated from '../../Components/EntryRated'
 import DayToCome from '../../Components/DayToCome'
 import PageHeader from '../../Components/PageHeader'
+import RestDay from '../../Components/RestDay'
+import ForcedRest from '../../Components/ForcedRest'
+import { openModal } from '@mantine/modals'
 
 interface Props {}
 const Home = (props: Props): React.ReactElement => {
   const {} = props
   const user = props['user']
   const entries = props['entries']
+  const earliestEntry = props['earliestEntry']
+  const entriesToVoteOn = props['entriesToVoteOn']
   const { classes, cx } = useStyles()
   moment.locale('es')
   const daysEs = ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab']
@@ -24,31 +29,29 @@ const Home = (props: Props): React.ReactElement => {
     var weekStart = currentDate.clone().startOf('isoWeek')
     var days: any = []
     for (var i = 0; i <= 6; i++) {
-      let c = moment(weekStart).add(i, 'days')
-
-      let userEntry = entries.find((e) => e.created_at.day == c.format('DD'))
-      let v = {
-        day: daysEs[c.format('d')],
-        date: c.format('DD'),
-        month: c.format('MMMM'),
-        monthNumber: c.format('MM'),
+      const momentDate = moment(weekStart).add(i, 'days')
+      const userEntry = entries.find((e) => e.created_at.day == momentDate.format('DD'))
+      const dateObj = {
+        day: daysEs[momentDate.format('d')],
+        date: momentDate.format('DD'),
+        month: momentDate.format('MMMM'),
+        monthNumber: momentDate.format('MM'),
         entry: userEntry,
       }
-      days.push(v)
+      days.push(dateObj)
     }
     return days
   }
-  // @ts-ignore
-  const [currentWeek, setCurrentWeek] = React.useState(() => getCurrentWeek())
-  // @ts-ignore
+
+  const [currentWeek, _setCurrentWeek] = React.useState(() => getCurrentWeek())
   const [selectedDay, setSelectedDay] = React.useState(moment().format('DD'))
-  // @ts-ignore
   const [selectedDayIndex, setSelectedDayIndex] = React.useState(moment().isoWeekday() - 1)
-  // @ts-ignore
-  const [isLoading, setisLoading] = React.useState()
+  const [isLoading, _setisLoading] = React.useState()
   const [isLoadingOverlay, setIsLoadingOverlay] = React.useState(false)
 
-  React.useEffect(() => {}, [])
+  React.useEffect(() => {
+    console.log(earliestEntry.length)
+  }, [])
   const getDayContainerClasses = (day: any) => {
     return cx(
       classes.dateContainer,
@@ -76,7 +79,7 @@ const Home = (props: Props): React.ReactElement => {
     }
 
     if (selection.entry?.is_rest_day) {
-      return <div>Es un dia de descanso</div>
+      return <RestDay />
     }
     if (selection.entry?.is_validated && selection.entry?.status == 'validated') {
       return <EntryRated entry={selection.entry} />
@@ -84,8 +87,11 @@ const Home = (props: Props): React.ReactElement => {
     if (!selection.entry?.is_validated && selection.entry?.status == 'pending') {
       return <EntryRated entry={selection.entry} />
     }
+    if (!selection.entry?.is_validated && selection.entry?.status == 'rejected') {
+      return <EntryRated entry={selection.entry} />
+    }
     if (selection.entry?.status == 'forced_rest') {
-      return <div>Se acabo la semna</div>
+      return <ForcedRest />
     }
     if (moment().format('DD') < selection.date) {
       return <DayToCome />
@@ -104,20 +110,40 @@ const Home = (props: Props): React.ReactElement => {
     setSelectedDayIndex(index)
   }
 
-  //@ts-ignore
-  const [shouldVote, setShouldVote] = React.useState(false)
-
+  const [shouldVote, _setShouldVote] = React.useState(entriesToVoteOn.length > 0 ? true : false)
+  const showTodaysModal = () => {
+    openModal({
+      centered: true,
+      title: 'Primera entrada',
+      children: (
+        <>
+          <div>
+            Esta es la pose del día: <br />
+            {earliestEntry.id ? (
+              <img
+                src={earliestEntry.pose_file_signed_url}
+                alt=""
+                style={{ width: '100%', maxWidth: '350px', borderRadius: '10px' }}
+              />
+            ) : (
+              <div>
+                <br />
+                Todavía no hay una entrada para hoy, sube la primera
+              </div>
+            )}
+          </div>
+        </>
+      ),
+    })
+  }
   return (
     <>
       <div className={classes.wrapper}>
         <LoadingOverlay visible={isLoadingOverlay} overlayBlur={2} />
 
         <PageHeader user={user} showCal={true} showLb={true} />
-        {/*  */}
 
-        {/*  */}
-
-        {!shouldVote && (
+        {shouldVote && (
           <Container
             className={classes.missingVotesContainer}
             sx={(theme) => ({
@@ -126,7 +152,9 @@ const Home = (props: Props): React.ReactElement => {
             onClick={() => (window.location.href = '/vote')}
           >
             <div>
-              <div className={classes.missingVotesContainer_top}>12 entradas por votar</div>
+              <div className={classes.missingVotesContainer_top}>
+                {entriesToVoteOn.length} entradas por votar
+              </div>
               <div className={classes.missingVotesContainer_bottom}>Mostrar detalles</div>
             </div>
 
@@ -139,13 +167,28 @@ const Home = (props: Props): React.ReactElement => {
         )}
 
         <div>
-          <div className={classes.todayDateContainer}>
-            <div>{moment().format('DD [de] ')}</div>
-            <div style={{ textTransform: 'capitalize', marginLeft: '3px' }}>
-              {moment().format('MMMM')}
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <div>
+              <div className={classes.todayDateContainer}>
+                <div>{moment().format('DD [de] ')}</div>
+                <div style={{ textTransform: 'capitalize', marginLeft: '3px' }}>
+                  {moment().format('MMMM')}
+                </div>
+              </div>
+              <div className={classes.todayLabel}>Hoy</div>
             </div>
+
+            <ActionIcon
+              color="#F04336"
+              size="lg"
+              radius="xl"
+              variant="light"
+              onClick={showTodaysModal}
+              style={{ marginLeft: '13px', marginTop: '5px' }}
+            >
+              <Photo size={26} />
+            </ActionIcon>
           </div>
-          <div className={classes.todayLabel}>Hoy</div>
 
           <div
             style={{
@@ -160,6 +203,7 @@ const Home = (props: Props): React.ReactElement => {
             rest day  -> 😴
             validated -> ✅
             pending   -> 🕒
+            rejected  -> 👎
             */}
             {currentWeek.map((day, index) => {
               return (
@@ -188,6 +232,12 @@ const Home = (props: Props): React.ReactElement => {
                     day.entry?.status == 'pending' &&
                     !day.entry?.is_rest_day
                       ? '🕒'
+                      : null}
+
+                    {!day.entry?.is_validated &&
+                    day.entry?.status == 'rejected' &&
+                    !day.entry?.is_rest_day
+                      ? '👎'
                       : null}
                   </div>
                 </div>

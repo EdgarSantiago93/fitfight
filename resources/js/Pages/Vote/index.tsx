@@ -15,34 +15,37 @@ const Vote = (props: Props): React.ReactElement => {
   const { classes } = useStyles()
   moment.locale('es')
 
-  // // const [isLoading, setisLoading] = React.useState()
+  React.useEffect(() => {}, [])
 
-  // const participatingUsers = userswithEntries.filter((u) => u.hasEntries)
-  // const nonParticipatingUsers = userswithEntries.filter((u) => !u.hasEntries)
-
-  // //order by entries
-  // const sortedUsers = participatingUsers.sort((a, b) => {
-  //   return b.entries.length - a.entries.length
-  // })
-
-  React.useEffect(() => {
-    console.log(entriesToVoteOn)
-  }, [])
-
-  // const [pendingVote, setPendingVote] = React.useState(entriesToVoteOn)
-
+  const [isOwn, _setIsOwn] = React.useState(
+    entriesToVoteOn.length == 0 && earliestEntry.user.id == user.id
+  )
+  const [isFirst, _setIsFirst] = React.useState(entriesToVoteOn[0]?.id == earliestEntry.id)
   return (
     <>
       <div className={classes.wrapper}>
         <PageHeader user={user} showHome={true} showCal={true} showLb={true} />
-
         <div>
           <div style={{ width: '100%', textAlign: 'center' }}>
-            <Text>Voting</Text>
+            <Text size={'xl'} weight={500}>
+              Voting
+            </Text>
           </div>
 
+          {isOwn && (
+            <>
+              <div>
+                Solo hay una entrada y es tuya, está abierta para votos de los otro bartolos.
+              </div>
+            </>
+          )}
           <div>
-            <VotingComponent earliestEntry={earliestEntry} entry={entriesToVoteOn[0]} />
+            <VotingComponent
+              earliestEntry={earliestEntry}
+              entry={entriesToVoteOn[0]}
+              isOwn={isOwn}
+              isFirst={isFirst}
+            />
           </div>
         </div>
       </div>

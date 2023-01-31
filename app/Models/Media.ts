@@ -37,7 +37,6 @@ export default class Media extends BaseModel {
   }
 
   public async presignedUrl() {
-    // @ts-ignore
     const getPresignedURLController = new GetPresignedURL()
     const url = await getPresignedURLController.controllerAction({
       fileKey: this.name,

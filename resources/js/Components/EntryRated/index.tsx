@@ -111,7 +111,7 @@ const VotingComponent = (props: Props) => {
         </Grid.Col>
 
         <Grid.Col span={6}>
-          <div style={{ width: '100%', textAlign: 'center' }}>
+          <div style={{ width: '100%', textAlign: 'left' }}>
             <Text weight={600} size="lg">
               Votos
             </Text>
@@ -147,9 +147,7 @@ const VotingComponent = (props: Props) => {
           </Text>
 
           <Text weight={600} size="xl">
-            {props.entry.status == 'pending' && !props.entry.is_validated
-              ? 'Pendiente de validación 🕒'
-              : ''}
+            {props.entry.status == 'pending' && !props.entry.is_validated ? 'Validando 🕒' : ''}
             {props.entry.status == 'validated' && props.entry.is_validated ? 'Válida 👍🏼' : ''}
             {props.entry.status == 'rejected' && !props.entry.is_validated ? 'No válida 👎🏼' : ''}
           </Text>

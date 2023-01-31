@@ -4,6 +4,20 @@ export const useStyles = createStyles((theme, _params, getRef) => {
     const fitRed = theme.colors['fit-red'][4];
     return (
         {
+            innerContainer: {
+                background: 'white',
+                borderRadius: "10px",
+            },
+            moduleBorderWrap: {
+                width: "100%",
+                padding: "11px 3px",
+                position: "relative",
+                backgroundImage: theme.fn.gradient({ from: '#F04336', to: '#FBAB3E', deg: 45 }),
+
+                borderRadius: "10px",
+                marginBottom: "10px"
+            },
+
             notSubmitted: {
                 marginTop: '15px'
             },

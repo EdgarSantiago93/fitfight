@@ -67,7 +67,7 @@ const VotingComponent = (props) => {
                     react_1.default.createElement("div", { className: classes.label }, "Minutos Ejercicio"),
                     react_1.default.createElement(core_1.Text, { weight: 600, style: { marginTop: '0px' } }, props.entry?.minutes == '' ? '-' : props.entry?.minutes))),
             react_1.default.createElement(core_1.Grid.Col, { span: 6 },
-                react_1.default.createElement("div", { style: { width: '100%', textAlign: 'center' } },
+                react_1.default.createElement("div", { style: { width: '100%', textAlign: 'left' } },
                     react_1.default.createElement(core_1.Text, { weight: 600, size: "lg" }, "Votos")),
                 react_1.default.createElement(core_1.Text, { weight: 600, size: "md" }, "A favor \u2705"),
                 react_1.default.createElement(core_1.Avatar.Group, { spacing: "sm", onClick: () => openVoteModal('for') },
@@ -93,9 +93,7 @@ const VotingComponent = (props) => {
             react_1.default.createElement(core_1.Grid.Col, { span: 6 },
                 react_1.default.createElement(core_1.Text, { weight: 600, size: "md" }, "Status"),
                 react_1.default.createElement(core_1.Text, { weight: 600, size: "xl" },
-                    props.entry.status == 'pending' && !props.entry.is_validated
-                        ? 'Pendiente de validación 🕒'
-                        : '',
+                    props.entry.status == 'pending' && !props.entry.is_validated ? 'Validando 🕒' : '',
                     props.entry.status == 'validated' && props.entry.is_validated ? 'Válida 👍🏼' : '',
                     props.entry.status == 'rejected' && !props.entry.is_validated ? 'No válida 👎🏼' : '')))));
 };

@@ -32,11 +32,6 @@ export default class Entry extends BaseModel {
 
   // @column({ serializeAs: null })
 
-  @column({
-    serializeAs: null,
-  })
-  public pose_file: string
-
   @column()
   public calories: string
 
@@ -64,6 +59,11 @@ export default class Entry extends BaseModel {
     serializeAs: null,
   })
   public tracker_file: string
+
+  @column({
+    serializeAs: null,
+  })
+  public pose_file: string
 
   @hasOne(() => Media, {
     foreignKey: 'id',

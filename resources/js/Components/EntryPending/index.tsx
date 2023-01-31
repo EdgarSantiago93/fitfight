@@ -12,7 +12,6 @@ const EntryPending = (props: Props) => {
   const {} = props
   const { classes } = useStyles()
 
-  //@ts-ignore
   const openVoteModal = (type) => {
     openModal({
       centered: true,

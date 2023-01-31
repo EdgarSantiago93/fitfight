@@ -1,4 +1,5 @@
 import { BaseCommand } from '@adonisjs/core/build/standalone'
+import moment from 'moment'
 
 export default class Awardpoints extends BaseCommand {
   /**
@@ -29,10 +30,52 @@ export default class Awardpoints extends BaseCommand {
 
   public async run() {
     this.logger.info('Hello world!')
-    // const { default: User } = await import('App/Models/User')
+    const { default: Entry } = await import('App/Models/Entry')
 
-    // get dias (entries) que el usuario participo en este mes  -> lunes 2 check, miercoles 3 check , jueves 4 descanso -> check
-    // buscar sesiones de otros usuarios que coincidan con los dias que el usuario participo
-    // buscar si la sesion de los otros usuarios tiene un voto del usuario
+    // const yesterday = moment().subtract(1, 'days')
+    const yesterday = moment()
+
+    const entriesForTheDay = await Entry.query()
+      .whereNot('status', 'validated')
+      .where('is_rest_day', false)
+      .where('created_at', '>=', yesterday.startOf('day').format())
+      .where('created_at', '<=', yesterday.endOf('day').format())
+
+    this.logger.info('Awarding points to users for: ' + yesterday.format('YYYY-MM-DD'))
+    console.log(entriesForTheDay.length)
+
+    for (const entry of entriesForTheDay) {
+      const votes = await entry.related('votes').query()
+      const votesFor = votes.filter((vote) => vote.type === 'for')
+      const votesAgainst = votes.filter((vote) => vote.type === 'against')
+      this.logger.info('Entry: ' + entry.id + ' has ' + votesFor.length + ' votes for')
+      this.logger.info('Entry: ' + entry.id + ' has ' + votesAgainst.length + ' votes against')
+
+      if (
+        votesFor.length > votesAgainst.length ||
+        (votesFor.length == 0 && votesAgainst.length == 0)
+      ) {
+        this.logger.success('Entry: ' + entry.id + ' was validated')
+        entry.status = 'validated'
+        entry.is_validated = true
+        await entry.save()
+      }
+      if (votesFor.length === votesAgainst.length) {
+        this.logger.action('Entry: ' + entry.id + ' was a tie')
+        //TODO: add logic for tie
+
+        entry.status = 'validated'
+        entry.is_validated = true
+        await entry.save()
+      }
+      if (votesFor.length < votesAgainst.length) {
+        this.logger.error('Entry: ' + entry.id + ' was rejected')
+        entry.status = 'rejected'
+        entry.is_validated = false
+        await entry.save()
+      }
+
+      this.logger.info('')
+    }
   }
 }

@@ -1,13 +1,11 @@
 import React from 'react'
 import { Avatar, Group, Image, Menu, ActionIcon } from '@mantine/core'
 import { useStyles } from './styles'
-import { Calendar, Logout, Medal, Home2 } from 'tabler-icons-react'
+import { Logout, Medal, Home2 } from 'tabler-icons-react'
 
-// interface Props {}
 import moment from 'moment'
 
 const PageHeader = ({ user, showHome = false, showLb = false, showCal = false }) => {
-  // const {} = props
   const { classes } = useStyles()
   moment.locale('es')
 
@@ -38,10 +36,10 @@ const PageHeader = ({ user, showHome = false, showLb = false, showCal = false })
         <div className={classes.avatarContainer}>
           {showHome && (
             <ActionIcon
-              color="red"
+              color="#F04336"
               size="xl"
               radius="xl"
-              variant="filled"
+              variant="light"
               onClick={() => (window.location.href = '/')}
               style={{ marginRight: 5 }}
             >
@@ -51,10 +49,10 @@ const PageHeader = ({ user, showHome = false, showLb = false, showCal = false })
 
           {showLb && (
             <ActionIcon
-              color="red"
+              color="#F04336"
               size="xl"
               radius="xl"
-              variant="filled"
+              variant="light"
               onClick={() => (window.location.href = '/lb')}
               style={{ marginRight: 5 }}
             >
@@ -62,18 +60,21 @@ const PageHeader = ({ user, showHome = false, showLb = false, showCal = false })
             </ActionIcon>
           )}
 
-          {showCal && (
+          {showCal && <></>}
+
+          {/* WIP */}
+          {/* {showCal && (
             <ActionIcon
-              color="red"
+              color="#F04336"
               size="xl"
               radius="xl"
-              variant="filled"
+              variant="light"
               onClick={() => (window.location.href = '/cal')}
               style={{ marginRight: 5 }}
             >
               <Calendar size={34} />
             </ActionIcon>
-          )}
+          )} */}
 
           <Menu shadow="md" width={200}>
             <Menu.Target>

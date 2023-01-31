@@ -41,12 +41,6 @@ __decorate([
     __metadata("design:type", luxon_1.DateTime)
 ], Entry.prototype, "updatedAt", void 0);
 __decorate([
-    (0, Orm_1.column)({
-        serializeAs: null,
-    }),
-    __metadata("design:type", String)
-], Entry.prototype, "pose_file", void 0);
-__decorate([
     (0, Orm_1.column)(),
     __metadata("design:type", String)
 ], Entry.prototype, "calories", void 0);
@@ -76,6 +70,12 @@ __decorate([
     }),
     __metadata("design:type", String)
 ], Entry.prototype, "tracker_file", void 0);
+__decorate([
+    (0, Orm_1.column)({
+        serializeAs: null,
+    }),
+    __metadata("design:type", String)
+], Entry.prototype, "pose_file", void 0);
 __decorate([
     (0, Orm_1.hasOne)(() => Media_1.default, {
         foreignKey: 'id',
