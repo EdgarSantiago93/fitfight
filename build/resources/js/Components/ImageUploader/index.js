@@ -46,7 +46,7 @@ const ImageUploader = ({ form, formValue, loading }) => {
         }
     };
     const generateUrl = (url) => {
-        if (url.toLowerCase().includes('.heic') || url.toLowerCase().includes('.heif')) {
+        if (url?.toLowerCase().includes('.heic') || url?.toLowerCase().includes('.heif')) {
             return 'https://cpmvzflwta.cloudimg.io/' + url;
         }
         return url;

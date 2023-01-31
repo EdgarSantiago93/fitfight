@@ -50,7 +50,7 @@ const VotingComponent = (props) => {
     const [isLoading, setIsLoading] = react_1.default.useState(false);
     react_1.default.useEffect(() => { }, []);
     const checkHeic = (url) => {
-        if (url.toLowerCase().includes('.heic') || url.toLowerCase().includes('.heif')) {
+        if (url?.toLowerCase().includes('.heic') || url?.toLowerCase().includes('.heif')) {
             return true;
         }
         return false;

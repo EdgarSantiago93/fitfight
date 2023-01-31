@@ -80,7 +80,7 @@ const VotingComponent = (props: Props) => {
   React.useEffect(() => {}, [])
 
   const checkHeic = (url): boolean => {
-    if (url.toLowerCase().includes('.heic') || url.toLowerCase().includes('.heif')) {
+    if (url?.toLowerCase().includes('.heic') || url?.toLowerCase().includes('.heif')) {
       return true
     }
     return false
