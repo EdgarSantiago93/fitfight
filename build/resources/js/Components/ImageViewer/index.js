@@ -7,21 +7,24 @@ const react_1 = __importDefault(require("react"));
 const core_1 = require("@mantine/core");
 const modals_1 = require("@mantine/modals");
 const styles_1 = require("./styles");
-const ImageViewer = ({ image, isSmall = false }) => {
+const ImageViewer = ({ image, isSmall = false, isHeic = false }) => {
     const { classes, cx } = (0, styles_1.useStyles)();
-    react_1.default.useEffect(() => { }, []);
+    react_1.default.useEffect(() => {
+        console.log('image is heic', isHeic);
+    }, []);
+    const [imageUrl, _setImageUrl] = react_1.default.useState(`${isHeic && 'https://cpmvzflwta.cloudimg.io/'}${image}`);
     const openPhotoModal = () => {
         (0, modals_1.openModal)({
             centered: true,
             children: (react_1.default.createElement(react_1.default.Fragment, null,
                 react_1.default.createElement("div", null,
-                    react_1.default.createElement("img", { src: image, alt: "", className: classes.photoView })),
+                    react_1.default.createElement("img", { src: imageUrl, alt: "", className: classes.photoView })),
                 react_1.default.createElement("div", { style: { width: '100%', textAlign: 'center', marginTop: '10px' } },
                     react_1.default.createElement(core_1.Button, { onClick: () => (0, modals_1.closeAllModals)() }, "Cerrar")))),
         });
     };
     return (react_1.default.createElement(react_1.default.Fragment, null, image ? (react_1.default.createElement("div", { style: {
-            backgroundImage: `url(${image})`,
+            backgroundImage: `url(${imageUrl})`,
         }, className: cx(isSmall ? classes.smallImage : classes.image), onClick: () => openPhotoModal() })) : (react_1.default.createElement("div", { className: cx(isSmall ? classes.noImageSmall : classes.noImage) }, "\uD83E\uDD37\uD83C\uDFFC\u200D\u2642\uFE0F"))));
 };
 exports.default = ImageViewer;

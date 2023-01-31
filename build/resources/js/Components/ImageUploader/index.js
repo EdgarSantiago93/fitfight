@@ -33,7 +33,7 @@ const ImageUploader = ({ form, formValue, loading }) => {
                     file_type: file.type,
                 })
                     .then((response) => {
-                    setPreviewUrl(response.data);
+                    setPreviewUrl(() => generateUrl(response.data));
                     setIsUploading(false);
                     setFileReady(true);
                     form.setFieldValue(formValue, getTokenCall?.data.id);
@@ -44,6 +44,12 @@ const ImageUploader = ({ form, formValue, loading }) => {
                 });
             });
         }
+    };
+    const generateUrl = (url) => {
+        if (url.toLowerCase().includes('.heic') || url.toLowerCase().includes('.heif')) {
+            return 'https://cpmvzflwta.cloudimg.io/' + url;
+        }
+        return url;
     };
     const transformProgress = (progress) => {
         let pre = Math.round(progress * 100);

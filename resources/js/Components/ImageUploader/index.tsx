@@ -35,7 +35,7 @@ const ImageUploader = ({ form, formValue, loading }) => {
             file_type: file.type,
           })
             .then((response) => {
-              setPreviewUrl(response.data)
+              setPreviewUrl(() => generateUrl(response.data))
               setIsUploading(false)
               setFileReady(true)
               form.setFieldValue(formValue, getTokenCall?.data.id)
@@ -47,6 +47,13 @@ const ImageUploader = ({ form, formValue, loading }) => {
         }
       )
     }
+  }
+
+  const generateUrl = (url) => {
+    if (url.toLowerCase().includes('.heic') || url.toLowerCase().includes('.heif')) {
+      return 'https://cpmvzflwta.cloudimg.io/' + url
+    }
+    return url
   }
 
   const transformProgress = (progress) => {
@@ -114,17 +121,6 @@ const ImageUploader = ({ form, formValue, loading }) => {
     if (inputRef.current === null) return
     inputRef.current.click()
   }
-
-  // async function convertToHeic(url) {
-  //   const output =
-  //     await fetch(url)
-  //     .then(async (data) => {
-  //       const buffer = Buffer.from(await data.arrayBuffer())
-  //       return heicConvert({ buffer, format: 'PNG' })
-  //     })
-
-  //   // ...
-  // }
 
   return (
     <>

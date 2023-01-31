@@ -82,11 +82,12 @@ const Home = (props) => {
         if ((0, moment_1.default)().format('DD') < selection.date) {
             return react_1.default.createElement(DayToCome_1.default, null);
         }
-        if ((0, moment_1.default)().format('DD') > selection.date && (0, moment_1.default)().format('MM') <= selection.monthNumber) {
-            return react_1.default.createElement(DayToCome_1.default, null);
-        }
         if (!selection.entry) {
             return react_1.default.createElement(NoEntry_1.default, null);
+        }
+        if ((0, moment_1.default)().format('DD') > selection.date && (0, moment_1.default)().format('MM') <= selection.monthNumber) {
+            console.log('this');
+            return react_1.default.createElement(DayToCome_1.default, null);
         }
     };
     const setDayAndIndex = (day, index) => {

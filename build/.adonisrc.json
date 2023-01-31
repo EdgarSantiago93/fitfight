@@ -13,7 +13,7 @@
     "Config": "config",
     "Database": "database",
     "Contracts": "contracts",
-    "@": "resources/js/"
+    "Resources": "resources"
   },
   "preloads": [
     "./start/routes",
@@ -62,5 +62,5 @@
   "testProviders": [
     "@japa/preset-adonis/TestsProvider"
   ],
-  "lastCompiledAt": "2023-01-31T02:55:11.342Z"
+  "lastCompiledAt": "2023-01-31T14:57:31.047Z"
 }

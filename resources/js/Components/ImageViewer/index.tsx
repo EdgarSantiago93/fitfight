@@ -2,11 +2,18 @@ import React from 'react'
 import { Button } from '@mantine/core'
 import { openModal, closeAllModals } from '@mantine/modals'
 import { useStyles } from './styles'
+// import heicConvert from 'heic-convert'
 
-const ImageViewer = ({ image, isSmall = false }) => {
+const ImageViewer = ({ image, isSmall = false, isHeic = false }) => {
   const { classes, cx } = useStyles()
 
-  React.useEffect(() => {}, [])
+  React.useEffect(() => {
+    console.log('image is heic', isHeic)
+  }, [])
+
+  const [imageUrl, _setImageUrl] = React.useState(
+    `${isHeic && 'https://cpmvzflwta.cloudimg.io/'}${image}`
+  )
 
   const openPhotoModal = () => {
     openModal({
@@ -14,7 +21,7 @@ const ImageViewer = ({ image, isSmall = false }) => {
       children: (
         <>
           <div>
-            <img src={image} alt="" className={classes.photoView} />
+            <img src={imageUrl} alt="" className={classes.photoView} />
           </div>
           <div style={{ width: '100%', textAlign: 'center', marginTop: '10px' }}>
             <Button onClick={() => closeAllModals()}>Cerrar</Button>
@@ -29,7 +36,7 @@ const ImageViewer = ({ image, isSmall = false }) => {
       {image ? (
         <div
           style={{
-            backgroundImage: `url(${image})`,
+            backgroundImage: `url(${imageUrl})`,
           }}
           className={cx(isSmall ? classes.smallImage : classes.image)}
           onClick={() => openPhotoModal()}

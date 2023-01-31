@@ -77,7 +77,16 @@ const VotingComponent = (props: Props) => {
   // @ts-ignore
   const [isLoading, setIsLoading] = React.useState(false)
 
-  React.useEffect(() => {}, [])
+  React.useEffect(() => {
+    console.log(checkHeic(props.entry.tracker_file_signed_url))
+  }, [])
+
+  const checkHeic = (url): boolean => {
+    if (url.toLowerCase().includes('.heic') || url.toLowerCase().includes('.heif')) {
+      return true
+    }
+    return false
+  }
 
   const votesFor = props.entry?.votes.filter((vote) => vote.type == 'for')
   const votesAgainst = props.entry?.votes.filter((vote) => vote.type == 'against')
@@ -87,7 +96,10 @@ const VotingComponent = (props: Props) => {
       <Grid>
         <Grid.Col span={4}>
           <div className={classes.label}>Tracker</div>
-          <ImageViewer image={props.entry?.tracker_file_signed_url} />
+          <ImageViewer
+            image={props.entry?.tracker_file_signed_url}
+            isHeic={checkHeic(props.entry?.tracker_file_signed_url)}
+          />
         </Grid.Col>
 
         <Grid.Col span={4}>

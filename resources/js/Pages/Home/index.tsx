@@ -97,12 +97,12 @@ const Home = (props: Props): React.ReactElement => {
       return <DayToCome />
     }
 
-    if (moment().format('DD') > selection.date && moment().format('MM') <= selection.monthNumber) {
-      return <DayToCome />
-    }
-
     if (!selection.entry) {
       return <NoEntry />
+    }
+    if (moment().format('DD') > selection.date && moment().format('MM') <= selection.monthNumber) {
+      console.log('this')
+      return <DayToCome />
     }
   }
   const setDayAndIndex = (day: any, index: number) => {

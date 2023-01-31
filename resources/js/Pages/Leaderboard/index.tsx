@@ -13,9 +13,6 @@ const Leaderboard = (props: Props): React.ReactElement => {
 
   const { classes } = useStyles()
   moment.locale('es')
-
-  // const [isLoading, setisLoading] = React.useState()
-
   const participatingUsers = userswithEntries.filter((u) => u.hasEntries)
   const nonParticipatingUsers = userswithEntries.filter((u) => !u.hasEntries)
 

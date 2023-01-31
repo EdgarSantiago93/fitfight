@@ -48,14 +48,22 @@ const VotingComponent = (props) => {
         });
     };
     const [isLoading, setIsLoading] = react_1.default.useState(false);
-    react_1.default.useEffect(() => { }, []);
+    react_1.default.useEffect(() => {
+        console.log(checkHeic(props.entry.tracker_file_signed_url));
+    }, []);
+    const checkHeic = (url) => {
+        if (url.toLowerCase().includes('.heic') || url.toLowerCase().includes('.heif')) {
+            return true;
+        }
+        return false;
+    };
     const votesFor = props.entry?.votes.filter((vote) => vote.type == 'for');
     const votesAgainst = props.entry?.votes.filter((vote) => vote.type == 'against');
     return (react_1.default.createElement("div", { className: classes.notSubmitted },
         react_1.default.createElement(core_1.Grid, null,
             react_1.default.createElement(core_1.Grid.Col, { span: 4 },
                 react_1.default.createElement("div", { className: classes.label }, "Tracker"),
-                react_1.default.createElement(ImageViewer_1.default, { image: props.entry?.tracker_file_signed_url })),
+                react_1.default.createElement(ImageViewer_1.default, { image: props.entry?.tracker_file_signed_url, isHeic: checkHeic(props.entry?.tracker_file_signed_url) })),
             react_1.default.createElement(core_1.Grid.Col, { span: 4 },
                 react_1.default.createElement("div", { className: classes.label }, "Pose"),
                 react_1.default.createElement(ImageViewer_1.default, { image: props.entry?.pose_file_signed_url })),

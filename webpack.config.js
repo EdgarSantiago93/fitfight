@@ -204,9 +204,7 @@ config.infrastructureLogging = {
   level: 'warn',
 };
 config.stats = 'errors-warnings';
-config.resolve.alias = {
-  '@': join(__dirname, './resources/js'),
-};
+
 /*
 |--------------------------------------------------------------------------
 | Export config
@@ -215,4 +213,27 @@ config.resolve.alias = {
 | Export config for webpack to do its job
 |
 */
+
+
+// config.resolve = {
+//   fallback: {
+//     "fs": 'empty'
+//   },
+// };
+// resolve: {
+//   fallback: {
+//       "fs": false
+//   },
+// }
+
+// module.exports = {
+//   ...
+//   resolve: {
+//       fallback: {
+//           "fs": false
+//       },
+//   }
+// }
+
+
 module.exports = config;
