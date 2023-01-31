@@ -77,9 +77,7 @@ const VotingComponent = (props: Props) => {
   // @ts-ignore
   const [isLoading, setIsLoading] = React.useState(false)
 
-  React.useEffect(() => {
-    console.log(checkHeic(props.entry.tracker_file_signed_url))
-  }, [])
+  React.useEffect(() => {}, [])
 
   const checkHeic = (url): boolean => {
     if (url.toLowerCase().includes('.heic') || url.toLowerCase().includes('.heif')) {
@@ -104,7 +102,10 @@ const VotingComponent = (props: Props) => {
 
         <Grid.Col span={4}>
           <div className={classes.label}>Pose</div>
-          <ImageViewer image={props.entry?.pose_file_signed_url} />
+          <ImageViewer
+            image={props.entry?.pose_file_signed_url}
+            isHeic={checkHeic(props.entry?.tracker_file_signed_url)}
+          />
         </Grid.Col>
 
         <Grid.Col span={4}>

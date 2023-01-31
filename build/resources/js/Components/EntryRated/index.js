@@ -48,9 +48,7 @@ const VotingComponent = (props) => {
         });
     };
     const [isLoading, setIsLoading] = react_1.default.useState(false);
-    react_1.default.useEffect(() => {
-        console.log(checkHeic(props.entry.tracker_file_signed_url));
-    }, []);
+    react_1.default.useEffect(() => { }, []);
     const checkHeic = (url) => {
         if (url.toLowerCase().includes('.heic') || url.toLowerCase().includes('.heif')) {
             return true;
@@ -66,7 +64,7 @@ const VotingComponent = (props) => {
                 react_1.default.createElement(ImageViewer_1.default, { image: props.entry?.tracker_file_signed_url, isHeic: checkHeic(props.entry?.tracker_file_signed_url) })),
             react_1.default.createElement(core_1.Grid.Col, { span: 4 },
                 react_1.default.createElement("div", { className: classes.label }, "Pose"),
-                react_1.default.createElement(ImageViewer_1.default, { image: props.entry?.pose_file_signed_url })),
+                react_1.default.createElement(ImageViewer_1.default, { image: props.entry?.pose_file_signed_url, isHeic: checkHeic(props.entry?.tracker_file_signed_url) })),
             react_1.default.createElement(core_1.Grid.Col, { span: 4 },
                 react_1.default.createElement("div", { style: { height: '50%' } },
                     react_1.default.createElement("div", { className: classes.label }, "Calorias"),
