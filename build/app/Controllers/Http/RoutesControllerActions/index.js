@@ -18,6 +18,7 @@ class RoutesControllerActions {
             const entry = await Entry_1.default.query()
                 .where('created_at', '>=', (0, moment_1.default)().startOf('day').format())
                 .where('created_at', '<=', (0, moment_1.default)().endOf('day').format())
+                .where('is_rest_day', 0)
                 .preload('user')
                 .orderBy('created_at', 'asc')
                 .first();
@@ -30,6 +31,7 @@ class RoutesControllerActions {
         const entries = await Entry_1.default.query()
             .where('status', 'pending')
             .where('is_validated', 0)
+            .where('is_rest_day', 0)
             .whereNot('user_id', user.id)
             .where('created_at', '>=', (0, moment_1.default)().startOf('day').format())
             .where('created_at', '<=', (0, moment_1.default)().endOf('day').format())
