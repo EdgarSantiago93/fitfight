@@ -31,9 +31,9 @@ export default class Awardpoints extends BaseCommand {
   public async run() {
     this.logger.info('Hello world!')
     const { default: Entry } = await import('App/Models/Entry')
-
-    // const yesterday = moment().subtract(1, 'days')
-    const yesterday = moment()
+    // this runs after 12:00am
+    const yesterday = moment().subtract(1, 'days')
+    // const yesterday = moment()
 
     const entriesForTheDay = await Entry.query()
       .whereNot('status', 'validated')
