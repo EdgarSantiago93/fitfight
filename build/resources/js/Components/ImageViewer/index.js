@@ -9,10 +9,8 @@ const modals_1 = require("@mantine/modals");
 const styles_1 = require("./styles");
 const ImageViewer = ({ image, isSmall = false, isHeic = false }) => {
     const { classes, cx } = (0, styles_1.useStyles)();
-    react_1.default.useEffect(() => {
-        console.log('image is heic', isHeic);
-    }, []);
-    const [imageUrl, _setImageUrl] = react_1.default.useState(`${isHeic && 'https://cpmvzflwta.cloudimg.io/'}${image}`);
+    react_1.default.useEffect(() => { }, []);
+    const [imageUrl, _setImageUrl] = react_1.default.useState(`${isHeic ? 'https://cpmvzflwta.cloudimg.io/' : ''}${image}`);
     const openPhotoModal = () => {
         (0, modals_1.openModal)({
             centered: true,

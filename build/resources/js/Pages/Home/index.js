@@ -60,7 +60,6 @@ const Home = (props) => {
     };
     const generateComponent = () => {
         const selection = currentWeek[selectedDayIndex];
-        console.log('selection', selection);
         if (!selection.entry && (0, moment_1.default)().format('DD') == selection.date) {
             return react_1.default.createElement(EntryNotSubmitted_1.default, { overlayLoad: setIsLoadingOverlay });
         }

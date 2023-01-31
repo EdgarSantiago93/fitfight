@@ -7,12 +7,10 @@ import { useStyles } from './styles'
 const ImageViewer = ({ image, isSmall = false, isHeic = false }) => {
   const { classes, cx } = useStyles()
 
-  React.useEffect(() => {
-    console.log('image is heic', isHeic)
-  }, [])
+  React.useEffect(() => {}, [])
 
   const [imageUrl, _setImageUrl] = React.useState(
-    `${isHeic && 'https://cpmvzflwta.cloudimg.io/'}${image}`
+    `${isHeic ? 'https://cpmvzflwta.cloudimg.io/' : ''}${image}`
   )
 
   const openPhotoModal = () => {
