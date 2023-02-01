@@ -34,6 +34,7 @@ export default class Awardpoints extends BaseCommand {
     // this runs after 12:00am
     const yesterday = moment().subtract(1, 'days')
     // const yesterday = moment()
+    this.logger.info('Yesterday was: ' + yesterday.format())
 
     const entriesForTheDay = await Entry.query()
       .whereNot('status', 'validated')

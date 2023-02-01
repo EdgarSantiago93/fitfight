@@ -38,6 +38,7 @@ const Home = (props) => {
                 month: momentDate.format('MMMM'),
                 monthNumber: momentDate.format('MM'),
                 entry: userEntry,
+                fullDate: momentDate.format(),
             };
             days.push(dateObj);
         }
@@ -60,7 +61,7 @@ const Home = (props) => {
     };
     const generateComponent = () => {
         const selection = currentWeek[selectedDayIndex];
-        if (!selection.entry && (0, moment_1.default)().format('DD') == selection.date) {
+        if (!selection.entry && (0, moment_1.default)().isSame(selection.fullDate, 'day')) {
             return react_1.default.createElement(EntryNotSubmitted_1.default, { overlayLoad: setIsLoadingOverlay });
         }
         if (selection.entry?.is_rest_day) {
@@ -76,9 +77,10 @@ const Home = (props) => {
             return react_1.default.createElement(EntryRated_1.default, { entry: selection.entry });
         }
         if (selection.entry?.status == 'forced_rest') {
+            return 'fr';
             return react_1.default.createElement(ForcedRest_1.default, null);
         }
-        if ((0, moment_1.default)().format('DD') < selection.date) {
+        if ((0, moment_1.default)(selection.fullDate) > (0, moment_1.default)()) {
             return react_1.default.createElement(DayToCome_1.default, null);
         }
         if (!selection.entry) {
@@ -106,6 +108,29 @@ const Home = (props) => {
                         react_1.default.createElement("br", null),
                         "Todav\u00EDa no hay una entrada para hoy, sube la primera"))))),
         });
+    };
+    const getEmoji = (day) => {
+        if (!day.entry && (0, moment_1.default)().isSame(day.fullDate, 'day')) {
+            return '';
+        }
+        if (day.entry?.is_rest_day) {
+            return '😴';
+        }
+        if (day.entry?.is_validated && day.entry?.status == 'validated') {
+            return '✅';
+        }
+        if (!day.entry?.is_validated && day.entry?.status == 'pending') {
+            return '🕒';
+        }
+        if (!day.entry?.is_validated && day.entry?.status == 'rejected') {
+            return '👎';
+        }
+        if ((0, moment_1.default)(day.fullDate) > (0, moment_1.default)()) {
+            return '';
+        }
+        if (!day.entry) {
+            return '❌';
+        }
     };
     return (react_1.default.createElement(react_1.default.Fragment, null,
         react_1.default.createElement("div", { className: classes.wrapper },
@@ -137,31 +162,11 @@ const Home = (props) => {
                         alignContent: 'center',
                         marginTop: '10px',
                     } }, currentWeek.map((day, index) => {
+                    console.log(day);
                     return (react_1.default.createElement("div", { key: 'datebutton' + index, className: getDayContainerClasses(day), onClick: () => setDayAndIndex(day.date, index) },
                         react_1.default.createElement("div", { className: classes.day }, day.day),
                         react_1.default.createElement("div", { className: classes.date }, day.date),
-                        react_1.default.createElement("div", null,
-                            day.entry?.is_rest_day ? '😴' : null,
-                            !day.entry &&
-                                (0, moment_1.default)().format('DD') > day.date &&
-                                (0, moment_1.default)().format('MM') >= day.monthNumber
-                                ? '❌'
-                                : null,
-                            day.entry?.is_validated &&
-                                day.entry?.status == 'validated' &&
-                                !day.entry?.is_rest_day
-                                ? '✅'
-                                : null,
-                            !day.entry?.is_validated &&
-                                day.entry?.status == 'pending' &&
-                                !day.entry?.is_rest_day
-                                ? '🕒'
-                                : null,
-                            !day.entry?.is_validated &&
-                                day.entry?.status == 'rejected' &&
-                                !day.entry?.is_rest_day
-                                ? '👎'
-                                : null)));
+                        react_1.default.createElement("div", null, getEmoji(day))));
                 })),
                 react_1.default.createElement("div", { className: classes.entryDescription },
                     isLoading && (react_1.default.createElement("div", { style: { width: '100%', textAlign: 'center', marginTop: '50px' } },

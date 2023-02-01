@@ -31,12 +31,14 @@ const Home = (props: Props): React.ReactElement => {
     for (var i = 0; i <= 6; i++) {
       const momentDate = moment(weekStart).add(i, 'days')
       const userEntry = entries.find((e) => e.created_at.day == momentDate.format('DD'))
+
       const dateObj = {
         day: daysEs[momentDate.format('d')],
         date: momentDate.format('DD'),
         month: momentDate.format('MMMM'),
         monthNumber: momentDate.format('MM'),
         entry: userEntry,
+        fullDate: momentDate.format(),
       }
       days.push(dateObj)
     }
@@ -71,15 +73,44 @@ const Home = (props: Props): React.ReactElement => {
   }
 
   const generateComponent = () => {
+    // if (!day.entry && moment().isSame(day.fullDate, 'day')) {
+    //   return ''
+    //   // return <EntryNotSubmitted overlayLoad={setIsLoadingOverlay} />
+    // }
+
+    // if (day.entry?.is_rest_day) {
+    //   return '😴'
+    // }
+    // if (day.entry?.is_validated && day.entry?.status == 'validated') {
+    //   return '✅'
+    // }
+    // if (!day.entry?.is_validated && day.entry?.status == 'pending') {
+    //   return '🕒'
+    // }
+    // if (!day.entry?.is_validated && day.entry?.status == 'rejected') {
+    //   return '👎'
+    // }
+    // // if (day.entry?.status == 'forced_rest') {
+    // //   return <ForcedRest />
+    // // }
+
+    // if (moment(day.fullDate) > moment()) {
+    //   return ''
+    // }
+
+    // if (!day.entry) {
+    //   return '❌'
+    // }
     const selection = currentWeek[selectedDayIndex]
 
-    if (!selection.entry && moment().format('DD') == selection.date) {
+    if (!selection.entry && moment().isSame(selection.fullDate, 'day')) {
       return <EntryNotSubmitted overlayLoad={setIsLoadingOverlay} />
     }
 
     if (selection.entry?.is_rest_day) {
       return <RestDay />
     }
+
     if (selection.entry?.is_validated && selection.entry?.status == 'validated') {
       return <EntryRated entry={selection.entry} />
     }
@@ -90,20 +121,57 @@ const Home = (props: Props): React.ReactElement => {
       return <EntryRated entry={selection.entry} />
     }
     if (selection.entry?.status == 'forced_rest') {
+      return 'fr'
       return <ForcedRest />
     }
-    if (moment().format('DD') < selection.date) {
+    if (moment(selection.fullDate) > moment()) {
       return <DayToCome />
     }
-
     if (!selection.entry) {
       return <NoEntry />
     }
+
     if (moment().format('DD') > selection.date && moment().format('MM') <= selection.monthNumber) {
       console.log('this')
       return <DayToCome />
     }
   }
+
+  // const generateComponent_ = () => {
+  //   const selection = currentWeek[selectedDayIndex]
+
+  //   if (!selection.entry && moment().format('DD') == selection.date) {
+  //     return <EntryNotSubmitted overlayLoad={setIsLoadingOverlay} />
+  //   }
+
+  //   if (selection.entry?.is_rest_day) {
+  //     return <RestDay />
+  //   }
+  //   if (selection.entry?.is_validated && selection.entry?.status == 'validated') {
+  //     return <EntryRated entry={selection.entry} />
+  //   }
+  //   if (!selection.entry?.is_validated && selection.entry?.status == 'pending') {
+  //     return <EntryRated entry={selection.entry} />
+  //   }
+  //   if (!selection.entry?.is_validated && selection.entry?.status == 'rejected') {
+  //     return <EntryRated entry={selection.entry} />
+  //   }
+  //   if (selection.entry?.status == 'forced_rest') {
+  //     return <ForcedRest />
+  //   }
+  //   if (!selection.entry) {
+  //     return <NoEntry />
+  //   }
+  //   if (moment().format('DD') < selection.date) {
+  //     return <DayToCome />
+  //   }
+
+  //   if (moment().format('DD') > selection.date && moment().format('MM') <= selection.monthNumber) {
+  //     console.log('this')
+  //     return <DayToCome />
+  //   }
+  // }
+
   const setDayAndIndex = (day: any, index: number) => {
     setSelectedDay(day)
     setSelectedDayIndex(index)
@@ -134,6 +202,64 @@ const Home = (props: Props): React.ReactElement => {
         </>
       ),
     })
+  }
+
+  const getEmoji = (day: any) => {
+    // {day.entry?.is_rest_day ? '😴' : null}
+    // {!day.entry && moment().format('DD') > day?.date
+    //   ? //  && moment().format('MM') >= day.monthNumber
+    //     '❌'
+    //   : null}
+    // {day.entry?.is_validated &&
+    // day.entry?.status == 'validated' &&
+    // !day.entry?.is_rest_day
+    //   ? '✅'
+    //   : null}
+
+    // {!day.entry?.is_validated &&
+    // day.entry?.status == 'pending' &&
+    // !day.entry?.is_rest_day
+    //   ? '🕒'
+    //   : null}
+
+    // {!day.entry?.is_validated &&
+    // day.entry?.status == 'rejected' &&
+    // !day.entry?.is_rest_day
+    //   ? '👎'
+    //   : null}
+
+    // if (!day.entry && moment().format('DD') == day.date) {
+    if (!day.entry && moment().isSame(day.fullDate, 'day')) {
+      return ''
+      // return <EntryNotSubmitted overlayLoad={setIsLoadingOverlay} />
+    }
+
+    if (day.entry?.is_rest_day) {
+      return '😴'
+    }
+    if (day.entry?.is_validated && day.entry?.status == 'validated') {
+      return '✅'
+    }
+    if (!day.entry?.is_validated && day.entry?.status == 'pending') {
+      return '🕒'
+    }
+    if (!day.entry?.is_validated && day.entry?.status == 'rejected') {
+      return '👎'
+    }
+    // if (day.entry?.status == 'forced_rest') {
+    //   return <ForcedRest />
+    // }
+
+    if (moment(day.fullDate) > moment()) {
+      return ''
+    }
+
+    if (!day.entry) {
+      return '❌'
+    }
+    // if (moment().format('DD') < day.date) {
+    //   return <DayToCome />
+    // }
   }
   return (
     <>
@@ -205,6 +331,7 @@ const Home = (props: Props): React.ReactElement => {
             rejected  -> 👎
             */}
             {currentWeek.map((day, index) => {
+              console.log(day)
               return (
                 <div
                   key={'datebutton' + index}
@@ -215,11 +342,11 @@ const Home = (props: Props): React.ReactElement => {
                   <div className={classes.day}>{day.day}</div>
                   <div className={classes.date}>{day.date}</div>
                   <div>
-                    {day.entry?.is_rest_day ? '😴' : null}
-                    {!day.entry &&
-                    moment().format('DD') > day.date &&
-                    moment().format('MM') >= day.monthNumber
-                      ? '❌'
+                    {getEmoji(day)}
+                    {/* {day.entry?.is_rest_day ? '😴' : null}
+                    {!day.entry && moment().format('DD') > day?.date
+                      ? //  && moment().format('MM') >= day.monthNumber
+                        '❌'
                       : null}
                     {day.entry?.is_validated &&
                     day.entry?.status == 'validated' &&
@@ -237,7 +364,7 @@ const Home = (props: Props): React.ReactElement => {
                     day.entry?.status == 'rejected' &&
                     !day.entry?.is_rest_day
                       ? '👎'
-                      : null}
+                      : null} */}
                   </div>
                 </div>
               )

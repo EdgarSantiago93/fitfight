@@ -8,9 +8,20 @@ const styles_1 = require("./styles");
 const DayToCome = () => {
     const { classes } = (0, styles_1.useStyles)();
     react_1.default.useEffect(() => { }, []);
+    const getImg = (min = 0, max = 100) => {
+        let difference = max - min;
+        let rand = Math.random();
+        rand = Math.floor(rand * difference);
+        rand = rand + min;
+        if (rand == 7) {
+            rand = 6;
+        }
+        return rand;
+    };
     return (react_1.default.createElement("div", { className: classes.noEntry },
-        react_1.default.createElement("div", { className: classes.label }, "Day to come"),
-        react_1.default.createElement("div", null, "\uD83D\uDCC5")));
+        react_1.default.createElement("div", { className: classes.label }, "A\u00FAn no llega este d\u00EDa"),
+        react_1.default.createElement("div", null,
+            react_1.default.createElement("img", { src: `/img/dogs/${getImg(1, 7)}.png`, alt: "", className: classes.dogImg }))));
 };
 exports.default = DayToCome;
 //# sourceMappingURL=index.js.map
