@@ -8,7 +8,7 @@ const core_1 = require("@mantine/core");
 const styles_1 = require("./styles");
 const tabler_icons_react_1 = require("tabler-icons-react");
 const moment_1 = __importDefault(require("moment"));
-const PageHeader = ({ user, showHome = false, showLb = false, showCal = false }) => {
+const PageHeader = ({ user, showHome = false, showLb = false, showCal = false, showToday = false, }) => {
     const { classes } = (0, styles_1.useStyles)();
     moment_1.default.locale('es');
     const getGreeting = () => {
@@ -38,6 +38,8 @@ const PageHeader = ({ user, showHome = false, showLb = false, showCal = false })
                     react_1.default.createElement(tabler_icons_react_1.Home2, { size: 34 }))),
                 showLb && (react_1.default.createElement(core_1.ActionIcon, { color: "#F04336", size: "xl", radius: "xl", variant: "light", onClick: () => (window.location.href = '/lb'), style: { marginRight: 5 } },
                     react_1.default.createElement(tabler_icons_react_1.Medal, { size: 34 }))),
+                showToday && (react_1.default.createElement(core_1.ActionIcon, { color: "#F04336", size: "xl", radius: "xl", variant: "light", onClick: () => (window.location.href = '/today'), style: { marginRight: 5 } },
+                    react_1.default.createElement(tabler_icons_react_1.Calendar, { size: 34 }))),
                 showCal && react_1.default.createElement(react_1.default.Fragment, null),
                 react_1.default.createElement(core_1.Menu, { shadow: "md", width: 200 },
                     react_1.default.createElement(core_1.Menu.Target, null,

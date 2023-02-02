@@ -13,6 +13,17 @@ class RoutesControllerActions {
             .where('created_at', '<=', (0, moment_1.default)().endOf('day').format());
         return entries;
     }
+    async getTotalTodaysEntriesWithVotes() {
+        const entries = await Entry_1.default.query()
+            .where('created_at', '>=', (0, moment_1.default)().startOf('day').format())
+            .where('created_at', '<=', (0, moment_1.default)().endOf('day').format())
+            .preload('user')
+            .preload('votes', (query) => {
+            query.preload('user');
+        })
+            .orderBy('created_at', 'asc');
+        return entries;
+    }
     async getTodaysEarliestEntry() {
         return await new Promise(async (resolve, _reject) => {
             const entry = await Entry_1.default.query()

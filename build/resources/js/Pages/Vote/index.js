@@ -21,7 +21,7 @@ const Vote = (props) => {
     const [isFirst, _setIsFirst] = react_1.default.useState(entriesToVoteOn[0]?.id == earliestEntry.id);
     return (react_1.default.createElement(react_1.default.Fragment, null,
         react_1.default.createElement("div", { className: classes.wrapper },
-            react_1.default.createElement(PageHeader_1.default, { user: user, showHome: true, showCal: true, showLb: true }),
+            react_1.default.createElement(PageHeader_1.default, { user: user, showHome: true, showCal: true, showLb: true, showToday: true }),
             react_1.default.createElement("div", null,
                 react_1.default.createElement("div", { style: { width: '100%', textAlign: 'center' } },
                     react_1.default.createElement(core_1.Text, { size: 'xl', weight: 500 }, "Voting")),

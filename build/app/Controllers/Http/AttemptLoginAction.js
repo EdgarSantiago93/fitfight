@@ -13,7 +13,6 @@ class AttemptLoginAction {
         if (!(await Hash_1.default.verify(user.password, password))) {
             return response.unprocessableEntity('Password incorrecto');
         }
-        console.log('Passed verification');
         await auth.use('web').attempt(email, password);
         return response.json({
             success: true,

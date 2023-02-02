@@ -17,7 +17,7 @@ const NoParticipation = (props) => {
     react_1.default.useEffect(() => { }, []);
     return (react_1.default.createElement(react_1.default.Fragment, null,
         react_1.default.createElement("div", { className: classes.wrapper },
-            react_1.default.createElement(PageHeader_1.default, { user: user, showHome: true, showCal: true, showLb: true }),
+            react_1.default.createElement(PageHeader_1.default, { user: user, showHome: true, showCal: true, showLb: true, showToday: true }),
             react_1.default.createElement("div", null,
                 react_1.default.createElement("div", { style: { width: '100%', fontSize: '40px', textAlign: 'center' } }, "\u270B\uD83C\uDFFC"),
                 "Para votar tienes que participar hoy. ",

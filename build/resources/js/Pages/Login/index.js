@@ -33,9 +33,7 @@ const Login = (props) => {
     const attemptLogin = async (data) => {
         setIsLoading(true);
         const apiCall = await (0, auth_1.login)(data);
-        console.log('apiCall', apiCall);
         if (apiCall?.success) {
-            console.log('successss');
             return (window.location.href = '/');
         }
         setIsLoading(false);

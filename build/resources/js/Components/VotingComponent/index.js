@@ -12,11 +12,7 @@ const EntryRated = (props) => {
     const {} = props;
     const { classes } = (0, styles_1.useStyles)();
     const [isLoading, setIsLoading] = react_1.default.useState(false);
-    react_1.default.useEffect(() => {
-        console.log('entry rated');
-        console.log(props.earliestEntry);
-        console.log('ENTRYYYY', props.entry);
-    }, []);
+    react_1.default.useEffect(() => { }, []);
     const ButtonConfirm = ({ callback, text, color, disabled }) => {
         const [isFirstTime, setIsFirstTime] = react_1.default.useState(true);
         const [isLoading, setIsLoading] = react_1.default.useState(false);
@@ -43,11 +39,8 @@ const EntryRated = (props) => {
     };
     const attemptVote = async (type) => {
         setIsLoading(true);
-        console.log('attempting vote', type);
         const apiCall = await (0, vote_1.voteOnEntry)({ entry_id: props.entry.id, type: type });
-        console.log('apiCall', apiCall);
         if (apiCall?.success) {
-            console.log('successss');
             return window.location.reload();
         }
         setIsLoading(false);

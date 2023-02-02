@@ -49,10 +49,6 @@ const VotingComponent = (props) => {
     };
     const [isLoading, setIsLoading] = react_1.default.useState(false);
     react_1.default.useEffect(() => {
-        console.log('ENTRY');
-        console.log(props.entry);
-        console.log(props.entry?.tracker_file_signed_url);
-        console.log(props.entry?.pose_file_signed_url);
         generateImage();
     }, [props.entry]);
     const checkHeic = (url) => {
@@ -79,10 +75,10 @@ const VotingComponent = (props) => {
                 react_1.default.createElement(ImageViewer_1.default, { image: poseFileUrl, isHeic: checkHeic(props.entry?.tracker_file_signed_url) })),
             react_1.default.createElement(core_1.Grid.Col, { span: 4 },
                 react_1.default.createElement("div", { style: { height: '50%' } },
-                    react_1.default.createElement("div", { className: classes.label }, "Calorias"),
+                    react_1.default.createElement("div", { className: classes.label }, "\uD83D\uDD25"),
                     react_1.default.createElement(core_1.Text, { weight: 600, style: { marginTop: '0px' } }, props.entry?.calories == '' ? '-' : props.entry?.calories)),
                 react_1.default.createElement("div", { style: { height: '50%' } },
-                    react_1.default.createElement("div", { className: classes.label }, "Minutos Ejercicio"),
+                    react_1.default.createElement("div", { className: classes.label }, "\u23F0\uD83C\uDFCB\uD83C\uDFFC"),
                     react_1.default.createElement(core_1.Text, { weight: 600, style: { marginTop: '0px' } }, props.entry?.minutes == '' ? '-' : props.entry?.minutes))),
             react_1.default.createElement(core_1.Grid.Col, { span: 6 },
                 react_1.default.createElement("div", { style: { width: '100%', textAlign: 'left' } },

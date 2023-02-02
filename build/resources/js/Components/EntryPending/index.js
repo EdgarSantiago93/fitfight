@@ -73,7 +73,6 @@ const EntryPending = (props) => {
                 react_1.default.createElement(core_1.Text, { weight: 600, size: "md" }, "A favor \u2705"),
                 react_1.default.createElement(core_1.Avatar.Group, { spacing: "sm", onClick: () => openVoteModal('for') },
                     votesFor?.map((vote, index) => {
-                        console.log(vote);
                         if (index < 3) {
                             return react_1.default.createElement(core_1.Avatar, { key: vote.id + 'for', src: vote.user.avatar, radius: "xl" });
                         }

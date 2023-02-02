@@ -70,7 +70,7 @@ const Leaderboard = (props) => {
     };
     return (react_1.default.createElement(react_1.default.Fragment, null,
         react_1.default.createElement("div", { className: classes.wrapper },
-            react_1.default.createElement(PageHeader_1.default, { user: user, showHome: true, showCal: true, showLb: false }),
+            react_1.default.createElement(PageHeader_1.default, { user: user, showHome: true, showCal: true, showLb: false, showToday: true }),
             react_1.default.createElement("div", null,
                 react_1.default.createElement("div", { style: { width: '100%', textAlign: 'center' } },
                     react_1.default.createElement(core_1.Text, null,

@@ -49,9 +49,7 @@ const Home = (props) => {
     const [selectedDayIndex, setSelectedDayIndex] = react_1.default.useState((0, moment_1.default)().isoWeekday() - 1);
     const [isLoading, _setisLoading] = react_1.default.useState();
     const [isLoadingOverlay, setIsLoadingOverlay] = react_1.default.useState(false);
-    react_1.default.useEffect(() => {
-        console.log(earliestEntry.length);
-    }, []);
+    react_1.default.useEffect(() => { }, []);
     const getDayContainerClasses = (day) => {
         return cx(classes.dateContainer, { [classes.today]: (0, moment_1.default)().format('DD') == day.date }, { [classes.selectedDay]: selectedDay == day.date }, { [classes.validated]: day.entry?.is_validated && day.entry?.status == 'validated' }, {
             [classes.validatedSelected]: selectedDay == day.date && day.entry?.is_validated && day.entry?.status == 'validated',
@@ -136,7 +134,7 @@ const Home = (props) => {
     return (react_1.default.createElement(react_1.default.Fragment, null,
         react_1.default.createElement("div", { className: classes.wrapper },
             react_1.default.createElement(core_1.LoadingOverlay, { visible: isLoadingOverlay, overlayBlur: 2 }),
-            react_1.default.createElement(PageHeader_1.default, { user: user, showCal: true, showLb: true }),
+            react_1.default.createElement(PageHeader_1.default, { user: user, showCal: true, showLb: true, showToday: true }),
             shouldVote && (react_1.default.createElement(core_1.Container, { className: classes.missingVotesContainer, sx: (theme) => ({
                     backgroundImage: theme.fn.gradient({ from: '#F04336', to: '#FBAB3E', deg: 45 }),
                 }), onClick: () => (window.location.href = '/vote') },

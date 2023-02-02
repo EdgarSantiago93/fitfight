@@ -31,7 +31,7 @@ __decorate([
     Orm_1.column.dateTime({
         autoCreate: true,
         serialize: (value) => {
-            return { day: value?.day, month: value?.month, year: value?.year };
+            return { day: value?.day, month: value?.month, year: value?.year, full_value: value };
         },
     }),
     __metadata("design:type", luxon_1.DateTime)
