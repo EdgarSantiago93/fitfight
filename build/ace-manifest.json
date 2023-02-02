@@ -7,7 +7,7 @@
       },
       "commandPath": "./commands/Awardpoints",
       "commandName": "awardpoints",
-      "description": "",
+      "description": "Award points to users for the day",
       "args": [],
       "aliases": [],
       "flags": []

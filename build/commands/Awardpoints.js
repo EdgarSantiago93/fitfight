@@ -30,10 +30,14 @@ const standalone_1 = require("@adonisjs/core/build/standalone");
 const moment_1 = __importDefault(require("moment"));
 class Awardpoints extends standalone_1.BaseCommand {
     async run() {
-        this.logger.info('Hello world!');
+        this.logger.info('->FITFIGHT<-');
         const { default: Entry } = await Promise.resolve().then(() => __importStar(global[Symbol.for('ioc.use')]('App/Models/Entry')));
         const yesterday = (0, moment_1.default)().utcOffset(-6).subtract(1, 'days');
-        console.log('OFFSEEET', yesterday.format());
+        if ((0, moment_1.default)().utcOffset(-6).hour() < 12 || (0, moment_1.default)().utcOffset(-6).hour() > 1) {
+            this.logger.info('Not running awardpoints');
+            this.logger.info('Current hour: ' + (0, moment_1.default)().utcOffset(-6).hour());
+            return;
+        }
         this.logger.info('Yesterday was: ' + yesterday.format());
         const entriesForTheDay = await Entry.query()
             .whereNot('status', 'validated')
@@ -41,7 +45,7 @@ class Awardpoints extends standalone_1.BaseCommand {
             .where('created_at', '>=', yesterday.startOf('day').format())
             .where('created_at', '<=', yesterday.endOf('day').format());
         this.logger.info('Awarding points to users for: ' + yesterday.format('YYYY-MM-DD'));
-        console.log(entriesForTheDay.length);
+        this.logger.info(entriesForTheDay.length.toString());
         for (const entry of entriesForTheDay) {
             const votes = await entry.related('votes').query();
             const votesFor = votes.filter((vote) => vote.type === 'for');
@@ -73,7 +77,7 @@ class Awardpoints extends standalone_1.BaseCommand {
 }
 exports.default = Awardpoints;
 Awardpoints.commandName = 'awardpoints';
-Awardpoints.description = '';
+Awardpoints.description = 'Award points to users for the day';
 Awardpoints.settings = {
     loadApp: true,
     stayAlive: false,
