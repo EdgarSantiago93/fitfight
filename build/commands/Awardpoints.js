@@ -32,7 +32,8 @@ class Awardpoints extends standalone_1.BaseCommand {
     async run() {
         this.logger.info('Hello world!');
         const { default: Entry } = await Promise.resolve().then(() => __importStar(global[Symbol.for('ioc.use')]('App/Models/Entry')));
-        const yesterday = (0, moment_1.default)().subtract(1, 'days');
+        const yesterday = (0, moment_1.default)().utcOffset(-6).subtract(1, 'days');
+        console.log('OFFSEEET', yesterday.format());
         this.logger.info('Yesterday was: ' + yesterday.format());
         const entriesForTheDay = await Entry.query()
             .whereNot('status', 'validated')

@@ -64,7 +64,7 @@ export const useStyles = createStyles((theme, _params, getRef) => {
             firstPlace: {
                 position: 'absolute',
                 left: 'calc(50% - 40px)',
-                zIndex: 999
+                zIndex: 9
             },
             secondPlace: {
                 position: 'absolute',
@@ -107,10 +107,11 @@ export const useStyles = createStyles((theme, _params, getRef) => {
                 paddingBottom: '5px',
             },
             userRowPlace: {
-                fontSize: '18px',
+                fontSize: '16px',
                 fontWeight: 700,
-                marginRight: '10px',
-                color: '#6c757d'
+                marginRight: '5px',
+                color: '#6c757d',
+                minWidth: '30px'
             },
             userRowName: {
                 fontSize: '15px',
@@ -121,7 +122,17 @@ export const useStyles = createStyles((theme, _params, getRef) => {
                 fontSize: '15px',
                 fontWeight: 600,
                 position: 'absolute',
-                right: '10px'
+                right: '10px',
+                top: '0px'
+            },
+
+            userRowTotalVotes: {
+                fontSize: '11px',
+                fontWeight: 600,
+                position: 'absolute',
+                right: '10px',
+                bottom: '6px',
+                color: '#919191'
             },
 
         }

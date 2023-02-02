@@ -32,7 +32,9 @@ export default class Awardpoints extends BaseCommand {
     this.logger.info('Hello world!')
     const { default: Entry } = await import('App/Models/Entry')
     // this runs after 12:00am
-    const yesterday = moment().subtract(1, 'days')
+    // const yesterday = moment().subtract(1, 'days')
+    const yesterday = moment().utcOffset(-6).subtract(1, 'days')
+    console.log('OFFSEEET', yesterday.format())
     // const yesterday = moment()
     this.logger.info('Yesterday was: ' + yesterday.format())
 

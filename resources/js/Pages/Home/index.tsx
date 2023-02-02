@@ -104,77 +104,51 @@ const Home = (props: Props): React.ReactElement => {
     const selection = currentWeek[selectedDayIndex]
 
     if (!selection.entry && moment().isSame(selection.fullDate, 'day')) {
-      return <EntryNotSubmitted overlayLoad={setIsLoadingOverlay} />
+      console.log(1)
+      return <EntryNotSubmitted key={selection.entry.id} overlayLoad={setIsLoadingOverlay} />
     }
 
     if (selection.entry?.is_rest_day) {
-      return <RestDay />
+      console.log(2)
+      return <RestDay key={selection.entry.id} />
     }
 
     if (selection.entry?.is_validated && selection.entry?.status == 'validated') {
-      return <EntryRated entry={selection.entry} />
+      console.log(3)
+      return <EntryRated key={selection.entry.id} entry={selection.entry ?? currentEntry} />
     }
     if (!selection.entry?.is_validated && selection.entry?.status == 'pending') {
-      return <EntryRated entry={selection.entry} />
+      return <EntryRated key={selection.entry.id} entry={selection.entry ?? currentEntry} />
     }
     if (!selection.entry?.is_validated && selection.entry?.status == 'rejected') {
-      return <EntryRated entry={selection.entry} />
+      console.log(5)
+      return <EntryRated key={selection.entry.id} entry={selection.entry ?? currentEntry} />
     }
     if (selection.entry?.status == 'forced_rest') {
-      return 'fr'
-      return <ForcedRest />
+      console.log(6)
+      return <ForcedRest key={selection.entry.id} />
     }
     if (moment(selection.fullDate) > moment()) {
+      console.log(7)
       return <DayToCome />
     }
     if (!selection.entry) {
+      console.log(8)
       return <NoEntry />
     }
 
     if (moment().format('DD') > selection.date && moment().format('MM') <= selection.monthNumber) {
-      console.log('this')
+      console.log(9)
       return <DayToCome />
     }
+    return <> </>
   }
 
-  // const generateComponent_ = () => {
-  //   const selection = currentWeek[selectedDayIndex]
-
-  //   if (!selection.entry && moment().format('DD') == selection.date) {
-  //     return <EntryNotSubmitted overlayLoad={setIsLoadingOverlay} />
-  //   }
-
-  //   if (selection.entry?.is_rest_day) {
-  //     return <RestDay />
-  //   }
-  //   if (selection.entry?.is_validated && selection.entry?.status == 'validated') {
-  //     return <EntryRated entry={selection.entry} />
-  //   }
-  //   if (!selection.entry?.is_validated && selection.entry?.status == 'pending') {
-  //     return <EntryRated entry={selection.entry} />
-  //   }
-  //   if (!selection.entry?.is_validated && selection.entry?.status == 'rejected') {
-  //     return <EntryRated entry={selection.entry} />
-  //   }
-  //   if (selection.entry?.status == 'forced_rest') {
-  //     return <ForcedRest />
-  //   }
-  //   if (!selection.entry) {
-  //     return <NoEntry />
-  //   }
-  //   if (moment().format('DD') < selection.date) {
-  //     return <DayToCome />
-  //   }
-
-  //   if (moment().format('DD') > selection.date && moment().format('MM') <= selection.monthNumber) {
-  //     console.log('this')
-  //     return <DayToCome />
-  //   }
-  // }
-
+  const [currentEntry, setCurrentEntry] = React.useState(null)
   const setDayAndIndex = (day: any, index: number) => {
     setSelectedDay(day)
     setSelectedDayIndex(index)
+    setCurrentEntry(currentWeek[index].entry)
   }
 
   const [shouldVote, _setShouldVote] = React.useState(entriesToVoteOn.length > 0 ? true : false)
@@ -331,7 +305,6 @@ const Home = (props: Props): React.ReactElement => {
             rejected  -> 👎
             */}
             {currentWeek.map((day, index) => {
-              console.log(day)
               return (
                 <div
                   key={'datebutton' + index}
@@ -377,6 +350,7 @@ const Home = (props: Props): React.ReactElement => {
                 <Loader variant="bars" />
               </div>
             )}
+            {/* {currentEntry} */}
 
             {generateComponent()}
           </div>

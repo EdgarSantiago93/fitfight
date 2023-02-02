@@ -9,7 +9,9 @@ const modals_1 = require("@mantine/modals");
 const styles_1 = require("./styles");
 const ImageViewer = ({ image, isSmall = false, isHeic = false }) => {
     const { classes, cx } = (0, styles_1.useStyles)();
-    react_1.default.useEffect(() => { }, []);
+    react_1.default.useEffect(() => {
+        console.log('image', image);
+    }, [image]);
     const [imageUrl, _setImageUrl] = react_1.default.useState(`${isHeic ? 'https://cpmvzflwta.cloudimg.io/' : ''}${image}`);
     const openPhotoModal = () => {
         (0, modals_1.openModal)({
@@ -23,7 +25,7 @@ const ImageViewer = ({ image, isSmall = false, isHeic = false }) => {
     };
     return (react_1.default.createElement(react_1.default.Fragment, null, image ? (react_1.default.createElement("div", { style: {
             backgroundImage: `url(${imageUrl})`,
-        }, className: cx(isSmall ? classes.smallImage : classes.image), onClick: () => openPhotoModal() })) : (react_1.default.createElement("div", { className: cx(isSmall ? classes.noImageSmall : classes.noImage) }, "\uD83E\uDD37\uD83C\uDFFC\u200D\u2642\uFE0F"))));
+        }, key: imageUrl, className: cx(isSmall ? classes.smallImage : classes.image), onClick: () => openPhotoModal() })) : (react_1.default.createElement("div", { className: cx(isSmall ? classes.noImageSmall : classes.noImage), key: imageUrl }, "\uD83E\uDD37\uD83C\uDFFC\u200D\u2642\uFE0F"))));
 };
 exports.default = ImageViewer;
 //# sourceMappingURL=index.js.map

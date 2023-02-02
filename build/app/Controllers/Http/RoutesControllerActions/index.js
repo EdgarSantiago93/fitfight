@@ -61,7 +61,15 @@ class RoutesControllerActions {
             .where('status', 'validated')
             .where('is_validated', 1)
             .where('created_at', '>=', (0, moment_1.default)().startOf('month').format())
-            .where('created_at', '<=', (0, moment_1.default)().endOf('month').format());
+            .where('created_at', '<=', (0, moment_1.default)().endOf('month').format())
+            .withCount('votes', (query) => {
+            query.as('vote_count_for');
+            query.where('type', 'for');
+        })
+            .withCount('votes', (query) => {
+            query.as('vote_count_against');
+            query.where('type', 'against');
+        });
         return entries;
     }
     async getUserThisWeeksEntries({ user }) {

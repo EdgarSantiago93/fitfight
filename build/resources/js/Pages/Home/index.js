@@ -62,38 +62,47 @@ const Home = (props) => {
     const generateComponent = () => {
         const selection = currentWeek[selectedDayIndex];
         if (!selection.entry && (0, moment_1.default)().isSame(selection.fullDate, 'day')) {
-            return react_1.default.createElement(EntryNotSubmitted_1.default, { overlayLoad: setIsLoadingOverlay });
+            console.log(1);
+            return react_1.default.createElement(EntryNotSubmitted_1.default, { key: selection.entry.id, overlayLoad: setIsLoadingOverlay });
         }
         if (selection.entry?.is_rest_day) {
-            return react_1.default.createElement(RestDay_1.default, null);
+            console.log(2);
+            return react_1.default.createElement(RestDay_1.default, { key: selection.entry.id });
         }
         if (selection.entry?.is_validated && selection.entry?.status == 'validated') {
-            return react_1.default.createElement(EntryRated_1.default, { entry: selection.entry });
+            console.log(3);
+            return react_1.default.createElement(EntryRated_1.default, { key: selection.entry.id, entry: selection.entry ?? currentEntry });
         }
         if (!selection.entry?.is_validated && selection.entry?.status == 'pending') {
-            return react_1.default.createElement(EntryRated_1.default, { entry: selection.entry });
+            return react_1.default.createElement(EntryRated_1.default, { key: selection.entry.id, entry: selection.entry ?? currentEntry });
         }
         if (!selection.entry?.is_validated && selection.entry?.status == 'rejected') {
-            return react_1.default.createElement(EntryRated_1.default, { entry: selection.entry });
+            console.log(5);
+            return react_1.default.createElement(EntryRated_1.default, { key: selection.entry.id, entry: selection.entry ?? currentEntry });
         }
         if (selection.entry?.status == 'forced_rest') {
-            return 'fr';
-            return react_1.default.createElement(ForcedRest_1.default, null);
+            console.log(6);
+            return react_1.default.createElement(ForcedRest_1.default, { key: selection.entry.id });
         }
         if ((0, moment_1.default)(selection.fullDate) > (0, moment_1.default)()) {
+            console.log(7);
             return react_1.default.createElement(DayToCome_1.default, null);
         }
         if (!selection.entry) {
+            console.log(8);
             return react_1.default.createElement(NoEntry_1.default, null);
         }
         if ((0, moment_1.default)().format('DD') > selection.date && (0, moment_1.default)().format('MM') <= selection.monthNumber) {
-            console.log('this');
+            console.log(9);
             return react_1.default.createElement(DayToCome_1.default, null);
         }
+        return react_1.default.createElement(react_1.default.Fragment, null, " ");
     };
+    const [currentEntry, setCurrentEntry] = react_1.default.useState(null);
     const setDayAndIndex = (day, index) => {
         setSelectedDay(day);
         setSelectedDayIndex(index);
+        setCurrentEntry(currentWeek[index].entry);
     };
     const [shouldVote, _setShouldVote] = react_1.default.useState(entriesToVoteOn.length > 0 ? true : false);
     const showTodaysModal = () => {
@@ -162,7 +171,6 @@ const Home = (props) => {
                         alignContent: 'center',
                         marginTop: '10px',
                     } }, currentWeek.map((day, index) => {
-                    console.log(day);
                     return (react_1.default.createElement("div", { key: 'datebutton' + index, className: getDayContainerClasses(day), onClick: () => setDayAndIndex(day.date, index) },
                         react_1.default.createElement("div", { className: classes.day }, day.day),
                         react_1.default.createElement("div", { className: classes.date }, day.date),

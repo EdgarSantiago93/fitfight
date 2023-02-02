@@ -122,13 +122,13 @@ const EntryPending = (props: Props) => {
             A favor ✅
           </Text>
           <Avatar.Group spacing="sm" onClick={() => openVoteModal('for')}>
-            {votesFor.map((vote, index) => {
+            {votesFor?.map((vote, index) => {
               console.log(vote)
               if (index < 3) {
                 return <Avatar key={vote.id + 'for'} src={vote.user.avatar} radius="xl" />
               }
             })}
-            {votesFor.length > 3 && <Avatar radius="xl">+{votesFor.length - 3}</Avatar>}
+            {votesFor?.length > 3 && <Avatar radius="xl">+{votesFor.length - 3}</Avatar>}
           </Avatar.Group>
         </Grid.Col>
         <Grid.Col span={6}>
@@ -136,12 +136,12 @@ const EntryPending = (props: Props) => {
             En contra ❌
           </Text>
           <Avatar.Group spacing="sm" onClick={() => openVoteModal('against')}>
-            {votesAgainst.map((vote, index) => {
+            {votesAgainst?.map((vote, index) => {
               if (index < 3) {
                 return <Avatar key={vote.id + 'ag'} src={vote.user.avatar} radius="xl" />
               }
             })}
-            {votesAgainst.length > 3 && <Avatar radius="xl">+{votesFor.length - 3}</Avatar>}
+            {votesAgainst?.length > 3 && <Avatar radius="xl">+{votesFor.length - 3}</Avatar>}
           </Avatar.Group>
         </Grid.Col>
       </Grid>

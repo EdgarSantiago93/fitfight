@@ -1,9 +1,10 @@
 import React from 'react'
-import { Avatar, Text } from '@mantine/core'
+import { Avatar, Text, Tooltip } from '@mantine/core'
 
 import { useStyles } from './styles'
 import moment from 'moment'
 import PageHeader from '../../Components/PageHeader'
+import { useClickOutside } from '@mantine/hooks'
 
 interface Props {}
 const Leaderboard = (props: Props): React.ReactElement => {
@@ -17,14 +18,89 @@ const Leaderboard = (props: Props): React.ReactElement => {
   const nonParticipatingUsers = userswithEntries.filter((u) => !u.hasEntries)
 
   //order by entries
-  const sortedUsers = participatingUsers.sort((a, b) => {
-    return b.entries.length - a.entries.length
-  })
+  const sortedUsers = participatingUsers
+    .sort(function (x, y) {
+      return x.entries.length - y.entries.length || x.totalVotes - y.totalVotes
+    })
+    .reverse()
 
-  React.useEffect(() => {
-    console.log(sortedUsers)
-    console.log(nonParticipatingUsers)
-  }, [])
+  React.useEffect(() => {}, [])
+
+  const FirstPlaceComponent = () => {
+    const [tooltipOpened, setTooltipOpened] = React.useState(false)
+    const ref = useClickOutside(() => setTooltipOpened(false))
+    return sortedUsers[0] && sortedUsers[0].hasEntries ? (
+      <>
+        <Tooltip
+          label={`${sortedUsers[0].totalVotes} votos totales`}
+          opened={tooltipOpened}
+          withArrow
+        >
+          <div onClick={() => setTooltipOpened((o) => !o)} ref={ref}>
+            <Avatar src={sortedUsers[0].avatar} radius={100} size={80} />
+            <div className={classes.placeName}>{sortedUsers[0].name}</div>
+            <div className={classes.placePts}>{sortedUsers[0].entries.length} pts.</div>
+          </div>
+        </Tooltip>
+      </>
+    ) : (
+      <>
+        <Avatar src="" radius={100} size={80} />
+        <div className={classes.placeName}>-</div>
+        <div className={classes.placePts}>-</div>
+      </>
+    )
+  }
+  const SecondPlaceComponent = () => {
+    const [tooltipOpened, setTooltipOpened] = React.useState(false)
+    const ref = useClickOutside(() => setTooltipOpened(false))
+    return sortedUsers[1] && sortedUsers[1].hasEntries ? (
+      <>
+        <Tooltip
+          label={`${sortedUsers[1].totalVotes} votos totales`}
+          opened={tooltipOpened}
+          withArrow
+        >
+          <div onClick={() => setTooltipOpened((o) => !o)} ref={ref}>
+            <Avatar src={sortedUsers[1].avatar} radius={100} size={80} />
+            <div className={classes.placeName}>{sortedUsers[1].name}</div>
+            <div className={classes.placePts}>{sortedUsers[1].entries.length} pts.</div>
+          </div>
+        </Tooltip>
+      </>
+    ) : (
+      <>
+        <Avatar src="" radius={100} size={80} />
+        <div className={classes.placeName}>-</div>
+        <div className={classes.placePts}>-</div>
+      </>
+    )
+  }
+  const ThirdPlaceComponent = () => {
+    const [tooltipOpened, setTooltipOpened] = React.useState(false)
+    const ref = useClickOutside(() => setTooltipOpened(false))
+    return sortedUsers[2] && sortedUsers[2].hasEntries ? (
+      <>
+        <Tooltip
+          label={`${sortedUsers[0].totalVotes} votos totales`}
+          opened={tooltipOpened}
+          withArrow
+        >
+          <div onClick={() => setTooltipOpened((o) => !o)} ref={ref}>
+            <Avatar src={sortedUsers[2].avatar} radius={100} size={80} />
+            <div className={classes.placeName}>{sortedUsers[2].name}</div>
+            <div className={classes.placePts}>{sortedUsers[2].entries.length} pts.</div>
+          </div>
+        </Tooltip>
+      </>
+    ) : (
+      <>
+        <Avatar src="" radius={100} size={80} />
+        <div className={classes.placeName}>-</div>
+        <div className={classes.placePts}>-</div>
+      </>
+    )
+  }
 
   return (
     <>
@@ -41,66 +117,49 @@ const Leaderboard = (props: Props): React.ReactElement => {
           <div className={classes.topRow}>
             <div className={classes.secondPlace}>
               <div className={classes.placeNumber}>2</div>
-              {sortedUsers[1] && sortedUsers[1] ? (
-                <>
-                  <Avatar src={sortedUsers[1].avatar} radius={100} size={70} />
-                  <div className={classes.placeName}>{sortedUsers[1].name}</div>
-                  <div className={classes.placePts}>{sortedUsers[1].entries.length} pts.</div>
-                </>
-              ) : (
-                <>
-                  <Avatar src="" radius={100} size={70} />
-                  <div className={classes.placeName}>-</div>
-                  <div className={classes.placePts}>-</div>
-                </>
-              )}
+
+              <SecondPlaceComponent />
             </div>
             <div className={classes.firstPlace}>
               <div className={classes.crown}>👑</div>
 
-              {sortedUsers[0] && sortedUsers[0].hasEntries ? (
-                <>
-                  <Avatar src={sortedUsers[0].avatar} radius={100} size={80} />
-                  <div className={classes.placeName}>{sortedUsers[0].name}</div>
-                  <div className={classes.placePts}>{sortedUsers[0].entries.length} pts.</div>
-                </>
-              ) : (
-                <>
-                  <Avatar src="" radius={100} size={80} />
-                  <div className={classes.placeName}>-</div>
-                  <div className={classes.placePts}>-</div>
-                </>
-              )}
+              <FirstPlaceComponent />
             </div>
 
             <div className={classes.thirdPlace}>
               <div className={classes.placeNumber}>3</div>
 
-              {sortedUsers[2] && sortedUsers[2].hasEntries ? (
-                <>
-                  <Avatar src={sortedUsers[2].avatar} radius={100} size={60} />
-                  <div className={classes.placeName}>{sortedUsers[2].name}</div>
-                  <div className={classes.placePts}>{sortedUsers[2].entries.length} pts.</div>
-                </>
-              ) : (
-                <>
-                  <Avatar src="" radius={100} size={60} />
-                  <div className={classes.placeName}>-</div>
-                  <div className={classes.placePts}>-</div>
-                </>
-              )}
+              <ThirdPlaceComponent />
             </div>
           </div>
 
           <div className={classes.bottomRow}>
             {sortedUsers.slice(2, sortedUsers.length).map((user, index) => {
               // {nonParticipatingUsers.slice(2, nonParticipatingUsers.length).map((user, index) => {
+              const [tooltipOpened, setTooltipOpened] = React.useState(false)
+              const ref = useClickOutside(() => setTooltipOpened(false))
+
               return (
                 <div className={classes.userRow} key={'participating' + index}>
                   <div className={classes.userRowPlace}>{index + 4}º</div>
                   <Avatar src={user.avatar} radius={100} size={43} />
                   <div className={classes.userRowName}>{user.name}</div>
-                  <div className={classes.userRowPts}>{user.entries.length}pts.</div>
+                  <div>
+                    <div className={classes.userRowPts}>{user.entries.length}pts.</div>
+                    <Tooltip
+                      label={`${user.totalVotes} votos totales`}
+                      opened={tooltipOpened}
+                      withArrow
+                    >
+                      <div
+                        ref={ref}
+                        className={classes.userRowTotalVotes}
+                        onClick={() => setTooltipOpened((o) => !o)}
+                      >
+                        {user.totalVotes} 🗳️
+                      </div>
+                    </Tooltip>
+                  </div>
                 </div>
               )
             })}

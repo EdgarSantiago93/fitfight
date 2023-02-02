@@ -77,7 +77,13 @@ const VotingComponent = (props: Props) => {
   // @ts-ignore
   const [isLoading, setIsLoading] = React.useState(false)
 
-  React.useEffect(() => {}, [])
+  React.useEffect(() => {
+    console.log('ENTRY')
+    console.log(props.entry)
+    console.log(props.entry?.tracker_file_signed_url)
+    console.log(props.entry?.pose_file_signed_url)
+    generateImage()
+  }, [props.entry])
 
   const checkHeic = (url): boolean => {
     if (url?.toLowerCase().includes('.heic') || url?.toLowerCase().includes('.heif')) {
@@ -89,21 +95,33 @@ const VotingComponent = (props: Props) => {
   const votesFor = props.entry?.votes.filter((vote) => vote.type == 'for')
   const votesAgainst = props.entry?.votes.filter((vote) => vote.type == 'against')
 
+  const [trackFileUrl, _setTrackFileUrl] = React.useState(props.entry?.tracker_file_signed_url)
+  const [poseFileUrl, _setPoseFileUrl] = React.useState(props.entry?.pose_file_signed_url)
+
+  const [trackerComponent, setTrackerComponent] = React.useState(<></>)
+
+  const generateImage = () => {
+    setTrackerComponent(
+      // <ImageViewer image={poseFileUrl} isHeic={checkHeic(props.entry?.tracker_file_signed_url)} />
+      <ImageViewer image={trackFileUrl} isHeic={checkHeic(trackFileUrl)} />
+    )
+  }
   return (
     <div className={classes.notSubmitted}>
       <Grid>
         <Grid.Col span={4}>
           <div className={classes.label}>Tracker</div>
-          <ImageViewer
-            image={props.entry?.tracker_file_signed_url}
+          {/* <ImageViewer
+            image={trackFileUrl}
             isHeic={checkHeic(props.entry?.tracker_file_signed_url)}
-          />
+          /> */}
+          {trackerComponent}
         </Grid.Col>
 
         <Grid.Col span={4}>
           <div className={classes.label}>Pose</div>
           <ImageViewer
-            image={props.entry?.pose_file_signed_url}
+            image={poseFileUrl}
             isHeic={checkHeic(props.entry?.tracker_file_signed_url)}
           />
         </Grid.Col>
@@ -134,24 +152,23 @@ const VotingComponent = (props: Props) => {
             A favor ✅
           </Text>
           <Avatar.Group spacing="sm" onClick={() => openVoteModal('for')}>
-            {votesFor.map((vote, index) => {
-              console.log(vote)
+            {votesFor?.map((vote, index) => {
               if (index < 3) {
                 return <Avatar key={vote.id + 'for'} src={vote.user.avatar} radius="xl" />
               }
             })}
-            {votesFor.length > 3 && <Avatar radius="xl">+{votesFor.length - 3}</Avatar>}
+            {votesFor?.length > 3 && <Avatar radius="xl">+{votesFor.length - 3}</Avatar>}
           </Avatar.Group>
           <Text weight={600} size="md">
             En contra ❌
           </Text>
           <Avatar.Group spacing="sm" onClick={() => openVoteModal('against')}>
-            {votesAgainst.map((vote, index) => {
+            {votesAgainst?.map((vote, index) => {
               if (index < 3) {
                 return <Avatar key={vote.id + 'ag'} src={vote.user.avatar} radius="xl" />
               }
             })}
-            {votesAgainst.length > 3 && <Avatar radius="xl">+{votesFor.length - 3}</Avatar>}
+            {votesAgainst?.length > 3 && <Avatar radius="xl">+{votesFor.length - 3}</Avatar>}
           </Avatar.Group>
         </Grid.Col>
         <Grid.Col span={6}>
@@ -160,9 +177,9 @@ const VotingComponent = (props: Props) => {
           </Text>
 
           <Text weight={600} size="xl">
-            {props.entry.status == 'pending' && !props.entry.is_validated ? 'Validando 🕒' : ''}
-            {props.entry.status == 'validated' && props.entry.is_validated ? 'Válida 👍🏼' : ''}
-            {props.entry.status == 'rejected' && !props.entry.is_validated ? 'No válida 👎🏼' : ''}
+            {props.entry?.status == 'pending' && !props.entry.is_validated ? 'Validando 🕒' : ''}
+            {props.entry?.status == 'validated' && props.entry.is_validated ? 'Válida 👍🏼' : ''}
+            {props.entry?.status == 'rejected' && !props.entry.is_validated ? 'No válida 👎🏼' : ''}
           </Text>
         </Grid.Col>
       </Grid>

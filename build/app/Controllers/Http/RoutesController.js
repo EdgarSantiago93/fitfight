@@ -58,7 +58,13 @@ class RoutesController {
             let serialized = user.serialize();
             const entries = await this.routesControllerActions.getValidatedEntries({ user });
             serialized.entries = entries;
+            let sum = entries.reduce(function (previousValue, currentValue, _currentIndex, _array) {
+                let val = currentValue.$extras.vote_count_for - currentValue.$extras.vote_count_against;
+                let result = previousValue + val;
+                return result;
+            }, 0);
             serialized.hasEntries = true;
+            serialized.totalVotes = sum;
             entries.length == 0 && (serialized.hasEntries = false);
             return serialized;
         }));

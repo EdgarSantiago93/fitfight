@@ -72,24 +72,24 @@ const EntryPending = (props) => {
             react_1.default.createElement(core_1.Grid.Col, { span: 6 },
                 react_1.default.createElement(core_1.Text, { weight: 600, size: "md" }, "A favor \u2705"),
                 react_1.default.createElement(core_1.Avatar.Group, { spacing: "sm", onClick: () => openVoteModal('for') },
-                    votesFor.map((vote, index) => {
+                    votesFor?.map((vote, index) => {
                         console.log(vote);
                         if (index < 3) {
                             return react_1.default.createElement(core_1.Avatar, { key: vote.id + 'for', src: vote.user.avatar, radius: "xl" });
                         }
                     }),
-                    votesFor.length > 3 && react_1.default.createElement(core_1.Avatar, { radius: "xl" },
+                    votesFor?.length > 3 && react_1.default.createElement(core_1.Avatar, { radius: "xl" },
                         "+",
                         votesFor.length - 3))),
             react_1.default.createElement(core_1.Grid.Col, { span: 6 },
                 react_1.default.createElement(core_1.Text, { weight: 600, size: "md" }, "En contra \u274C"),
                 react_1.default.createElement(core_1.Avatar.Group, { spacing: "sm", onClick: () => openVoteModal('against') },
-                    votesAgainst.map((vote, index) => {
+                    votesAgainst?.map((vote, index) => {
                         if (index < 3) {
                             return react_1.default.createElement(core_1.Avatar, { key: vote.id + 'ag', src: vote.user.avatar, radius: "xl" });
                         }
                     }),
-                    votesAgainst.length > 3 && react_1.default.createElement(core_1.Avatar, { radius: "xl" },
+                    votesAgainst?.length > 3 && react_1.default.createElement(core_1.Avatar, { radius: "xl" },
                         "+",
                         votesFor.length - 3))))));
 };
