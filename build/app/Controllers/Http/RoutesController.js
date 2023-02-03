@@ -86,7 +86,7 @@ class RoutesController {
                 return serialized;
             }));
         return inertia.render('DaysEntries', {
-            user: { user },
+            user: user,
             userswithEntries: [],
             today: todaysEntriesJson,
         });

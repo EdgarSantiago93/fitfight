@@ -24,7 +24,7 @@ const Vote = (props: Props): React.ReactElement => {
   return (
     <>
       <div className={classes.wrapper}>
-        <PageHeader user={user} showHome={true} showCal={true} showLb={true} />
+        <PageHeader user={user} showHome={true} showCal={true} showLb={true} showToday={true} />
         <div>
           <div style={{ width: '100%', textAlign: 'center' }}>
             <Text size={'xl'} weight={500}>

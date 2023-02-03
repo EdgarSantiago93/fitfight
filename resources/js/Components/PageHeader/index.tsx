@@ -1,11 +1,17 @@
 import React from 'react'
 import { Avatar, Group, Image, Menu, ActionIcon } from '@mantine/core'
 import { useStyles } from './styles'
-import { Logout, Medal, Home2 } from 'tabler-icons-react'
+import { Logout, Medal, Home2, Calendar } from 'tabler-icons-react'
 
 import moment from 'moment'
 
-const PageHeader = ({ user, showHome = false, showLb = false, showCal = false }) => {
+const PageHeader = ({
+  user,
+  showHome = false,
+  showLb = false,
+  showCal = false,
+  showToday = false,
+}) => {
   const { classes } = useStyles()
   moment.locale('es')
 
@@ -57,6 +63,19 @@ const PageHeader = ({ user, showHome = false, showLb = false, showCal = false })
               style={{ marginRight: 5 }}
             >
               <Medal size={34} />
+            </ActionIcon>
+          )}
+
+          {showToday && (
+            <ActionIcon
+              color="#F04336"
+              size="xl"
+              radius="xl"
+              variant="light"
+              onClick={() => (window.location.href = '/today')}
+              style={{ marginRight: 5 }}
+            >
+              <Calendar size={34} />
             </ActionIcon>
           )}
 

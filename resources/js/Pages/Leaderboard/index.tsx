@@ -17,95 +17,36 @@ const Leaderboard = (props: Props): React.ReactElement => {
   const participatingUsers = userswithEntries.filter((u) => u.hasEntries)
   const nonParticipatingUsers = userswithEntries.filter((u) => !u.hasEntries)
 
-  //order by entries
-  const sortedUsers = participatingUsers
-    .sort(function (x, y) {
-      return x.entries.length - y.entries.length || x.totalVotes - y.totalVotes
+  //order by entries, votes and date average
+
+  const orderData = (data) => {
+    return data.sort((a, b) => {
+      if (a.entries.length !== b.entries.length) {
+        return b.entries.length - a.entries.length
+      } else if (a.totalVotes !== b.totalVotes) {
+        return b.totalVotes - a.totalVotes
+      } else {
+        const aAverage =
+          a.entries.reduce((sum, entry) => {
+            const date = new Date(entry.created_at.full_value)
+            return sum + date.valueOf()
+          }, 0) / a.entries.length
+        const bAverage =
+          b.entries.reduce((sum, entry) => {
+            const date = new Date(entry.created_at.full_value)
+            return sum + date.valueOf()
+          }, 0) / b.entries.length
+        return aAverage - bAverage
+      }
     })
-    .reverse()
-
+  }
   React.useEffect(() => {}, [])
-
-  const FirstPlaceComponent = () => {
-    const [tooltipOpened, setTooltipOpened] = React.useState(false)
-    const ref = useClickOutside(() => setTooltipOpened(false))
-    return sortedUsers[0] && sortedUsers[0].hasEntries ? (
-      <>
-        <Tooltip
-          label={`${sortedUsers[0].totalVotes} votos totales`}
-          opened={tooltipOpened}
-          withArrow
-        >
-          <div onClick={() => setTooltipOpened((o) => !o)} ref={ref}>
-            <Avatar src={sortedUsers[0].avatar} radius={100} size={80} />
-            <div className={classes.placeName}>{sortedUsers[0].name}</div>
-            <div className={classes.placePts}>{sortedUsers[0].entries.length} pts.</div>
-          </div>
-        </Tooltip>
-      </>
-    ) : (
-      <>
-        <Avatar src="" radius={100} size={80} />
-        <div className={classes.placeName}>-</div>
-        <div className={classes.placePts}>-</div>
-      </>
-    )
-  }
-  const SecondPlaceComponent = () => {
-    const [tooltipOpened, setTooltipOpened] = React.useState(false)
-    const ref = useClickOutside(() => setTooltipOpened(false))
-    return sortedUsers[1] && sortedUsers[1].hasEntries ? (
-      <>
-        <Tooltip
-          label={`${sortedUsers[1].totalVotes} votos totales`}
-          opened={tooltipOpened}
-          withArrow
-        >
-          <div onClick={() => setTooltipOpened((o) => !o)} ref={ref}>
-            <Avatar src={sortedUsers[1].avatar} radius={100} size={80} />
-            <div className={classes.placeName}>{sortedUsers[1].name}</div>
-            <div className={classes.placePts}>{sortedUsers[1].entries.length} pts.</div>
-          </div>
-        </Tooltip>
-      </>
-    ) : (
-      <>
-        <Avatar src="" radius={100} size={80} />
-        <div className={classes.placeName}>-</div>
-        <div className={classes.placePts}>-</div>
-      </>
-    )
-  }
-  const ThirdPlaceComponent = () => {
-    const [tooltipOpened, setTooltipOpened] = React.useState(false)
-    const ref = useClickOutside(() => setTooltipOpened(false))
-    return sortedUsers[2] && sortedUsers[2].hasEntries ? (
-      <>
-        <Tooltip
-          label={`${sortedUsers[0].totalVotes} votos totales`}
-          opened={tooltipOpened}
-          withArrow
-        >
-          <div onClick={() => setTooltipOpened((o) => !o)} ref={ref}>
-            <Avatar src={sortedUsers[2].avatar} radius={100} size={80} />
-            <div className={classes.placeName}>{sortedUsers[2].name}</div>
-            <div className={classes.placePts}>{sortedUsers[2].entries.length} pts.</div>
-          </div>
-        </Tooltip>
-      </>
-    ) : (
-      <>
-        <Avatar src="" radius={100} size={80} />
-        <div className={classes.placeName}>-</div>
-        <div className={classes.placePts}>-</div>
-      </>
-    )
-  }
+  const sortedUsers = React.useMemo(() => orderData(participatingUsers), [])
 
   return (
     <>
       <div className={classes.wrapper}>
-        <PageHeader user={user} showHome={true} showCal={true} showLb={false} />
+        <PageHeader user={user} showHome={true} showCal={true} showLb={false} showToday={true} />
 
         <div>
           <div style={{ width: '100%', textAlign: 'center' }}>
@@ -117,25 +58,23 @@ const Leaderboard = (props: Props): React.ReactElement => {
           <div className={classes.topRow}>
             <div className={classes.secondPlace}>
               <div className={classes.placeNumber}>2</div>
-
-              <SecondPlaceComponent />
+              <Top3Component user={sortedUsers[1]} classes={classes} />
             </div>
             <div className={classes.firstPlace}>
               <div className={classes.crown}>👑</div>
 
-              <FirstPlaceComponent />
+              <Top3Component user={sortedUsers[0]} classes={classes} />
             </div>
 
             <div className={classes.thirdPlace}>
               <div className={classes.placeNumber}>3</div>
 
-              <ThirdPlaceComponent />
+              <Top3Component user={sortedUsers[2]} classes={classes} />
             </div>
           </div>
 
           <div className={classes.bottomRow}>
-            {sortedUsers.slice(2, sortedUsers.length).map((user, index) => {
-              // {nonParticipatingUsers.slice(2, nonParticipatingUsers.length).map((user, index) => {
+            {sortedUsers.slice(3, sortedUsers.length).map((user, index) => {
               const [tooltipOpened, setTooltipOpened] = React.useState(false)
               const ref = useClickOutside(() => setTooltipOpened(false))
 
@@ -184,6 +123,28 @@ const Leaderboard = (props: Props): React.ReactElement => {
           </div>
         </div>
       </div>
+    </>
+  )
+}
+
+const Top3Component = ({ user, classes }) => {
+  const [tooltipOpened, setTooltipOpened] = React.useState(false)
+  const ref = useClickOutside(() => setTooltipOpened(false))
+  return user && user.hasEntries ? (
+    <>
+      <Tooltip label={`${user.totalVotes} votos totales`} opened={tooltipOpened} withArrow>
+        <div onClick={() => setTooltipOpened((o) => !o)} ref={ref}>
+          <Avatar src={user.avatar} radius={100} size={80} />
+          <div className={classes.placeName}>{user.name}</div>
+          <div className={classes.placePts}>{user.entries.length} pts.</div>
+        </div>
+      </Tooltip>
+    </>
+  ) : (
+    <>
+      <Avatar src="" radius={100} size={80} />
+      <div className={classes.placeName}>-</div>
+      <div className={classes.placePts}>-</div>
     </>
   )
 }

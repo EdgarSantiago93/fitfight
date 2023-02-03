@@ -51,9 +51,7 @@ const Home = (props: Props): React.ReactElement => {
   const [isLoading, _setisLoading] = React.useState()
   const [isLoadingOverlay, setIsLoadingOverlay] = React.useState(false)
 
-  React.useEffect(() => {
-    console.log(earliestEntry.length)
-  }, [])
+  React.useEffect(() => {}, [])
   const getDayContainerClasses = (day: any) => {
     return cx(
       classes.dateContainer,
@@ -104,41 +102,30 @@ const Home = (props: Props): React.ReactElement => {
     const selection = currentWeek[selectedDayIndex]
 
     if (!selection.entry && moment().isSame(selection.fullDate, 'day')) {
-      console.log(1)
-      return <EntryNotSubmitted key={selection.entry.id} overlayLoad={setIsLoadingOverlay} />
+      return <EntryNotSubmitted overlayLoad={setIsLoadingOverlay} />
     }
-
     if (selection.entry?.is_rest_day) {
-      console.log(2)
       return <RestDay key={selection.entry.id} />
     }
-
     if (selection.entry?.is_validated && selection.entry?.status == 'validated') {
-      console.log(3)
       return <EntryRated key={selection.entry.id} entry={selection.entry ?? currentEntry} />
     }
     if (!selection.entry?.is_validated && selection.entry?.status == 'pending') {
       return <EntryRated key={selection.entry.id} entry={selection.entry ?? currentEntry} />
     }
     if (!selection.entry?.is_validated && selection.entry?.status == 'rejected') {
-      console.log(5)
       return <EntryRated key={selection.entry.id} entry={selection.entry ?? currentEntry} />
     }
     if (selection.entry?.status == 'forced_rest') {
-      console.log(6)
-      return <ForcedRest key={selection.entry.id} />
+      return <ForcedRest key={Date.now() + 'fr'} />
     }
     if (moment(selection.fullDate) > moment()) {
-      console.log(7)
       return <DayToCome />
     }
     if (!selection.entry) {
-      console.log(8)
       return <NoEntry />
     }
-
     if (moment().format('DD') > selection.date && moment().format('MM') <= selection.monthNumber) {
-      console.log(9)
       return <DayToCome />
     }
     return <> </>
@@ -240,7 +227,7 @@ const Home = (props: Props): React.ReactElement => {
       <div className={classes.wrapper}>
         <LoadingOverlay visible={isLoadingOverlay} overlayBlur={2} />
 
-        <PageHeader user={user} showCal={true} showLb={true} />
+        <PageHeader user={user} showCal={true} showLb={true} showToday={true} />
 
         {shouldVote && (
           <Container

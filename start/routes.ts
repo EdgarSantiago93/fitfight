@@ -12,6 +12,7 @@ Route.group(() => {
   Route.get('/lb', 'RoutesController.getLeaderBoardView')
   Route.get('/vote', 'RoutesController.getVotingView')
   Route.get('/cal', 'RoutesController.getVotingView') //WIP
+  Route.get('/today', 'RoutesController.getTodaysEntriesView') //WIP
 
   //Actions
   Route.post('/get_media_token', 'GetUploadTokenAction')

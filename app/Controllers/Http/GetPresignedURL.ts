@@ -10,7 +10,6 @@ export default class GetPresignedURL {
     const fileKey = request.input('file_key')
     const live = request.input('is_live')
     const fileType = request.input('file_type')
-    console.log('API HANDLE')
     const res = await this.controllerAction({ fileKey: fileKey, live: live, fileType: fileType })
 
     if (res == 'error') {

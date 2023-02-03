@@ -6,36 +6,27 @@ export default class Awardpoints extends BaseCommand {
    * Command name is used to run the command
    */
   public static commandName = 'awardpoints' // updateLeaderboard
-
-  /**
-   * Command description is displayed in the "help" output
-   */
-  public static description = ''
+  public static description = 'Award points to users for the day'
 
   public static settings = {
-    /**
-     * Set the following value to true, if you want to load the application
-     * before running the command. Don't forget to call `node ace generate:manifest`
-     * afterwards.
-     */
     loadApp: true,
-
-    /**
-     * Set the following value to true, if you want this command to keep running until
-     * you manually decide to exit the process. Don't forget to call
-     * `node ace generate:manifest` afterwards.
-     */
     stayAlive: false,
   }
 
   public async run() {
-    this.logger.info('Hello world!')
+    this.logger.info('->FITFIGHT<-')
     const { default: Entry } = await import('App/Models/Entry')
     // this runs after 12:00am
     // const yesterday = moment().subtract(1, 'days')
     const yesterday = moment().utcOffset(-6).subtract(1, 'days')
-    console.log('OFFSEEET', yesterday.format())
-    // const yesterday = moment()
+
+    // only run between 12:00am and 1:30am
+    if (moment().utcOffset(-6).hour() < 12 || moment().utcOffset(-6).hour() > 1) {
+      this.logger.info('Not running awardpoints')
+      this.logger.info('Current hour: ' + moment().utcOffset(-6).hour())
+      return
+    }
+
     this.logger.info('Yesterday was: ' + yesterday.format())
 
     const entriesForTheDay = await Entry.query()
@@ -45,7 +36,7 @@ export default class Awardpoints extends BaseCommand {
       .where('created_at', '<=', yesterday.endOf('day').format())
 
     this.logger.info('Awarding points to users for: ' + yesterday.format('YYYY-MM-DD'))
-    console.log(entriesForTheDay.length)
+    this.logger.info(entriesForTheDay.length.toString())
 
     for (const entry of entriesForTheDay) {
       const votes = await entry.related('votes').query()

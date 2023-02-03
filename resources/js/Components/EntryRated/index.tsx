@@ -78,10 +78,6 @@ const VotingComponent = (props: Props) => {
   const [isLoading, setIsLoading] = React.useState(false)
 
   React.useEffect(() => {
-    console.log('ENTRY')
-    console.log(props.entry)
-    console.log(props.entry?.tracker_file_signed_url)
-    console.log(props.entry?.pose_file_signed_url)
     generateImage()
   }, [props.entry])
 
@@ -128,13 +124,16 @@ const VotingComponent = (props: Props) => {
 
         <Grid.Col span={4}>
           <div style={{ height: '50%' }}>
-            <div className={classes.label}>Calorias</div>
+            {/* <div className={classes.label}>Calorias</div> */}
+            <div className={classes.label}>🔥</div>
+
             <Text weight={600} style={{ marginTop: '0px' }}>
               {props.entry?.calories == '' ? '-' : props.entry?.calories}
             </Text>
           </div>
           <div style={{ height: '50%' }}>
-            <div className={classes.label}>Minutos Ejercicio</div>
+            {/* <div className={classes.label}>Minutos Ejercicio</div> */}
+            <div className={classes.label}>⏰🏋🏼</div>
             <Text weight={600} style={{ marginTop: '0px' }}>
               {props.entry?.minutes == '' ? '-' : props.entry?.minutes}
             </Text>

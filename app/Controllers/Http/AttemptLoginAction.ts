@@ -17,7 +17,6 @@ export default class AttemptLoginAction {
       return response.unprocessableEntity('Password incorrecto')
     }
 
-    console.log('Passed verification')
     await auth.use('web').attempt(email, password)
     return response.json({
       success: true,

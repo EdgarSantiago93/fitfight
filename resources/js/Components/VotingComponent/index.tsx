@@ -18,11 +18,7 @@ const EntryRated = (props: Props) => {
   // @ts-ignore
   const [isLoading, setIsLoading] = React.useState(false)
 
-  React.useEffect(() => {
-    console.log('entry rated')
-    console.log(props.earliestEntry)
-    console.log('ENTRYYYY', props.entry)
-  }, [])
+  React.useEffect(() => {}, [])
 
   const ButtonConfirm = ({ callback, text, color, disabled }) => {
     const [isFirstTime, setIsFirstTime] = React.useState<boolean>(true)
@@ -65,11 +61,8 @@ const EntryRated = (props: Props) => {
 
   const attemptVote = async (type) => {
     setIsLoading(true)
-    console.log('attempting vote', type)
     const apiCall = await voteOnEntry({ entry_id: props.entry.id, type: type })
-    console.log('apiCall', apiCall)
     if (apiCall?.success) {
-      console.log('successss')
       return window.location.reload()
     }
     setIsLoading(false)

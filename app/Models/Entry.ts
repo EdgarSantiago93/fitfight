@@ -22,7 +22,7 @@ export default class Entry extends BaseModel {
   @column.dateTime({
     autoCreate: true,
     serialize: (value: DateTime | null) => {
-      return { day: value?.day, month: value?.month, year: value?.year }
+      return { day: value?.day, month: value?.month, year: value?.year, full_value: value }
     },
   })
   public createdAt: DateTime

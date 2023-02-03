@@ -7,9 +7,7 @@ import { useStyles } from './styles'
 const ImageViewer = ({ image, isSmall = false, isHeic = false }) => {
   const { classes, cx } = useStyles()
 
-  React.useEffect(() => {
-    console.log('image', image)
-  }, [image])
+  React.useEffect(() => {}, [image])
 
   const [imageUrl, _setImageUrl] = React.useState(
     `${isHeic ? 'https://cpmvzflwta.cloudimg.io/' : ''}${image}`

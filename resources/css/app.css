@@ -6,7 +6,7 @@ html, body {
   background-color: #F7F8FA;
   /* font-family: 'Poppins', sans-serif; */
   font-family: 'Noto Sans', sans-serif!important;
-  height: 100vh;
+  min-height: 100vh;
   color: #46444c;
   position: relative;
 }

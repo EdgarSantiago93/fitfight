@@ -123,7 +123,6 @@ const EntryPending = (props: Props) => {
           </Text>
           <Avatar.Group spacing="sm" onClick={() => openVoteModal('for')}>
             {votesFor?.map((vote, index) => {
-              console.log(vote)
               if (index < 3) {
                 return <Avatar key={vote.id + 'for'} src={vote.user.avatar} radius="xl" />
               }

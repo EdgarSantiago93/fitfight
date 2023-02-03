@@ -81,6 +81,32 @@ export default class RoutesController {
 
     return inertia.render('Leaderboard', { user: user, userswithEntries: userswithEntries })
   }
+  public async getTodaysEntriesView({ auth, inertia }) {
+    await auth.use('web').authenticate()
+    const user = auth.use('web').user!
+
+    const todaysEntries = await this.routesControllerActions.getTotalTodaysEntriesWithVotes()
+
+    const todaysEntriesJson = await Promise.all(
+      todaysEntries &&
+        todaysEntries.map(async (entry) => {
+          let serialized = entry.serialize()
+          entry?.pose_file && (await entry.load('pose_file_model'))
+          entry?.tracker_file && (await entry.load('tracker_file_model'))
+          entry.pose_file &&
+            (serialized.pose_file_signed_url = await entry.pose_file_model.presignedUrl())
+          entry.tracker_file &&
+            (serialized.tracker_file_signed_url = await entry.tracker_file_model.presignedUrl())
+          return serialized
+        })
+    )
+
+    return inertia.render('DaysEntries', {
+      user: user,
+      userswithEntries: [],
+      today: todaysEntriesJson,
+    })
+  }
 
   public async getDashboardView({ auth, inertia }) {
     await auth.use('web').authenticate()

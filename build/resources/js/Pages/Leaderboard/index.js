@@ -17,57 +17,29 @@ const Leaderboard = (props) => {
     moment_1.default.locale('es');
     const participatingUsers = userswithEntries.filter((u) => u.hasEntries);
     const nonParticipatingUsers = userswithEntries.filter((u) => !u.hasEntries);
-    const sortedUsers = participatingUsers
-        .sort(function (x, y) {
-        return x.entries.length - y.entries.length || x.totalVotes - y.totalVotes;
-    })
-        .reverse();
+    const orderData = (data) => {
+        return data.sort((a, b) => {
+            if (a.entries.length !== b.entries.length) {
+                return b.entries.length - a.entries.length;
+            }
+            else if (a.totalVotes !== b.totalVotes) {
+                return b.totalVotes - a.totalVotes;
+            }
+            else {
+                const aAverage = a.entries.reduce((sum, entry) => {
+                    const date = new Date(entry.created_at.full_value);
+                    return sum + date.valueOf();
+                }, 0) / a.entries.length;
+                const bAverage = b.entries.reduce((sum, entry) => {
+                    const date = new Date(entry.created_at.full_value);
+                    return sum + date.valueOf();
+                }, 0) / b.entries.length;
+                return aAverage - bAverage;
+            }
+        });
+    };
     react_1.default.useEffect(() => { }, []);
-    const FirstPlaceComponent = () => {
-        const [tooltipOpened, setTooltipOpened] = react_1.default.useState(false);
-        const ref = (0, hooks_1.useClickOutside)(() => setTooltipOpened(false));
-        return sortedUsers[0] && sortedUsers[0].hasEntries ? (react_1.default.createElement(react_1.default.Fragment, null,
-            react_1.default.createElement(core_1.Tooltip, { label: `${sortedUsers[0].totalVotes} votos totales`, opened: tooltipOpened, withArrow: true },
-                react_1.default.createElement("div", { onClick: () => setTooltipOpened((o) => !o), ref: ref },
-                    react_1.default.createElement(core_1.Avatar, { src: sortedUsers[0].avatar, radius: 100, size: 80 }),
-                    react_1.default.createElement("div", { className: classes.placeName }, sortedUsers[0].name),
-                    react_1.default.createElement("div", { className: classes.placePts },
-                        sortedUsers[0].entries.length,
-                        " pts."))))) : (react_1.default.createElement(react_1.default.Fragment, null,
-            react_1.default.createElement(core_1.Avatar, { src: "", radius: 100, size: 80 }),
-            react_1.default.createElement("div", { className: classes.placeName }, "-"),
-            react_1.default.createElement("div", { className: classes.placePts }, "-")));
-    };
-    const SecondPlaceComponent = () => {
-        const [tooltipOpened, setTooltipOpened] = react_1.default.useState(false);
-        const ref = (0, hooks_1.useClickOutside)(() => setTooltipOpened(false));
-        return sortedUsers[1] && sortedUsers[1].hasEntries ? (react_1.default.createElement(react_1.default.Fragment, null,
-            react_1.default.createElement(core_1.Tooltip, { label: `${sortedUsers[1].totalVotes} votos totales`, opened: tooltipOpened, withArrow: true },
-                react_1.default.createElement("div", { onClick: () => setTooltipOpened((o) => !o), ref: ref },
-                    react_1.default.createElement(core_1.Avatar, { src: sortedUsers[1].avatar, radius: 100, size: 80 }),
-                    react_1.default.createElement("div", { className: classes.placeName }, sortedUsers[1].name),
-                    react_1.default.createElement("div", { className: classes.placePts },
-                        sortedUsers[1].entries.length,
-                        " pts."))))) : (react_1.default.createElement(react_1.default.Fragment, null,
-            react_1.default.createElement(core_1.Avatar, { src: "", radius: 100, size: 80 }),
-            react_1.default.createElement("div", { className: classes.placeName }, "-"),
-            react_1.default.createElement("div", { className: classes.placePts }, "-")));
-    };
-    const ThirdPlaceComponent = () => {
-        const [tooltipOpened, setTooltipOpened] = react_1.default.useState(false);
-        const ref = (0, hooks_1.useClickOutside)(() => setTooltipOpened(false));
-        return sortedUsers[2] && sortedUsers[2].hasEntries ? (react_1.default.createElement(react_1.default.Fragment, null,
-            react_1.default.createElement(core_1.Tooltip, { label: `${sortedUsers[0].totalVotes} votos totales`, opened: tooltipOpened, withArrow: true },
-                react_1.default.createElement("div", { onClick: () => setTooltipOpened((o) => !o), ref: ref },
-                    react_1.default.createElement(core_1.Avatar, { src: sortedUsers[2].avatar, radius: 100, size: 80 }),
-                    react_1.default.createElement("div", { className: classes.placeName }, sortedUsers[2].name),
-                    react_1.default.createElement("div", { className: classes.placePts },
-                        sortedUsers[2].entries.length,
-                        " pts."))))) : (react_1.default.createElement(react_1.default.Fragment, null,
-            react_1.default.createElement(core_1.Avatar, { src: "", radius: 100, size: 80 }),
-            react_1.default.createElement("div", { className: classes.placeName }, "-"),
-            react_1.default.createElement("div", { className: classes.placePts }, "-")));
-    };
+    const sortedUsers = react_1.default.useMemo(() => orderData(participatingUsers), []);
     return (react_1.default.createElement(react_1.default.Fragment, null,
         react_1.default.createElement("div", { className: classes.wrapper },
             react_1.default.createElement(PageHeader_1.default, { user: user, showHome: true, showCal: true, showLb: false, showToday: true }),
@@ -80,15 +52,15 @@ const Leaderboard = (props) => {
                 react_1.default.createElement("div", { className: classes.topRow },
                     react_1.default.createElement("div", { className: classes.secondPlace },
                         react_1.default.createElement("div", { className: classes.placeNumber }, "2"),
-                        react_1.default.createElement(SecondPlaceComponent, null)),
+                        react_1.default.createElement(Top3Component, { user: sortedUsers[1], classes: classes })),
                     react_1.default.createElement("div", { className: classes.firstPlace },
                         react_1.default.createElement("div", { className: classes.crown }, "\uD83D\uDC51"),
-                        react_1.default.createElement(FirstPlaceComponent, null)),
+                        react_1.default.createElement(Top3Component, { user: sortedUsers[0], classes: classes })),
                     react_1.default.createElement("div", { className: classes.thirdPlace },
                         react_1.default.createElement("div", { className: classes.placeNumber }, "3"),
-                        react_1.default.createElement(ThirdPlaceComponent, null))),
+                        react_1.default.createElement(Top3Component, { user: sortedUsers[2], classes: classes }))),
                 react_1.default.createElement("div", { className: classes.bottomRow },
-                    sortedUsers.slice(2, sortedUsers.length).map((user, index) => {
+                    sortedUsers.slice(3, sortedUsers.length).map((user, index) => {
                         const [tooltipOpened, setTooltipOpened] = react_1.default.useState(false);
                         const ref = (0, hooks_1.useClickOutside)(() => setTooltipOpened(false));
                         return (react_1.default.createElement("div", { className: classes.userRow, key: 'participating' + index },
@@ -116,6 +88,21 @@ const Leaderboard = (props) => {
                                 user.entries.length,
                                 "pts.")));
                     }))))));
+};
+const Top3Component = ({ user, classes }) => {
+    const [tooltipOpened, setTooltipOpened] = react_1.default.useState(false);
+    const ref = (0, hooks_1.useClickOutside)(() => setTooltipOpened(false));
+    return user && user.hasEntries ? (react_1.default.createElement(react_1.default.Fragment, null,
+        react_1.default.createElement(core_1.Tooltip, { label: `${user.totalVotes} votos totales`, opened: tooltipOpened, withArrow: true },
+            react_1.default.createElement("div", { onClick: () => setTooltipOpened((o) => !o), ref: ref },
+                react_1.default.createElement(core_1.Avatar, { src: user.avatar, radius: 100, size: 80 }),
+                react_1.default.createElement("div", { className: classes.placeName }, user.name),
+                react_1.default.createElement("div", { className: classes.placePts },
+                    user.entries.length,
+                    " pts."))))) : (react_1.default.createElement(react_1.default.Fragment, null,
+        react_1.default.createElement(core_1.Avatar, { src: "", radius: 100, size: 80 }),
+        react_1.default.createElement("div", { className: classes.placeName }, "-"),
+        react_1.default.createElement("div", { className: classes.placePts }, "-")));
 };
 exports.default = Leaderboard;
 //# sourceMappingURL=index.js.map

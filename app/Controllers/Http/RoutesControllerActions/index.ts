@@ -14,6 +14,18 @@ export default class RoutesControllerActions {
     return entries
   }
 
+  public async getTotalTodaysEntriesWithVotes(): Promise<Entry[]> {
+    const entries = await Entry.query()
+      .where('created_at', '>=', moment().startOf('day').format())
+      .where('created_at', '<=', moment().endOf('day').format())
+      .preload('user')
+      .preload('votes', (query) => {
+        query.preload('user')
+      })
+      .orderBy('created_at', 'asc')
+    return entries
+  }
+
   public async getTodaysEarliestEntry(): Promise<Entry | null> {
     return await new Promise(async (resolve, _reject) => {
       const entry = await Entry.query()
