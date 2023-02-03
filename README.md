@@ -1,22 +1,13 @@
 
 # Fitfight
-My group of friends started working out, to make it more interesting, we decided to put in place rules and a point system that ultimately decided who would be the winner.
 
-- Every member must log at least 30 mins of active exercise
-- Theres an entry fee
-- They must prove their participation by uploading:
-    - A photo of themselves with the day's unique pose, if no entry has been submitted yet, they get to choose one.
-    - (optional) A photo of their fitness tracker
-    - (optional) Log their active minutes and active calories
-- This system is somewhat based on the ```proof of work``` premise, every node(member) must prove that certain amount of effort has been expended. Verifiers can subsequently confirm this with little effort by voting (👍 or 👎) on each others entries.
-- Each member decides if the entry in question is valid or not
-- Every day at 00:05 a cron job is ran to count the votes for and against for each entry and validates them accordingly
-- A point is awarded to a ```validated``` entry
-- At the end of each month, whomever has accrued more points is declared the winner
-- Theres a jackpot plus a difference-of-points reward system 
-    eg.
-    - John places 1st with 10 points -> gets the jackpot
-    - Andrew places 4th with 6 points -> pays John ```(10-6) * $10 = $40```
+My group of friends and I have started a fun workout challenge with rules and a point system to determine the winner. To participate, every member must log at least 30 minutes of active exercise and pay an entry fee. They must prove their participation by submitting a photo of themselves with the day's unique pose (or choose one if no other entry has been submitted yet), and they may also include a photo of their fitness tracker and log their active minutes and calories.
+
+This system operates on the ```proof of work``` principle where every member must demonstrate a certain amount of effort. Verifiers can easily validate the entries by voting "👍" or "👎" on each other's submissions. The members will decide if each entry is valid or not. Every day, a cron job runs at 00:05 to tally the votes and validate the entries, awarding a point to each ```validated``` entry.
+
+At the end of each month, the member with the most points will be declared the winner and receive the jackpot. There's also a difference-of-points reward system in place, for example, if John places first with 10 points, he gets the jackpot, and if Andrew places fourth with 6 points, he pays John $40 ```(calculated as (10-6) * $10)```.
+
+In case of a tie in points, the system will determine the winner by considering the member with the most number of votes. If there's still a tie, the average time of the entries will be taken into account and the member with the earliest time will be declared the winner.
 
 ## Technical
 This project was created as an experiment / something fun for my friends/ a great way of learning a new framework
