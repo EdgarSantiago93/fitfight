@@ -103,89 +103,101 @@ const DaysEntries = (props: Props): React.ReactElement => {
                         </div>
                       </Grid.Col>
 
-                      <Grid.Col span={4}>
-                        <div className={classes.label}>Tracker</div>
-                        <ImageViewer
-                          image={entry?.tracker_file_signed_url}
-                          isSmall={true}
-                          isHeic={checkHeic(entry?.tracker_file_signed_url)}
-                        />
-                      </Grid.Col>
+                      {entry.is_rest_day ? (
+                        <Grid.Col span={12} className={classes.entryGrid}>
+                          <div
+                            style={{ textAlign: 'center', marginTop: '40px', marginBottom: '40px' }}
+                          >
+                            <div className={classes.label}>Día de descanso</div>
+                            😴
+                          </div>
+                        </Grid.Col>
+                      ) : (
+                        <>
+                          <Grid.Col span={4}>
+                            <div className={classes.label}>Tracker</div>
+                            <ImageViewer
+                              image={entry?.tracker_file_signed_url}
+                              isSmall={true}
+                              isHeic={checkHeic(entry?.tracker_file_signed_url)}
+                            />
+                          </Grid.Col>
+                          <Grid.Col span={4}>
+                            <div className={classes.label}>Pose</div>
+                            <ImageViewer
+                              image={entry?.pose_file_signed_url}
+                              isSmall={true}
+                              isHeic={checkHeic(entry?.tracker_file_signed_url)}
+                            />
+                          </Grid.Col>
+                          <Grid.Col span={4}>
+                            <div style={{ height: '50%' }}>
+                              <div className={classes.label}>🔥</div>
+                              <Text weight={600} style={{ marginTop: '0px' }}>
+                                {entry?.calories == '' ? '-' : entry?.calories}
+                              </Text>
+                            </div>
+                            <div style={{ height: '50%' }}>
+                              <div className={classes.label}>⏰🏋🏼</div>
+                              <Text weight={600} style={{ marginTop: '0px' }}>
+                                {entry?.minutes == '' ? '-' : entry?.minutes}
+                              </Text>
+                            </div>
+                          </Grid.Col>
+                          <Grid.Col span={6}>
+                            <div className={classes.label}> A favor ✅</div>
 
-                      <Grid.Col span={4}>
-                        <div className={classes.label}>Pose</div>
-                        <ImageViewer
-                          image={entry?.pose_file_signed_url}
-                          isSmall={true}
-                          isHeic={checkHeic(entry?.tracker_file_signed_url)}
-                        />
-                      </Grid.Col>
+                            <Avatar.Group
+                              spacing="sm"
+                              onClick={() => openVoteModal('for', votesFor)}
+                            >
+                              {votesFor?.map((vote, index) => {
+                                if (index < 3) {
+                                  return (
+                                    <Avatar
+                                      key={vote.id + 'for'}
+                                      src={vote.user.avatar}
+                                      radius="xl"
+                                      size={'sm'}
+                                    />
+                                  )
+                                }
+                              })}
+                              {votesFor?.length > 3 && (
+                                <Avatar radius="xl" size={'sm'}>
+                                  +{votesFor.length - 3}
+                                </Avatar>
+                              )}
+                            </Avatar.Group>
+                          </Grid.Col>
+                          <Grid.Col span={6}>
+                            <div className={classes.label}> En contra ❌</div>
 
-                      <Grid.Col span={4}>
-                        <div style={{ height: '50%' }}>
-                          <div className={classes.label}>🔥</div>
-                          <Text weight={600} style={{ marginTop: '0px' }}>
-                            {entry?.calories == '' ? '-' : entry?.calories}
-                          </Text>
-                        </div>
-                        <div style={{ height: '50%' }}>
-                          <div className={classes.label}>⏰🏋🏼</div>
-                          <Text weight={600} style={{ marginTop: '0px' }}>
-                            {entry?.minutes == '' ? '-' : entry?.minutes}
-                          </Text>
-                        </div>
-                      </Grid.Col>
-
-                      <Grid.Col span={6}>
-                        <div className={classes.label}> A favor ✅</div>
-
-                        <Avatar.Group spacing="sm" onClick={() => openVoteModal('for', votesFor)}>
-                          {votesFor?.map((vote, index) => {
-                            if (index < 3) {
-                              return (
-                                <Avatar
-                                  key={vote.id + 'for'}
-                                  src={vote.user.avatar}
-                                  radius="xl"
-                                  size={'sm'}
-                                />
-                              )
-                            }
-                          })}
-                          {votesFor?.length > 3 && (
-                            <Avatar radius="xl" size={'sm'}>
-                              +{votesFor.length - 3}
-                            </Avatar>
-                          )}
-                        </Avatar.Group>
-                      </Grid.Col>
-
-                      <Grid.Col span={6}>
-                        <div className={classes.label}> En contra ❌</div>
-
-                        <Avatar.Group
-                          spacing="sm"
-                          onClick={() => openVoteModal('against', votesAgainst)}
-                        >
-                          {votesAgainst?.map((vote, index) => {
-                            if (index < 3) {
-                              return (
-                                <Avatar
-                                  key={vote.id + 'for'}
-                                  src={vote.user.avatar}
-                                  radius="xl"
-                                  size={'sm'}
-                                />
-                              )
-                            }
-                          })}
-                          {votesAgainst?.length > 3 && (
-                            <Avatar radius="xl" size={'sm'}>
-                              +{votesAgainst.length - 3}
-                            </Avatar>
-                          )}
-                        </Avatar.Group>
-                      </Grid.Col>
+                            <Avatar.Group
+                              spacing="sm"
+                              onClick={() => openVoteModal('against', votesAgainst)}
+                            >
+                              {votesAgainst?.map((vote, index) => {
+                                if (index < 3) {
+                                  return (
+                                    <Avatar
+                                      key={vote.id + 'for'}
+                                      src={vote.user.avatar}
+                                      radius="xl"
+                                      size={'sm'}
+                                    />
+                                  )
+                                }
+                              })}
+                              {votesAgainst?.length > 3 && (
+                                <Avatar radius="xl" size={'sm'}>
+                                  +{votesAgainst.length - 3}
+                                </Avatar>
+                              )}
+                            </Avatar.Group>
+                          </Grid.Col>{' '}
+                        </>
+                      )}
                     </Grid>
                   </div>
                 )

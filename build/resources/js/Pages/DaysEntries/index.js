@@ -71,41 +71,46 @@ const DaysEntries = (props) => {
                                             react_1.default.createElement("span", { className: classes.ownerName }, entry.user.name),
                                             react_1.default.createElement("span", { className: classes.ownerAt }, "@"),
                                             react_1.default.createElement("span", { className: classes.ownerDate }, (0, moment_1.default)(entry.created_at?.full_value).format('HH:mm')))),
-                                    react_1.default.createElement(core_1.Grid.Col, { span: 4 },
-                                        react_1.default.createElement("div", { className: classes.label }, "Tracker"),
-                                        react_1.default.createElement(ImageViewer_1.default, { image: entry?.tracker_file_signed_url, isSmall: true, isHeic: checkHeic(entry?.tracker_file_signed_url) })),
-                                    react_1.default.createElement(core_1.Grid.Col, { span: 4 },
-                                        react_1.default.createElement("div", { className: classes.label }, "Pose"),
-                                        react_1.default.createElement(ImageViewer_1.default, { image: entry?.pose_file_signed_url, isSmall: true, isHeic: checkHeic(entry?.tracker_file_signed_url) })),
-                                    react_1.default.createElement(core_1.Grid.Col, { span: 4 },
-                                        react_1.default.createElement("div", { style: { height: '50%' } },
-                                            react_1.default.createElement("div", { className: classes.label }, "\uD83D\uDD25"),
-                                            react_1.default.createElement(core_1.Text, { weight: 600, style: { marginTop: '0px' } }, entry?.calories == '' ? '-' : entry?.calories)),
-                                        react_1.default.createElement("div", { style: { height: '50%' } },
-                                            react_1.default.createElement("div", { className: classes.label }, "\u23F0\uD83C\uDFCB\uD83C\uDFFC"),
-                                            react_1.default.createElement(core_1.Text, { weight: 600, style: { marginTop: '0px' } }, entry?.minutes == '' ? '-' : entry?.minutes))),
-                                    react_1.default.createElement(core_1.Grid.Col, { span: 6 },
-                                        react_1.default.createElement("div", { className: classes.label }, " A favor \u2705"),
-                                        react_1.default.createElement(core_1.Avatar.Group, { spacing: "sm", onClick: () => openVoteModal('for', votesFor) },
-                                            votesFor?.map((vote, index) => {
-                                                if (index < 3) {
-                                                    return (react_1.default.createElement(core_1.Avatar, { key: vote.id + 'for', src: vote.user.avatar, radius: "xl", size: 'sm' }));
-                                                }
-                                            }),
-                                            votesFor?.length > 3 && (react_1.default.createElement(core_1.Avatar, { radius: "xl", size: 'sm' },
-                                                "+",
-                                                votesFor.length - 3)))),
-                                    react_1.default.createElement(core_1.Grid.Col, { span: 6 },
-                                        react_1.default.createElement("div", { className: classes.label }, " En contra \u274C"),
-                                        react_1.default.createElement(core_1.Avatar.Group, { spacing: "sm", onClick: () => openVoteModal('against', votesAgainst) },
-                                            votesAgainst?.map((vote, index) => {
-                                                if (index < 3) {
-                                                    return (react_1.default.createElement(core_1.Avatar, { key: vote.id + 'for', src: vote.user.avatar, radius: "xl", size: 'sm' }));
-                                                }
-                                            }),
-                                            votesAgainst?.length > 3 && (react_1.default.createElement(core_1.Avatar, { radius: "xl", size: 'sm' },
-                                                "+",
-                                                votesAgainst.length - 3)))))));
+                                    entry.is_rest_day ? (react_1.default.createElement(core_1.Grid.Col, { span: 12, className: classes.entryGrid },
+                                        react_1.default.createElement("div", { style: { textAlign: 'center', marginTop: '40px', marginBottom: '40px' } },
+                                            react_1.default.createElement("div", { className: classes.label }, "D\u00EDa de descanso"),
+                                            "\uD83D\uDE34"))) : (react_1.default.createElement(react_1.default.Fragment, null,
+                                        react_1.default.createElement(core_1.Grid.Col, { span: 4 },
+                                            react_1.default.createElement("div", { className: classes.label }, "Tracker"),
+                                            react_1.default.createElement(ImageViewer_1.default, { image: entry?.tracker_file_signed_url, isSmall: true, isHeic: checkHeic(entry?.tracker_file_signed_url) })),
+                                        react_1.default.createElement(core_1.Grid.Col, { span: 4 },
+                                            react_1.default.createElement("div", { className: classes.label }, "Pose"),
+                                            react_1.default.createElement(ImageViewer_1.default, { image: entry?.pose_file_signed_url, isSmall: true, isHeic: checkHeic(entry?.tracker_file_signed_url) })),
+                                        react_1.default.createElement(core_1.Grid.Col, { span: 4 },
+                                            react_1.default.createElement("div", { style: { height: '50%' } },
+                                                react_1.default.createElement("div", { className: classes.label }, "\uD83D\uDD25"),
+                                                react_1.default.createElement(core_1.Text, { weight: 600, style: { marginTop: '0px' } }, entry?.calories == '' ? '-' : entry?.calories)),
+                                            react_1.default.createElement("div", { style: { height: '50%' } },
+                                                react_1.default.createElement("div", { className: classes.label }, "\u23F0\uD83C\uDFCB\uD83C\uDFFC"),
+                                                react_1.default.createElement(core_1.Text, { weight: 600, style: { marginTop: '0px' } }, entry?.minutes == '' ? '-' : entry?.minutes))),
+                                        react_1.default.createElement(core_1.Grid.Col, { span: 6 },
+                                            react_1.default.createElement("div", { className: classes.label }, " A favor \u2705"),
+                                            react_1.default.createElement(core_1.Avatar.Group, { spacing: "sm", onClick: () => openVoteModal('for', votesFor) },
+                                                votesFor?.map((vote, index) => {
+                                                    if (index < 3) {
+                                                        return (react_1.default.createElement(core_1.Avatar, { key: vote.id + 'for', src: vote.user.avatar, radius: "xl", size: 'sm' }));
+                                                    }
+                                                }),
+                                                votesFor?.length > 3 && (react_1.default.createElement(core_1.Avatar, { radius: "xl", size: 'sm' },
+                                                    "+",
+                                                    votesFor.length - 3)))),
+                                        react_1.default.createElement(core_1.Grid.Col, { span: 6 },
+                                            react_1.default.createElement("div", { className: classes.label }, " En contra \u274C"),
+                                            react_1.default.createElement(core_1.Avatar.Group, { spacing: "sm", onClick: () => openVoteModal('against', votesAgainst) },
+                                                votesAgainst?.map((vote, index) => {
+                                                    if (index < 3) {
+                                                        return (react_1.default.createElement(core_1.Avatar, { key: vote.id + 'for', src: vote.user.avatar, radius: "xl", size: 'sm' }));
+                                                    }
+                                                }),
+                                                votesAgainst?.length > 3 && (react_1.default.createElement(core_1.Avatar, { radius: "xl", size: 'sm' },
+                                                    "+",
+                                                    votesAgainst.length - 3)))),
+                                        ' ')))));
                         }))))));
 };
 exports.default = DaysEntries;
