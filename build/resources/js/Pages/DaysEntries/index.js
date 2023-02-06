@@ -53,7 +53,7 @@ const DaysEntries = (props) => {
                 react_1.default.createElement("div", { style: { width: '100%', textAlign: 'center' } },
                     react_1.default.createElement(core_1.Text, null,
                         "Participaciones del ",
-                        (0, moment_1.default)().format('MM'),
+                        (0, moment_1.default)().format('DD'),
                         " de",
                         react_1.default.createElement("span", { style: { textTransform: 'capitalize', marginLeft: '3px' } }, (0, moment_1.default)().format('MMMM')))),
                 react_1.default.createElement("div", null,
