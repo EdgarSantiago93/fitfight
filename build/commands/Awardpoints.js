@@ -52,6 +52,7 @@ class Awardpoints extends standalone_1.BaseCommand {
             const entriesForTheDay = await Entry.query()
                 .whereNot('status', 'validated')
                 .where('is_rest_day', false)
+                .where('forced_rest', false)
                 .where('created_at', '>=', yesterday.startOf('day').format())
                 .where('created_at', '<=', yesterday.endOf('day').format());
             this.logger.info('Awarding points to users for: ' + yesterday.format('YYYY-MM-DD'));

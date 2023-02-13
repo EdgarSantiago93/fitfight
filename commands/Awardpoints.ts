@@ -38,6 +38,7 @@ export default class Awardpoints extends BaseCommand {
       const entriesForTheDay = await Entry.query()
         .whereNot('status', 'validated')
         .where('is_rest_day', false)
+        .where('forced_rest', false)
         .where('created_at', '>=', yesterday.startOf('day').format())
         .where('created_at', '<=', yesterday.endOf('day').format())
 

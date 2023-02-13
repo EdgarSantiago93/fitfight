@@ -10,7 +10,15 @@
       "description": "Award points to users for the day",
       "args": [],
       "aliases": [],
-      "flags": []
+      "flags": [
+        {
+          "name": "force-update",
+          "propertyName": "forceUpdate",
+          "type": "boolean",
+          "alias": "f",
+          "description": "force"
+        }
+      ]
     },
     "dump:rcfile": {
       "settings": {},

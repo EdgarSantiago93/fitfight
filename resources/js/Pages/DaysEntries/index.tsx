@@ -66,7 +66,7 @@ const DaysEntries = (props: Props): React.ReactElement => {
         <div>
           <div style={{ width: '100%', textAlign: 'center' }}>
             <Text>
-              Participaciones del {moment().format('MM')} de
+              Participaciones del {moment().format('DD')} de
               <span style={{ textTransform: 'capitalize', marginLeft: '3px' }}>
                 {moment().format('MMMM')}
               </span>
