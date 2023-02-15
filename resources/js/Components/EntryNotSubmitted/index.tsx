@@ -7,8 +7,8 @@ interface Props {
 import { useStyles } from './styles'
 import { closeAllModals, openConfirmModal } from '@mantine/modals'
 import moment from 'moment'
-// import ImageUploader from '../../Components/ImageUploader'
-import ImageUploaderTest from '../../Components/ImageUploaderTest'
+import ImageUploader from '../../Components/ImageUploader'
+// import ImageUploaderTest from '../../Components/ImageUploaderTest'
 import { useForm } from '@mantine/form'
 import { createEntry } from '../../api/entry'
 
@@ -108,7 +108,7 @@ const EntryNotSubmitted = (props: Props) => {
       <Grid>
         <Grid.Col span={6}>
           <div className={classes.label}>Tracker</div>
-          <ImageUploaderTest
+          <ImageUploader
             formValue="tracker_img"
             form={form}
             loading={setTrackerLoading}
@@ -118,7 +118,7 @@ const EntryNotSubmitted = (props: Props) => {
 
         <Grid.Col span={6}>
           <div className={classes.label}>Pose</div>
-          <ImageUploaderTest
+          <ImageUploader
             formValue="pose_img"
             form={form}
             loading={setPoseLoading}
