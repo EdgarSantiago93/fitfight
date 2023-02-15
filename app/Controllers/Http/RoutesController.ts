@@ -11,7 +11,7 @@ export default class RoutesController {
     this.routesControllerActions = new RoutesControllerActions()
   }
 
-  public async getLoginView({ auth, inertia, response }) {
+  public async getLoginView({ auth, inertia, response }): Promise<any> {
     await auth.use('web').authenticate()
     if (auth.use('web').isLoggedIn) {
       return response.redirect('/')
@@ -22,12 +22,12 @@ export default class RoutesController {
     })
   }
 
-  public async getVotingView({ auth, inertia }) {
+  public async getVotingView({ auth, inertia }): Promise<any> {
     await auth.use('web').authenticate()
     const user = auth.use('web').user!
     const userCanVote = await this.routesControllerActions.getUserTodaysEntries({ user })
 
-    if (userCanVote.length == 0) {
+    if (userCanVote.length === 0) {
       return inertia.render('NoParticipation', { user: user })
     }
 
@@ -36,7 +36,7 @@ export default class RoutesController {
 
     if (earliestEntry) {
       earliestJson = await new Promise(async (resolve, _reject) => {
-        let serializedEarliest = earliestEntry?.serialize()
+        const serializedEarliest = earliestEntry?.serialize()
 
         earliestEntry.pose_file &&
           (serializedEarliest.pose_file_signed_url =
@@ -58,30 +58,30 @@ export default class RoutesController {
     })
   }
 
-  public async getLeaderBoardView({ auth, inertia }) {
+  public async getLeaderBoardView({ auth, inertia }): Promise<any> {
     await auth.use('web').authenticate()
     const user = auth.use('web').user!
     const users = await User.all()
     const userswithEntries = await Promise.all(
       users.map(async (user) => {
-        let serialized = user.serialize()
+        const serialized = user.serialize()
         const entries = await this.routesControllerActions.getValidatedEntries({ user })
         serialized.entries = entries
-        let sum = entries.reduce(function (previousValue, currentValue, _currentIndex, _array) {
-          let val = currentValue.$extras.vote_count_for - currentValue.$extras.vote_count_against
-          let result = previousValue + val
+        const sum = entries.reduce(function (previousValue, currentValue, _currentIndex, _array) {
+          const val = currentValue.$extras.vote_count_for - currentValue.$extras.vote_count_against
+          const result = previousValue + val
           return result
         }, 0)
         serialized.hasEntries = true
         serialized.totalVotes = sum
-        entries.length == 0 && (serialized.hasEntries = false)
+        entries.length === 0 && (serialized.hasEntries = false)
         return serialized
       })
     )
 
     return inertia.render('Leaderboard', { user: user, userswithEntries: userswithEntries })
   }
-  public async getTodaysEntriesView({ auth, inertia }) {
+  public async getTodaysEntriesView({ auth, inertia }): Promise<any> {
     await auth.use('web').authenticate()
     const user = auth.use('web').user!
 
@@ -90,7 +90,7 @@ export default class RoutesController {
     const todaysEntriesJson = await Promise.all(
       todaysEntries &&
         todaysEntries.map(async (entry) => {
-          let serialized = entry.serialize()
+          const serialized = entry.serialize()
           entry?.pose_file && (await entry.load('pose_file_model'))
           entry?.tracker_file && (await entry.load('tracker_file_model'))
           entry.pose_file &&
@@ -108,7 +108,7 @@ export default class RoutesController {
     })
   }
 
-  public async getDashboardView({ auth, inertia }) {
+  public async getDashboardView({ auth, inertia }): Promise<any> {
     await auth.use('web').authenticate()
     const user = auth.use('web').user!
     // const dbUser = await User.find(user.id)
@@ -119,7 +119,7 @@ export default class RoutesController {
     let earliestJson = {}
     if (earliestEntry) {
       earliestJson = await new Promise(async (resolve, _reject) => {
-        let serializedEarliest = earliestEntry?.serialize()
+        const serializedEarliest = earliestEntry?.serialize()
 
         earliestEntry.pose_file &&
           (serializedEarliest.pose_file_signed_url =
@@ -135,7 +135,7 @@ export default class RoutesController {
     const weeksEntriesJson = await Promise.all(
       weeksEntries &&
         weeksEntries.map(async (entry) => {
-          let serialized = entry.serialize()
+          const serialized = entry.serialize()
           entry?.pose_file && (await entry.load('pose_file_model'))
           entry?.tracker_file && (await entry.load('tracker_file_model'))
           entry.pose_file &&
@@ -154,8 +154,54 @@ export default class RoutesController {
     })
   }
 
+  public async getTestView({ auth, inertia }) {
+    await auth.use('web').authenticate()
+    const user = auth.use('web').user!
+    // const dbUser = await User.find(user.id)
+
+    const weeksEntries = await this.routesControllerActions.getUserThisWeeksEntries({ user })
+    const entriesToVoteOn = await this.routesControllerActions.getUsersEntriesToVoteOn({ user })
+    const earliestEntry = await this.routesControllerActions.getTodaysEarliestEntry()
+    let earliestJson = {}
+    if (earliestEntry) {
+      earliestJson = await new Promise(async (resolve, _reject) => {
+        const serializedEarliest = earliestEntry?.serialize()
+
+        earliestEntry.pose_file &&
+          (serializedEarliest.pose_file_signed_url =
+            await earliestEntry.pose_file_model?.presignedUrl())
+
+        earliestEntry.tracker_file &&
+          (serializedEarliest.tracker_file_signed_url =
+            await earliestEntry.tracker_file_model?.presignedUrl())
+        resolve(serializedEarliest)
+      })
+    }
+
+    const weeksEntriesJson = await Promise.all(
+      weeksEntries &&
+        weeksEntries.map(async (entry) => {
+          const serialized = entry.serialize()
+          entry?.pose_file && (await entry.load('pose_file_model'))
+          entry?.tracker_file && (await entry.load('tracker_file_model'))
+          entry.pose_file &&
+            (serialized.pose_file_signed_url = await entry.pose_file_model.presignedUrl())
+          entry.tracker_file &&
+            (serialized.tracker_file_signed_url = await entry.tracker_file_model.presignedUrl())
+          return serialized
+        })
+    )
+
+    return inertia.render('Test', {
+      user: user,
+      entries: weeksEntriesJson,
+      entriesToVoteOn: entriesToVoteOn,
+      earliestEntry: earliestJson,
+    })
+  }
+
   // View to share entry on telegram
-  public async entryShareCard({ request, response }) {
+  public async entryShareCard({ request, response }): Promise<any> {
     if (!request.params().id) {
       return response.redirect('/')
     }

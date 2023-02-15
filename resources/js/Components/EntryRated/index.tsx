@@ -88,8 +88,8 @@ const VotingComponent = (props: Props) => {
     return false
   }
 
-  const votesFor = props.entry?.votes.filter((vote) => vote.type == 'for')
-  const votesAgainst = props.entry?.votes.filter((vote) => vote.type == 'against')
+  const votesFor = props.entry?.votes.filter((vote) => vote.type === 'for')
+  const votesAgainst = props.entry?.votes.filter((vote) => vote.type === 'against')
 
   const [trackFileUrl, _setTrackFileUrl] = React.useState(props.entry?.tracker_file_signed_url)
   const [poseFileUrl, _setPoseFileUrl] = React.useState(props.entry?.pose_file_signed_url)
@@ -128,14 +128,14 @@ const VotingComponent = (props: Props) => {
             <div className={classes.label}>🔥</div>
 
             <Text weight={600} style={{ marginTop: '0px' }}>
-              {props.entry?.calories == '' ? '-' : props.entry?.calories}
+              {props.entry?.calories === '' ? '-' : props.entry?.calories}
             </Text>
           </div>
           <div style={{ height: '50%' }}>
             {/* <div className={classes.label}>Minutos Ejercicio</div> */}
             <div className={classes.label}>⏰🏋🏼</div>
             <Text weight={600} style={{ marginTop: '0px' }}>
-              {props.entry?.minutes == '' ? '-' : props.entry?.minutes}
+              {props.entry?.minutes === '' ? '-' : props.entry?.minutes}
             </Text>
           </div>
         </Grid.Col>
@@ -176,9 +176,9 @@ const VotingComponent = (props: Props) => {
           </Text>
 
           <Text weight={600} size="xl">
-            {props.entry?.status == 'pending' && !props.entry.is_validated ? 'Validando 🕒' : ''}
-            {props.entry?.status == 'validated' && props.entry.is_validated ? 'Válida 👍🏼' : ''}
-            {props.entry?.status == 'rejected' && !props.entry.is_validated ? 'No válida 👎🏼' : ''}
+            {props.entry?.status === 'pending' && !props.entry.is_validated ? 'Validando 🕒' : ''}
+            {props.entry?.status === 'validated' && props.entry.is_validated ? 'Válida 👍🏼' : ''}
+            {props.entry?.status === 'rejected' && !props.entry.is_validated ? 'No válida 👎🏼' : ''}
           </Text>
         </Grid.Col>
       </Grid>

@@ -234,6 +234,4 @@ config.stats = 'errors-warnings';
 //       },
 //   }
 // }
-
-
 module.exports = config;

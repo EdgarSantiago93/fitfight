@@ -12,15 +12,45 @@
   "eslintConfig": {
     "extends": [
       "plugin:adonis/typescriptApp",
-      "prettier"
+        "plugin:@typescript-eslint/recommended",
+      "plugin:prettier/recommended"
+  
     ],
+    "parser": "@typescript-eslint/parser",
     "plugins": [
       "prettier"
     ],
     "rules": {
       "prettier/prettier": [
         "error"
+      ],
+      "eqeqeq": "off",
+      "@typescript-eslint/no-non-null-assertion": "off",
+      "@typescript-eslint/no-explicit-any": "off",
+      
+      "@typescript-eslint/naming-convention": [
+        "error",
+        {
+          "selector": "variable",
+          "format": ["camelCase", "UPPER_CASE", "PascalCase", "_camelCase", "_UPPER_CASE", "_PascalCase"],
+          "leadingUnderscore": "allow"
+        },
+        {
+          "selector": "function",
+          "format": ["camelCase", "PascalCase", "_camelCase", "_PascalCase"],
+          "leadingUnderscore": "allow"
+        }
+      ],
+      "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
+      "@typescript-eslint/no-empty-function": "warn",
+      "@typescript-eslint/explicit-function-return-type": [
+        "warn",
+        {
+          "allowExpressions": true,
+          "allowConciseArrowFunctionExpressionsStartingWithVoid": true
+        }
       ]
+      
     }
   },
   "eslintIgnore": [
@@ -34,7 +64,8 @@
     "quoteProps": "consistent",
     "bracketSpacing": true,
     "arrowParens": "always",
-    "printWidth": 100
+    "printWidth": 100,
+    "eqeqeq": "smart"
   },
   "devDependencies": {
     "@adonisjs/assembler": "^5.9.5",
@@ -47,8 +78,10 @@
     "@types/proxy-addr": "^2.0.0",
     "@types/react": "^18.0.27",
     "@types/source-map-support": "^0.5.6",
+    "@typescript-eslint/eslint-plugin": "^5.52.0",
+    "@typescript-eslint/parser": "^5.52.0",
     "adonis-preset-ts": "^2.1.0",
-    "eslint": "^8.32.0",
+    "eslint": "^8.34.0",
     "eslint-config-prettier": "^8.6.0",
     "eslint-plugin-adonis": "^2.1.1",
     "eslint-plugin-prettier": "^4.2.1",

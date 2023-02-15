@@ -14,6 +14,7 @@ Route_1.default.group(() => {
     Route_1.default.get('/vote', 'RoutesController.getVotingView');
     Route_1.default.get('/cal', 'RoutesController.getVotingView');
     Route_1.default.get('/today', 'RoutesController.getTodaysEntriesView');
+    Route_1.default.get('/uploadTest', 'RoutesController.getTestView');
     Route_1.default.post('/get_media_token', 'GetUploadTokenAction');
     Route_1.default.post('/get_signed_url', 'GetPresignedURL.apiHandle');
     Route_1.default.post('/create_entry', 'SaveEntryAction');

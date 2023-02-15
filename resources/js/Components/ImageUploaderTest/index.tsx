@@ -4,7 +4,7 @@ import { Loader, Button } from '@mantine/core'
 import { openModal, closeAllModals } from '@mantine/modals'
 import { useStyles } from './styles'
 
-const ImageUploader = ({ form, formValue, loading }) => {
+const ImageUploaderTest = ({ form, formValue, loading }) => {
   const { classes } = useStyles()
   const [uploadProgress, setUploadProgress] = React.useState(0)
   const [previewUrl, setPreviewUrl] = React.useState('')
@@ -14,15 +14,107 @@ const ImageUploader = ({ form, formValue, loading }) => {
 
   const handleFileInput = (e) => uploadFile(e.target.files[0])
 
+  const checkHeic = (url): boolean => {
+    if (url?.toLowerCase().includes('.heic') || url?.toLowerCase().includes('.heif')) {
+      return true
+    }
+    return false
+  }
+  const compressImage = async (file, { quality = 1, type = file.type }) => {
+    // Get as image data
+    const imageBitmap = await createImageBitmap(file)
+    console.log(imageBitmap)
+    console.log(imageBitmap.width)
+    console.log(imageBitmap.height)
+    // Draw to canvas
+    const canvas = document.createElement('canvas')
+    // const canvas = document.getElementById('test') as HTMLCanvasElement
+    canvas.width = imageBitmap.width
+    canvas.height = imageBitmap.height
+    const ctx = canvas.getContext('2d')
+    ctx?.drawImage(imageBitmap, 0, 0)
+
+    // Turn into Blob
+    // const blob: Blob = await new Promise((resolve) => canvas.toBlob(resolve, type, quality))
+
+    // Turn Blob into File
+
+    const blob = await new Promise<Blob>((resolve) => {
+      canvas.toBlob(
+        (blob) => {
+          if (blob) {
+            resolve(blob)
+          } else {
+            resolve(new Blob())
+          }
+        },
+        type,
+        quality
+      )
+    })
+    return new File([blob as BlobPart], file.name, {
+      type: blob.type,
+    })
+  }
+
+  // Get the selected file from the file input
+  // const input = document.querySelector('.my-image-field')
+  // input.addEventListener('change', async (e) => {
+  //   // Get the files
+  //   const { files } = e.target
+
+  //   // No files selected
+  //   if (!files.length) return
+
+  //   // We'll store the files in this data transfer object
+  //   const dataTransfer = new DataTransfer()
+
+  //   // For every file in the files list
+  //   for (const file of files) {
+  //     // We don't have to compress files that aren't images
+  //     if (!file.type.startsWith('image')) {
+  //       // Ignore this file, but do add it to our result
+  //       dataTransfer.items.add(file)
+  //       continue
+  //     }
+
+  //     // We compress the file by 50%
+  //     const compressedFile = await compressImage(file, {
+  //       quality: 0.5,
+  //       type: 'image/jpeg',
+  //     })
+
+  //     // Save back the compressed file instead of the original file
+  //     dataTransfer.items.add(compressedFile)
+  //   }
+
+  //   // Set value of the file input to our new files list
+  //   e.target.files = dataTransfer.files
+  // })
+
   const uploadFile = async (file) => {
     setIsUploading(true)
     loading(true)
+    if (!checkHeic(file.name)) {
+      console.log('no es heic, compressing')
+      const compressedFile = await compressImage(file, {
+        quality: 0.5,
+        type: 'image/jpeg',
+      })
+      file = compressedFile
+    }
+
+    // console.log(compressedFile)
+
+    // this is the loading function from the parent component
     const requestObject = {
       file_name: file.name,
       file_type: file.type,
       file_size: file.size,
     }
+    console.log(requestObject)
     const getTokenCall = await getS3Token(requestObject)
+
     if (getTokenCall?.success) {
       //   setFileKey(getTokenCall?.data.key)
       await uploadToS3({ url: getTokenCall?.data.url, file: file }, transformProgress).then(
@@ -152,4 +244,4 @@ const ImageUploader = ({ form, formValue, loading }) => {
   )
 }
 
-export default ImageUploader
+export default ImageUploaderTest

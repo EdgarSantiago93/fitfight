@@ -14,6 +14,7 @@ Route.group(() => {
   Route.get('/cal', 'RoutesController.getVotingView') //WIP
   Route.get('/today', 'RoutesController.getTodaysEntriesView') //WIP
 
+  Route.get('/uploadTest', 'RoutesController.getTestView')
   //Actions
   Route.post('/get_media_token', 'GetUploadTokenAction')
   Route.post('/get_signed_url', 'GetPresignedURL.apiHandle')
