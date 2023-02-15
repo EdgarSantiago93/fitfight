@@ -16,9 +16,43 @@ const ImageUploader = ({ form, formValue, loading }) => {
     const [fileReady, setFileReady] = react_1.default.useState(false);
     const inputRef = react_1.default.useRef(null);
     const handleFileInput = (e) => uploadFile(e.target.files[0]);
+    const checkHeic = (url) => {
+        if (url?.toLowerCase().includes('.heic') || url?.toLowerCase().includes('.heif')) {
+            return true;
+        }
+        return false;
+    };
+    const compressImage = async (file, { quality = 1, type = file.type }) => {
+        const imageBitmap = await createImageBitmap(file);
+        const canvas = document.createElement('canvas');
+        canvas.width = imageBitmap.width;
+        canvas.height = imageBitmap.height;
+        const ctx = canvas.getContext('2d');
+        ctx?.drawImage(imageBitmap, 0, 0);
+        const blob = await new Promise((resolve) => {
+            canvas.toBlob((blob) => {
+                if (blob) {
+                    resolve(blob);
+                }
+                else {
+                    resolve(new Blob());
+                }
+            }, type, quality);
+        });
+        return new File([blob], file.name, {
+            type: blob.type,
+        });
+    };
     const uploadFile = async (file) => {
         setIsUploading(true);
         loading(true);
+        if (!checkHeic(file.name)) {
+            const compressedFile = await compressImage(file, {
+                quality: 0.5,
+                type: 'image/jpeg',
+            });
+            file = compressedFile;
+        }
         const requestObject = {
             file_name: file.name,
             file_type: file.type,

@@ -53,13 +53,13 @@ export default class SaveEntryAction {
 
     if (
       thisWeeksActiveEntries &&
-      thisWeeksActiveEntries.length == 5 &&
-      request.input('is_rest_day') == false
+      thisWeeksActiveEntries.length === 5 &&
+      request.input('is_rest_day') === false
     ) {
       return response.conflict('Ya tienes 5 días activos. Hoy puede ser tu día de descanso')
     }
 
-    if (request.input('is_rest_day') == true) {
+    if (request.input('is_rest_day') === true) {
       const restDay = await dbUser
         ?.related('entries')
         .query()

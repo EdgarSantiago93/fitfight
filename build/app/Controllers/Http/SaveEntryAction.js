@@ -45,11 +45,11 @@ class SaveEntryAction {
             .where('created_at', '>=', sow)
             .where('created_at', '<=', eow);
         if (thisWeeksActiveEntries &&
-            thisWeeksActiveEntries.length == 5 &&
-            request.input('is_rest_day') == false) {
+            thisWeeksActiveEntries.length === 5 &&
+            request.input('is_rest_day') === false) {
             return response.conflict('Ya tienes 5 días activos. Hoy puede ser tu día de descanso');
         }
-        if (request.input('is_rest_day') == true) {
+        if (request.input('is_rest_day') === true) {
             const restDay = await dbUser
                 ?.related('entries')
                 .query()
@@ -108,7 +108,7 @@ class SaveEntryAction {
             .where('created_at', '>=', sow)
             .where('created_at', '<=', eow);
         const daysUntilEndOfWeek = (0, moment_1.default)().endOf('isoWeek').diff((0, moment_1.default)(), 'days');
-        if (thisWeekEntries && thisWeekEntries.length == 6 && daysUntilEndOfWeek == 1) {
+        if (thisWeekEntries && thisWeekEntries.length === 6 && daysUntilEndOfWeek === 1) {
             await Entry_1.default.create({
                 is_rest_day: false,
                 is_validated: true,
