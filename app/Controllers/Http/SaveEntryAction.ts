@@ -129,7 +129,7 @@ export default class SaveEntryAction {
       .where('created_at', '<=', eow)
 
     const daysUntilEndOfWeek = moment().endOf('isoWeek').diff(moment(), 'days')
-    if (thisWeekEntries && thisWeekEntries.length == 6 && daysUntilEndOfWeek == 1) {
+    if (thisWeekEntries && thisWeekEntries.length === 6 && daysUntilEndOfWeek === 1) {
       await Entry.create({
         is_rest_day: false,
         is_validated: true,
