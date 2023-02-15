@@ -17,6 +17,13 @@
           "type": "boolean",
           "alias": "f",
           "description": "force"
+        },
+        {
+          "name": "day",
+          "propertyName": "day",
+          "type": "string",
+          "alias": "d",
+          "description": "day"
         }
       ]
     },

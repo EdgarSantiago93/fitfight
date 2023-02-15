@@ -16,29 +16,36 @@ export default class Awardpoints extends BaseCommand {
   @flags.boolean({ alias: 'f', description: 'force' })
   public forceUpdate: boolean
 
+  @flags.string({ alias: 'd', description: 'day' })
+  public day: string
+
   public async run() {
     this.logger.info('->FITFIGHT<-')
     const { default: Entry } = await import('App/Models/Entry')
     // this runs after 12:00am
     // const yesterday = moment().subtract(1, 'days')
-    const yesterday = moment().utcOffset(-6).subtract(1, 'days')
+    let yesterday = moment().utcOffset(-6).subtract(1, 'days')
 
     // only run between 12:00am and 1:30am
 
     if (
-      moment().utcOffset(-6).hour() == 0 ||
-      moment().utcOffset(-6).hour() == 1 ||
+      moment().utcOffset(-6).hour() === 0 ||
+      moment().utcOffset(-6).hour() === 1 ||
       this.forceUpdate
     ) {
       if (this.forceUpdate) {
         this.logger.info('Running awardpoints with forced flag')
       }
+      if (this.day) {
+        this.logger.info('Running awardpoints with day flag')
+        yesterday = moment(this.day.toString())
+      }
       this.logger.info('Yesterday was: ' + yesterday.format())
 
       const entriesForTheDay = await Entry.query()
         .whereNot('status', 'validated')
+        .whereNot('status', 'forced_rest')
         .where('is_rest_day', false)
-        .where('forced_rest', false)
         .where('created_at', '>=', yesterday.startOf('day').format())
         .where('created_at', '<=', yesterday.endOf('day').format())
 
@@ -54,7 +61,7 @@ export default class Awardpoints extends BaseCommand {
 
         if (
           votesFor.length > votesAgainst.length ||
-          (votesFor.length == 0 && votesAgainst.length == 0)
+          (votesFor.length === 0 && votesAgainst.length === 0)
         ) {
           this.logger.success('Entry: ' + entry.id + ' was validated')
           entry.status = 'validated'

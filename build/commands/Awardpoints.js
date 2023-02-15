@@ -41,18 +41,22 @@ class Awardpoints extends standalone_1.BaseCommand {
     async run() {
         this.logger.info('->FITFIGHT<-');
         const { default: Entry } = await Promise.resolve().then(() => __importStar(global[Symbol.for('ioc.use')]('App/Models/Entry')));
-        const yesterday = (0, moment_1.default)().utcOffset(-6).subtract(1, 'days');
-        if ((0, moment_1.default)().utcOffset(-6).hour() == 0 ||
-            (0, moment_1.default)().utcOffset(-6).hour() == 1 ||
+        let yesterday = (0, moment_1.default)().utcOffset(-6).subtract(1, 'days');
+        if ((0, moment_1.default)().utcOffset(-6).hour() === 0 ||
+            (0, moment_1.default)().utcOffset(-6).hour() === 1 ||
             this.forceUpdate) {
             if (this.forceUpdate) {
                 this.logger.info('Running awardpoints with forced flag');
             }
+            if (this.day) {
+                this.logger.info('Running awardpoints with day flag');
+                yesterday = (0, moment_1.default)(this.day.toString());
+            }
             this.logger.info('Yesterday was: ' + yesterday.format());
             const entriesForTheDay = await Entry.query()
                 .whereNot('status', 'validated')
+                .whereNot('status', 'forced_rest')
                 .where('is_rest_day', false)
-                .where('forced_rest', false)
                 .where('created_at', '>=', yesterday.startOf('day').format())
                 .where('created_at', '<=', yesterday.endOf('day').format());
             this.logger.info('Awarding points to users for: ' + yesterday.format('YYYY-MM-DD'));
@@ -64,7 +68,7 @@ class Awardpoints extends standalone_1.BaseCommand {
                 this.logger.info('Entry: ' + entry.id + ' has ' + votesFor.length + ' votes for');
                 this.logger.info('Entry: ' + entry.id + ' has ' + votesAgainst.length + ' votes against');
                 if (votesFor.length > votesAgainst.length ||
-                    (votesFor.length == 0 && votesAgainst.length == 0)) {
+                    (votesFor.length === 0 && votesAgainst.length === 0)) {
                     this.logger.success('Entry: ' + entry.id + ' was validated');
                     entry.status = 'validated';
                     entry.is_validated = true;
@@ -102,5 +106,9 @@ __decorate([
     standalone_1.flags.boolean({ alias: 'f', description: 'force' }),
     __metadata("design:type", Boolean)
 ], Awardpoints.prototype, "forceUpdate", void 0);
+__decorate([
+    standalone_1.flags.string({ alias: 'd', description: 'day' }),
+    __metadata("design:type", String)
+], Awardpoints.prototype, "day", void 0);
 exports.default = Awardpoints;
 //# sourceMappingURL=Awardpoints.js.map
