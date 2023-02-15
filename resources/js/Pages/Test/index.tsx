@@ -4,7 +4,7 @@ import { useStyles } from './styles'
 import moment from 'moment'
 
 import { useForm } from '@mantine/form'
-import ImageUploader from '../../Components/ImageUploader'
+import ImageUploaderTest from '../../Components/ImageUploaderTest'
 
 interface Props {}
 const Test = (props: Props): React.ReactElement => {
@@ -53,14 +53,14 @@ const Test = (props: Props): React.ReactElement => {
             )}
             {/* {currentEntry} */}
             <div className={classes.label}>1</div>
-            <ImageUploader
+            <ImageUploaderTest
               formValue="first_img"
               form={form}
               loading={setisLoading}
               key="first_img_key"
             />
             <div className={classes.label}>2</div>
-            <ImageUploader
+            <ImageUploaderTest
               formValue="scd_img"
               form={form}
               loading={setisLoading}
@@ -68,7 +68,7 @@ const Test = (props: Props): React.ReactElement => {
             />
             <div className={classes.label}>3</div>
 
-            <ImageUploader
+            <ImageUploaderTest
               formValue="thrd_img"
               form={form}
               loading={setisLoading}

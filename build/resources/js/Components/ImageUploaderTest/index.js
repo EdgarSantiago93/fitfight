@@ -16,13 +16,12 @@ const ImageUploaderTest = ({ form, formValue, loading }) => {
     const [fileReady, setFileReady] = react_1.default.useState(false);
     const inputRef = react_1.default.useRef(null);
     const handleFileInput = (e) => uploadFile(e.target.files[0]);
-    const checkHeic = (url) => {
-        if (url?.toLowerCase().includes('.heic') || url?.toLowerCase().includes('.heif')) {
-            return true;
-        }
-        return false;
-    };
     const compressImage = async (file, { quality = 1, type = file.type }) => {
+        console.log(file.type);
+        if (file.type === 'image/heic' || file.type === 'image/heif') {
+            console.log('Heic image, not compressing');
+            return file;
+        }
         const imageBitmap = await createImageBitmap(file);
         console.log(imageBitmap);
         console.log(imageBitmap.width);
@@ -46,23 +45,18 @@ const ImageUploaderTest = ({ form, formValue, loading }) => {
             type: blob.type,
         });
     };
-    const uploadFile = async (file) => {
+    const uploadFile = async (prefile) => {
         setIsUploading(true);
         loading(true);
-        if (!checkHeic(file.name)) {
-            console.log('no es heic, compressing');
-            const compressedFile = await compressImage(file, {
-                quality: 0.5,
-                type: 'image/jpeg',
-            });
-            file = compressedFile;
-        }
+        const file = await compressImage(prefile, {
+            quality: 0.4,
+            type: 'image/jpeg',
+        });
         const requestObject = {
             file_name: file.name,
             file_type: file.type,
             file_size: file.size,
         };
-        console.log(requestObject);
         const getTokenCall = await (0, media_1.getS3Token)(requestObject);
         if (getTokenCall?.success) {
             await (0, media_1.uploadToS3)({ url: getTokenCall?.data.url, file: file }, transformProgress).then(async () => {
@@ -94,7 +88,9 @@ const ImageUploaderTest = ({ form, formValue, loading }) => {
         let pre = Math.round(progress * 100);
         setUploadProgress(pre);
     };
-    react_1.default.useEffect(() => { }, []);
+    react_1.default.useEffect(() => {
+        console.info('Using test image loader');
+    }, []);
     const openPhotoModal = () => {
         (0, modals_1.openModal)({
             centered: true,

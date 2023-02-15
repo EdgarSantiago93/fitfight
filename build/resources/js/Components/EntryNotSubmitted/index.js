@@ -8,7 +8,7 @@ const core_1 = require("@mantine/core");
 const styles_1 = require("./styles");
 const modals_1 = require("@mantine/modals");
 const moment_1 = __importDefault(require("moment"));
-const ImageUploader_1 = __importDefault(require("../../Components/ImageUploader"));
+const ImageUploaderTest_1 = __importDefault(require("../../Components/ImageUploaderTest"));
 const form_1 = require("@mantine/form");
 const entry_1 = require("../../api/entry");
 const EntryNotSubmitted = (props) => {
@@ -93,10 +93,10 @@ const EntryNotSubmitted = (props) => {
         react_1.default.createElement(core_1.Grid, null,
             react_1.default.createElement(core_1.Grid.Col, { span: 6 },
                 react_1.default.createElement("div", { className: classes.label }, "Tracker"),
-                react_1.default.createElement(ImageUploader_1.default, { formValue: "tracker_img", form: form, loading: setTrackerLoading, key: "tracker_img_key" })),
+                react_1.default.createElement(ImageUploaderTest_1.default, { formValue: "tracker_img", form: form, loading: setTrackerLoading, key: "tracker_img_key" })),
             react_1.default.createElement(core_1.Grid.Col, { span: 6 },
                 react_1.default.createElement("div", { className: classes.label }, "Pose"),
-                react_1.default.createElement(ImageUploader_1.default, { formValue: "pose_img", form: form, loading: setPoseLoading, key: "pose_img_key" })),
+                react_1.default.createElement(ImageUploaderTest_1.default, { formValue: "pose_img", form: form, loading: setPoseLoading, key: "pose_img_key" })),
             react_1.default.createElement(core_1.Grid.Col, { span: 6 },
                 react_1.default.createElement(core_1.TextInput, { label: "Calorias", radius: "md", size: "md", ...form.getInputProps('calories') })),
             react_1.default.createElement(core_1.Grid.Col, { span: 6 },
