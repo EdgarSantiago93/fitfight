@@ -12,9 +12,8 @@
   "eslintConfig": {
     "extends": [
       "plugin:adonis/typescriptApp",
-        "plugin:@typescript-eslint/recommended",
+      "plugin:@typescript-eslint/recommended",
       "plugin:prettier/recommended"
-  
     ],
     "parser": "@typescript-eslint/parser",
     "plugins": [
@@ -27,21 +26,37 @@
       "eqeqeq": "off",
       "@typescript-eslint/no-non-null-assertion": "off",
       "@typescript-eslint/no-explicit-any": "off",
-      
       "@typescript-eslint/naming-convention": [
         "error",
         {
           "selector": "variable",
-          "format": ["camelCase", "UPPER_CASE", "PascalCase", "_camelCase", "_UPPER_CASE", "_PascalCase"],
+          "format": [
+            "camelCase",
+            "UPPER_CASE",
+            "PascalCase",
+            "_camelCase",
+            "_UPPER_CASE",
+            "_PascalCase"
+          ],
           "leadingUnderscore": "allow"
         },
         {
           "selector": "function",
-          "format": ["camelCase", "PascalCase", "_camelCase", "_PascalCase"],
+          "format": [
+            "camelCase",
+            "PascalCase",
+            "_camelCase",
+            "_PascalCase"
+          ],
           "leadingUnderscore": "allow"
         }
       ],
-      "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        {
+          "argsIgnorePattern": "^_"
+        }
+      ],
       "@typescript-eslint/no-empty-function": "warn",
       "@typescript-eslint/explicit-function-return-type": [
         "warn",
@@ -50,7 +65,6 @@
           "allowConciseArrowFunctionExpressionsStartingWithVoid": true
         }
       ]
-      
     }
   },
   "eslintIgnore": [
